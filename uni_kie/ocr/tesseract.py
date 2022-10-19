@@ -1,2 +1,0 @@
-class Tesseract:
-    pass

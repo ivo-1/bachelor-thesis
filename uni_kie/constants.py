@@ -1,8 +1,5 @@
-from uni_kie.ocr.tesseract import Tesseract
-
-
 class OCR_MODELS:
-    TESSERACT = Tesseract
+    TESSERACT = "TESSERACT"
 
 
 class PROMPT_VARIANTS:
@@ -15,7 +12,7 @@ class MODELS:
 
     class GPT:
         NeoX = "NeoX"
-        Davinci = "Davinci"
+        Davinci = "text-davinci-002"
 
 
 class PARSERS:

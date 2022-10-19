@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "unimodal-kie"
+name = "uni_kie"
 version = "0.1.0"
-description = ""
+description = "Unimodal language models for KIE."
 authors = ["ivo-1 <ivoschaper@gmail.com>"]
 
 [tool.poetry.dependencies]
