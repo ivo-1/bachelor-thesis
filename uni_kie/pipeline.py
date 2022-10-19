@@ -25,7 +25,7 @@ class AbstractPipeline:
         raise NotImplementedError
 
 
-class LLM_Pipeline(AbstractPipeline):
+class LLMPipeline(AbstractPipeline):
     """
     Consists of OCR_MODEL, PROMPT_VARIANT, MODEL, PARSER.
     # 1. takes in some file
@@ -59,16 +59,16 @@ class LLM_Pipeline(AbstractPipeline):
         self.parser = parser
 
     def __repr__(self):
-        return f"LLM_Pipeline(ocr_model={self.ocr_model}, prompt_variant={self.prompt_variant}, model={self.model}, parser={self.parser})"
+        return f"LLMPipeline(ocr_model={self.ocr_model}, prompt_variant={self.prompt_variant}, model={self.model}, parser={self.parser})"
 
     def _generate_prompt(self, ocr_text: str) -> str:
-        return "foz"
+        return ocr_text
 
     def _prompt_model(self, prompt: str) -> str:
-        return "bar"
+        return prompt
 
     def _parse_model_output(self, model_output: str):
-        return "baz"
+        return model_output
 
     def predict(self, file_path: Union[str, Path]):
         ocr_text = self._run_ocr(file_path)
@@ -81,12 +81,12 @@ class LLM_Pipeline(AbstractPipeline):
         pass
 
 
-class Baseline_Pipeline(AbstractPipeline):
+class BaselinePipeline(AbstractPipeline):
     def __init__(self, ocr_model):
         super().__init__(model=BaselineModel(), ocr_model=ocr_model)
 
     def __repr__(self):
-        return f"Baseline_Pipeline(ocr_model={self.ocr_model}, model={self.model})"
+        return f"BaselinePipeline(ocr_model={self.ocr_model}, model={self.model})"
 
     def predict(self, ocr_text: str):
         return self.model.predict(ocr_text)

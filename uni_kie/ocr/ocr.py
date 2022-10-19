@@ -18,4 +18,4 @@ class Tesseract(AbstractOCRModel):
         return f"Tesseract()"
 
     def ocr(self, file_path: Path) -> str:
-        return "foo"
+        return file_path
