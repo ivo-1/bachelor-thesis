@@ -22,9 +22,7 @@ if __name__ == "__main__":
     print(llm_pipeline.predict("./datasets/own_sample_invoice.pdf"))
 
     print("Initializing BaselinePipeline...")
-    baseline_pipeline = BaselinePipeline(
-        ocr_model=Tesseract(),
-    )
+    baseline_pipeline = BaselinePipeline(pdf_to_text_model=Tesseract())
     print(baseline_pipeline)
     print("Running BaselinePipeline...")
     print(baseline_pipeline.predict("./datasets/own_sample_invoice.pdf"))

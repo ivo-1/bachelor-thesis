@@ -1,10 +1,9 @@
 from pathlib import Path
 from typing import List, Union
 
-from uni_kie.constants import MODELS, OCR_MODELS, PARSERS, PROMPT_VARIANTS
+from uni_kie.constants import MODELS, PARSERS, PROMPT_VARIANTS
 from uni_kie.models.baseline import BaselineModel
 from uni_kie.models.model import AbstractModel, LargeLanguageModel
-from uni_kie.ocr.ocr import AbstractOCRModel
 from uni_kie.pdf_to_text.pdf_to_text import AbstractPDFToTextModel
 
 
@@ -77,19 +76,16 @@ class LLMPipeline(AbstractPipeline):
 
 
 class BaselinePipeline(AbstractPipeline):
-    def __init__(self, ocr_model):
-        super().__init__(model=BaselineModel(), pdf_to_text_model=ocr_model)
+    def __init__(self, pdf_to_text_model: AbstractPDFToTextModel):
+        super().__init__(model=BaselineModel(), pdf_to_text_model=pdf_to_text_model)
 
     def __repr__(self):
         return f"BaselinePipeline(pdf_to_text_model={self.pdf_to_text_model}, model={self.model})"
 
-    def predict(self, ocr_text: str):
-        return self.model.predict(ocr_text)
-
-    def predict_file(self, file_path: Union[str, Path]):
+    def predict(self, file_path: Union[str, Path]):
         text = self.pdf_to_text_model.get_text(file_path)
-        model_output = self.predict(text)
-        return model_output
+        prediction = self.model.predict(text)
+        return prediction
 
     def predict_directory(self, directory_path: Union[str, Path]):
         pass

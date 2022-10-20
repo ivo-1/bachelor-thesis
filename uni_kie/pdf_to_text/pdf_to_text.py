@@ -11,7 +11,7 @@ class AbstractPDFToTextModel:
         raise NotImplementedError
 
 
-class PDFToTextWrapperModel(AbstractPDFToTextModel):
+class PDFToTextWrapper(AbstractPDFToTextModel):
     def __init__(self):
         super().__init__()
 
@@ -40,5 +40,5 @@ class PDFToTextWrapperModel(AbstractPDFToTextModel):
 
 
 if __name__ == "__main__":
-    pdf_to_text = PDFToTextWrapperModel()
+    pdf_to_text = PDFToTextWrapper()
     pdf_to_text.get_text("lorem_ipsum.pdf")
