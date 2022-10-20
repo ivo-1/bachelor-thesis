@@ -2,9 +2,9 @@
 Large language models for unimodal key information extraction
 
 ## Installation
-In order to use pdftotext you need to install poppler on your machine.
+In order to use pymupdf you may need to run this (for Apple Silicon macOS) before.
 
-For macOS it's
-```brew install pkg-config poppler python```
+```brew install mupdf swig freetype```
 
-Other OSes can be found here: https://pypi.org/project/pdftotext/
+Other than that you can simply run:
+```poetry shell```
