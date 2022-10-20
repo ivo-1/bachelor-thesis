@@ -23,6 +23,6 @@ if __name__ == "__main__":
     baseline_pipeline = BaselinePipeline(pdf_to_text_model=PyMuPDFWrapper())
     print(baseline_pipeline)
     print("Running BaselinePipeline...")
-    print(baseline_pipeline.predict("./datasets/own_sample_invoice.pdf"))
+    print(baseline_pipeline.predict("./datasets/own_sample_invoice_NOT_SEARCHABLE.pdf"))
 
     print("Done!")
