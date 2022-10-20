@@ -6,7 +6,7 @@ class T0pp(LargeLanguageModel):
         super().__init__()
 
     def __repr__(self):
-        return f"T0pp()"
+        return f"T0pp(LargeLanguageModel)"
 
     def predict(self, input: str) -> str:
         return input

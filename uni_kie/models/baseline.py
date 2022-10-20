@@ -6,7 +6,7 @@ class BaselineModel(AbstractModel):
         super().__init__()
 
     def __repr__(self):
-        return f"BaselineModel()"
+        return f"BaselineModel(AbstractModel)"
 
     def predict(self, input: str) -> str:
         return input
