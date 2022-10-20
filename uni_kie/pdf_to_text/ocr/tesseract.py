@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytesseract
 
-from uni_kie.ocr.ocr import AbstractOCRModel
+from uni_kie.pdf_to_text.ocr.ocr import AbstractOCRModel
 
 
 class Tesseract(AbstractOCRModel):

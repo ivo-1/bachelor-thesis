@@ -1,12 +1,9 @@
-from pathlib import Path
-
-from constants import MODELS, PARSERS, PROMPT_VARIANTS
-from ocr.tesseract import Tesseract
+from constants import PARSERS, PROMPT_VARIANTS
 from pipeline import BaselinePipeline, LLMPipeline
 
 from uni_kie import __version__
-from uni_kie.models.baseline import BaselineModel
 from uni_kie.models.t0pp import T0pp
+from uni_kie.pdf_to_text.ocr import Tesseract
 
 if __name__ == "__main__":
     print(__version__)
