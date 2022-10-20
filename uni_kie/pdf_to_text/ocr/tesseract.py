@@ -13,5 +13,9 @@ class Tesseract(AbstractOCRModel):
         return f"Tesseract()"
 
     def ocr(self, file_path: Path) -> str:
-        img = self._convert_pdf_to_image(file_path)
-        return pytesseract.image_to_string(img)
+        images = self._convert_pdf_to_images(file_path)
+        ocr_string = ""
+        for image in images:
+            ocr_string += pytesseract.image_to_string(image)
+
+        return ocr_string
