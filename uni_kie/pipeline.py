@@ -67,7 +67,7 @@ class LLMPipeline(AbstractPipeline):
     def predict(self, file_path: Union[str, Path]):
         text = self.pdf_to_text_model.get_text(file_path)
         prompt = self._generate_prompt(text)
-        model_output = self._prompt_model(prompt)
+        model_output = self.model.predict(prompt)
         parsed_output = self._parse_model_output(model_output)
         return parsed_output
 
