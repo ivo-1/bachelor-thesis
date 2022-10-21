@@ -12,7 +12,7 @@ class AbstractPipeline:
         self.model = model
         self.pdf_to_text_model = pdf_to_text_model
 
-    def predict(self, file_path: Union[str, Path]) -> dict:
+    def predict(self, file_path: Union[str, Path], gold_keys: List) -> dict:
         raise NotImplementedError
 
     def predict_directory(self, directory_path: Union[str, Path]) -> List[dict]:
@@ -55,18 +55,21 @@ class LLMPipeline(AbstractPipeline):
     def __repr__(self):
         return f"LLMPipeline(pdf_to_text_model={self.pdf_to_text_model}, prompt_variant={self.prompt_variant}, model={self.model}, parser={self.parser})"
 
-    def _generate_prompt(self, ocr_text: str) -> str:
-        return ocr_text
+    @staticmethod
+    def _key_list_to_string(key_list: List):
+        """Splits a list of keys into a string while keeping double quotes."""
+        return ", ".join([f'"{key}"' for key in key_list])
 
-    def _prompt_model(self, prompt: str) -> str:
-        return prompt
+    def _generate_prompt(self, ocr_text: str, keys: List) -> str:
+        return f"Extract {self._key_list_to_string(keys)} from the document below:\n\n{ocr_text}\n\nKey: Value\n{keys[0]}:"
 
     def _parse_model_output(self, model_output: str):
         return model_output
 
-    def predict(self, file_path: Union[str, Path]):
+    def predict(self, file_path: Union[str, Path], gold_keys: List) -> dict:
         text = self.pdf_to_text_model.get_text(file_path)
-        prompt = self._generate_prompt(text)
+        prompt = self._generate_prompt(text, gold_keys)
+        print(prompt)
         model_output = self.model.predict(prompt)
         parsed_output = self._parse_model_output(model_output)
         return parsed_output

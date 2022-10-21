@@ -12,15 +12,16 @@ if __name__ == "__main__":
     print("Initializing LLMPipeline...")
     llm_pipeline = LLMPipeline(
         model=GPT3_Davinci(),
-        pdf_to_text_model=Tesseract(),
-        prompt_variant=PROMPT_VARIANTS.SIMPLE,
+        pdf_to_text_model=PyMuPDFWrapper(),
+        prompt_variant=PROMPT_VARIANTS.NEUTRAL,
         parser=PARSERS.SIMPLE,
     )
     print(llm_pipeline)
     print("Running LLMPipeline...")
     print(
         llm_pipeline.predict(
-            "/Users/ivo/PycharmProjects/Levity/unimodal-kie/uni_kie/datasets/own_sample_invoice.pdf"
+            "/Users/ivo/PycharmProjects/Levity/unimodal-kie/uni_kie/datasets/own_sample_invoice.pdf",
+            ["Invoice Number", "Total", "VAT Percentage", "Email address of seller"],
         )
     )
 

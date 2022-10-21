@@ -13,10 +13,10 @@ class GPT3_Davinci(LargeLanguageModel):
     def __repr__(self):
         return f"GPT_3_Davinci(LargeLanguageModel)"
 
-    def predict(self, input: str) -> str:
+    def predict(self, prompt: str) -> str:
         response = openai.Completion.create(
             model="text-ada-001",
-            prompt="This is a test. What is it for?",
+            prompt=prompt,
             temperature=0,
             top_p=1,
             max_tokens=20,

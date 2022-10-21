@@ -3,7 +3,7 @@ class OCR_MODELS:
 
 
 class PROMPT_VARIANTS:
-    SIMPLE = "SIMPLE"
+    NEUTRAL = "NEUTRAL"
 
 
 class MODELS:
