@@ -57,11 +57,11 @@ class LLMPipeline(AbstractPipeline):
 
     @staticmethod
     def _key_list_to_string(key_list: List):
-        """Splits a list of keys into a string while keeping double quotes."""
         return ", ".join([f'"{key}"' for key in key_list])
 
     def _generate_prompt(self, ocr_text: str, keys: List) -> str:
-        return f"Extract {self._key_list_to_string(keys)} from the document below:\n\n{ocr_text}\n\nKey: Value\n{keys[0]}:"
+        if self.prompt_variant == PROMPT_VARIANTS.NEUTRAL:
+            return f"Extract {self._key_list_to_string(keys)} from the document below:\n\n{ocr_text}\n\nKey: Value\n{keys[0]}:"
 
     def _parse_model_output(self, model_output: str):
         return model_output
@@ -69,7 +69,6 @@ class LLMPipeline(AbstractPipeline):
     def predict(self, file_path: Union[str, Path], gold_keys: List) -> dict:
         text = self.pdf_to_text_model.get_text(file_path)
         prompt = self._generate_prompt(text, gold_keys)
-        print(prompt)
         model_output = self.model.predict(prompt)
         parsed_output = self._parse_model_output(model_output)
         return parsed_output

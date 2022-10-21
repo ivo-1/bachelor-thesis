@@ -15,10 +15,12 @@ class GPT3_Davinci(LargeLanguageModel):
 
     def predict(self, prompt: str) -> str:
         response = openai.Completion.create(
-            model="text-ada-001",
+            model="text-babbage-001",
             prompt=prompt,
             temperature=0,
             top_p=1,
-            max_tokens=20,
+            max_tokens=60,
+            presence_penalty=-0.5,
+            frequency_penalty=-0.5,
         )["choices"][0]["text"]
         return response

@@ -9,7 +9,6 @@ from uni_kie.pdf_to_text.pdf_to_text import PyMuPDFWrapper
 
 if __name__ == "__main__":
     print(__version__)
-    print("Initializing LLMPipeline...")
     llm_pipeline = LLMPipeline(
         model=GPT3_Davinci(),
         pdf_to_text_model=PyMuPDFWrapper(),
@@ -18,11 +17,10 @@ if __name__ == "__main__":
     )
     print(llm_pipeline)
     print("Running LLMPipeline...")
+    gold_keys = ["Invoice Number", "Total", "VAT Percentage", "Email address of seller"]
+    print(f"Gold keys: {gold_keys}")
     print(
-        llm_pipeline.predict(
-            "/Users/ivo/PycharmProjects/Levity/unimodal-kie/uni_kie/datasets/own_sample_invoice.pdf",
-            ["Invoice Number", "Total", "VAT Percentage", "Email address of seller"],
-        )
+        f"{gold_keys[0]}:{llm_pipeline.predict('/Users/ivo/PycharmProjects/Levity/unimodal-kie/uni_kie/datasets/own_sample_invoice.pdf', gold_keys)}"
     )
 
     # print("Initializing BaselinePipeline...")
@@ -31,4 +29,4 @@ if __name__ == "__main__":
     # print("Running BaselinePipeline...")
     # print(baseline_pipeline.predict("./datasets/own_sample_invoice.pdf"))
 
-    print("Done!")
+    print("======================== DONE ============================")
