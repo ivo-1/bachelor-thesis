@@ -130,3 +130,6 @@ dmypy.json
 
 # macOS
 .DS_STORE
+
+# dataset (uncompressed)
+uni_kie/datasets/kleister_charity_test_set/in.tsv
