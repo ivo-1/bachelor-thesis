@@ -1,6 +1,8 @@
 import csv
 import json
-from typing import List
+from typing import List, Union
+
+from uni_kie.pdf_to_text.pdf_to_text import KleisterCharityWrapper
 
 
 class Parser:
@@ -11,43 +13,14 @@ class Parser:
     def __init__(self):
         pass
 
-    def parse_single_model_output(self, model_output: str):
+    def parse_single_model_output(self, *args, **kwargs):
         raise NotImplementedError
 
 
-class KleisterCharityParser(Parser):
+class KleisterCharityParser(Parser, KleisterCharityWrapper):
     def __init__(self):
         super().__init__()
-        self.gold_keys = [
-            "address__post_town",
-            "address__postcode",
-            "address__street_line",
-            "charity_name",
-            "charity_number",
-            "income_annually_in_british_pounds",
-            "report_date",
-            "spending_annually_in_british_pounds",
-        ]
-        self.prompt_key_to_gold_key = {
-            "Address (post town)": "address__post_town",
-            "Address (post code)": "address__post_code",
-            "Address (street)": "address__street_line",
-            "Charity Name": "charity_name",
-            "Charity Number": "charity_number",
-            "Annual Income": "income_annually_in_british_pounds",
-            "Report Date (YYYY-MM-DD, ISO8601)": "report_date",
-            "Annual Spending": "spending_annually_in_british_pounds",
-        }
-        self.gold_key_to_prompt_key = {
-            "address__post_town": "Address (post town)",
-            "address__postcode": "Address (post code)",
-            "address__street_line": "Address (street)",
-            "charity_name": "Charity Name",
-            "charity_number": "Charity Number",
-            "income_annually_in_british_pounds": "Annual Income",
-            "report_date": "Report Date (YYYY-MM-DD, ISO8601)",
-            "spending_annually_in_british_pounds": "Annual Spending",
-        }
+        KleisterCharityWrapper.__init__(self)
 
     def parse_single_model_output(self, model_output: str) -> str:
         """
@@ -75,16 +48,16 @@ class KleisterCharityParser(Parser):
                 out.append(key + "=" + value)
 
         # last key
-        out.append(
-            self.gold_keys[-1]
-            + "="
-            + model_output.split(self.gold_key_to_prompt_key[self.gold_keys[-1]] + ":")[
-                1
-            ]
+        value = (
+            model_output.split(self.gold_key_to_prompt_key[self.gold_keys[-1]] + ":")[1]
             .strip()
             .replace(" ", "_")
             .replace(":", "_")
         )
+
+        if value != "null":
+            out.append(self.gold_keys[-1] + "=" + value)
+
         return " ".join(out)
 
     @staticmethod
@@ -103,33 +76,33 @@ class KleisterCharityParser(Parser):
 
 
 class JSONParser(Parser):
-    def __init__(self, gold_keys: List[str]):
+    def __init__(self):
         super().__init__()
-        self.gold_keys = gold_keys
 
-    def parse_single_model_output(self, model_output: str) -> dict:
+    @staticmethod
+    def parse_single_model_output(model_output: str, gold_keys: List[str]) -> dict:
         """
         Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks)
 
         The value for some keys will be "null". These are *not* transferred to the expected_output.
         Note that the model output *never includes* the first key.
+
+        Assumes that model_output is ordered according to gold_keys.
         """
-        model_output = self.gold_keys[0] + ":" + model_output
+        model_output = gold_keys[0] + ":" + model_output
         out = {}
-        for i in range(len(self.gold_keys) - 1):
-            key = self.gold_keys[i]
-            next_key = self.gold_keys[i + 1]
+        for i in range(len(gold_keys) - 1):
+            key = gold_keys[i]
+            next_key = gold_keys[i + 1]
             value = model_output.split(key + ":")[1].split(next_key)[0].strip()
             if value != "null":
                 out[key] = value
 
-        # last key
-        out[self.gold_keys[-1]] = (
-            model_output.split(self.gold_keys[-1] + ":")[1]
-            .strip()
-            .replace(" ", "_")
-            .replace(":", "_")
-        )
+        # last key (no next key) but still check if it's null
+        value = model_output.split(gold_keys[-1] + ":")[1].strip()
+        if value != "null":
+            out[gold_keys[-1]] = value
+
         return out
 
     @staticmethod
