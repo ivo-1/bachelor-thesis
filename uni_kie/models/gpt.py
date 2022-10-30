@@ -8,7 +8,7 @@ from uni_kie.models.model import LargeLanguageModel
 class GPT3_Davinci(LargeLanguageModel):
     def __init__(self):
         super().__init__()
-        openai.api_key = os.getenv("OPENAI_TOKEN")
+        # openai.api_key = os.getenv("OPENAI_TOKEN")
 
     def __repr__(self):
         return f"GPT_3_Davinci(LargeLanguageModel)"
