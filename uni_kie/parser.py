@@ -1,4 +1,5 @@
 import csv
+import json
 from typing import List
 
 
@@ -130,3 +131,15 @@ class JSONParser(Parser):
             .replace(":", "_")
         )
         return out
+
+    @staticmethod
+    def parse_model_outputs_to_json(model_outputs: List[dict], model_name: str) -> None:
+        """
+        Saves into {model_name}_predicted.json.
+
+        :param model_outputs: The list of dicts that come from parse_single_model_output_for_evaluation
+        :param model_name: The name of the model
+        :return:
+        """
+        with open(f"{model_name}_predicted.json", "w") as json_file:
+            json.dump(model_outputs, json_file)
