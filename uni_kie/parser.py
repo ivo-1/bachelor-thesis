@@ -13,7 +13,7 @@ class Parser:
     def __init__(self):
         pass
 
-    def parse_single_model_output(self, *args, **kwargs):
+    def parse_single_model_output(self, model_output: str, gold_keys: List[str]):
         raise NotImplementedError
 
 
@@ -22,21 +22,19 @@ class KleisterCharityParser(Parser, KleisterCharityWrapper):
         super().__init__()
         KleisterCharityWrapper.__init__(self)
 
-    def parse_single_model_output(self, model_output: str) -> str:
+    def parse_single_model_output(self, model_output: str, gold_keys: List[str]) -> str:
         """
         Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks)
 
         The value for some keys will be "null". These are *not* transferred to the expected_output.
         Note that the model output *never includes* the first key.
         """
-        model_output = (
-            self.gold_key_to_prompt_key[self.gold_keys[0]] + ":" + model_output
-        )
+        model_output = self.gold_key_to_prompt_key[gold_keys[0]] + ":" + model_output
         out = []
-        for i in range(len(self.gold_keys) - 1):
-            key = self.gold_keys[i]
+        for i in range(len(gold_keys) - 1):
+            key = gold_keys[i]
             prompt_key = self.gold_key_to_prompt_key[key]
-            next_prompt_key = self.gold_key_to_prompt_key[self.gold_keys[i + 1]]
+            next_prompt_key = self.gold_key_to_prompt_key[gold_keys[i + 1]]
             value = (
                 model_output.split(prompt_key + ":")[1]
                 .split(next_prompt_key)[0]
@@ -49,14 +47,14 @@ class KleisterCharityParser(Parser, KleisterCharityWrapper):
 
         # last key
         value = (
-            model_output.split(self.gold_key_to_prompt_key[self.gold_keys[-1]] + ":")[1]
+            model_output.split(self.gold_key_to_prompt_key[gold_keys[-1]] + ":")[1]
             .strip()
             .replace(" ", "_")
             .replace(":", "_")
         )
 
         if value != "null":
-            out.append(self.gold_keys[-1] + "=" + value)
+            out.append(gold_keys[-1] + "=" + value)
 
         return " ".join(out)
 
