@@ -20,7 +20,7 @@ class PyMuPDFWrapper(AbstractPDFToTextModel):
 
     def get_text(self, file_path: Path) -> str:
         """
-        Extracts text from a PDF file using PyMuPDF.
+        Extracts text from a PDF file using PY_MU_PDF.
 
         It automatically detects whether the PDF is searchable or not and extracts text accordingly. Essentially
         if it's not searchable it runs TesseractOCR on the PDF and returns the text.
@@ -37,3 +37,46 @@ class PyMuPDFWrapper(AbstractPDFToTextModel):
                 partial_tp = page.get_textpage_ocr(flags=0, full=False)
                 text += page.get_text(textpage=partial_tp, sort=True) + "\n"
         return text
+
+
+class KleisterCharityWrapper(AbstractPDFToTextModel):
+    """
+    A wrapper of the Kleister Charity dataset which uses the text
+    that is already provided with the dataset.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.gold_keys = [
+            "address__post_town",
+            "address__postcode",
+            "address__street_line",
+            "charity_name",
+            "charity_number",
+            "income_annually_in_british_pounds",
+            "report_date",
+            "spending_annually_in_british_pounds",
+        ]
+        self.prompt_key_to_gold_key = {
+            "Address (post town)": "address__post_town",
+            "Address (post code)": "address__post_code",
+            "Address (street)": "address__street_line",
+            "Charity Name": "charity_name",
+            "Charity Number": "charity_number",
+            "Annual Income": "income_annually_in_british_pounds",
+            "Report Date (YYYY-MM-DD, ISO8601)": "report_date",
+            "Annual Spending": "spending_annually_in_british_pounds",
+        }
+        self.gold_key_to_prompt_key = {
+            "address__post_town": "Address (post town)",
+            "address__postcode": "Address (post code)",
+            "address__street_line": "Address (street)",
+            "charity_name": "Charity Name",
+            "charity_number": "Charity Number",
+            "income_annually_in_british_pounds": "Annual Income",
+            "report_date": "Report Date (YYYY-MM-DD, ISO8601)",
+            "spending_annually_in_british_pounds": "Annual Spending",
+        }
+
+    def get_text(self, file_path: Path) -> str:
+        pass
