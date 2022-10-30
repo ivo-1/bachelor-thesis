@@ -4,6 +4,7 @@ from typing import List, Union
 from uni_kie.constants import MODELS, PARSERS, PROMPT_VARIANTS
 from uni_kie.models.baseline import BaselineModel
 from uni_kie.models.model import AbstractModel, LargeLanguageModel
+from uni_kie.parser import Parser
 from uni_kie.pdf_to_text.pdf_to_text import AbstractPDFToTextModel
 
 
@@ -26,8 +27,7 @@ class LLMPipeline(AbstractPipeline):
     # 2. runs OCR_MODELS on it
     # 3. creates a prompt with the OCR_MODELS'd text
     # 4. prompts the model with the prompt
-    # 5. parses the model's output into a JSON
-    # 6. returns the JSON
+    # 5. parses the model's output
     """
 
     def __init__(
@@ -35,7 +35,7 @@ class LLMPipeline(AbstractPipeline):
         model: LargeLanguageModel,
         pdf_to_text_model: AbstractPDFToTextModel,
         prompt_variant: PROMPT_VARIANTS,
-        parser: PARSERS,
+        parser: Parser,
     ):
         """
         Initializes the pipeline.
@@ -47,6 +47,8 @@ class LLMPipeline(AbstractPipeline):
 
         :type model: MODELS
         :type pdf_to_text_model: AbstractPDFToTextModel
+        :type prompt_variant: PROMPT_VARIANTS
+        :type parser: Parser
         """
         super().__init__(model, pdf_to_text_model)
         self.prompt_variant = prompt_variant
@@ -61,16 +63,19 @@ class LLMPipeline(AbstractPipeline):
 
     def _generate_prompt(self, ocr_text: str, keys: List) -> str:
         if self.prompt_variant == PROMPT_VARIANTS.NEUTRAL:
-            return f"Extract {self._key_list_to_string(keys)} from the document below:\n\n{ocr_text}\n\nKey: Value\n{keys[0]}:"
+            return (
+                f"{ocr_text}\nExtract {self._key_list_to_string(keys)} from the document above. If you can't find "
+                f'a key-value pair in the document set the value to "null".\n\nKey: Value\n{keys[0]}:'
+            )
 
-    def _parse_model_output(self, model_output: str):
-        return model_output
+    def _parse_model_output(self, model_output: str, gold_keys) -> Union[dict, str]:
+        return self.parser.parse_single_model_output(model_output, gold_keys)
 
-    def predict(self, file_path: Union[str, Path], gold_keys: List) -> dict:
+    def predict(self, file_path: Union[str, Path], gold_keys: List) -> Union[dict, str]:
         text = self.pdf_to_text_model.get_text(file_path)
         prompt = self._generate_prompt(text, gold_keys)
         model_output = self.model.predict(prompt)
-        parsed_output = self._parse_model_output(model_output)
+        parsed_output = self._parse_model_output(model_output, gold_keys)
         return parsed_output
 
     def predict_directory(self, directory_path: Union[str, Path]):
