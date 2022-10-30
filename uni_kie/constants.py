@@ -1,3 +1,8 @@
+from uni_kie.models.gpt import GPT3_Davinci
+from uni_kie.parser import KleisterCharityParser
+from uni_kie.pdf_to_text.pdf_to_text import PyMuPDFWrapper
+
+
 class OCR_MODELS:
     TESSERACT = "TESSERACT"
 
@@ -12,8 +17,12 @@ class MODELS:
 
     class GPT:
         NeoX = "NeoX"
-        Davinci = "text-davinci-002"
+        Davinci = GPT3_Davinci()
+
+
+class PDF_TO_TEXT_MODELS:
+    PY_MU_PDF = PyMuPDFWrapper()
 
 
 class PARSERS:
-    SIMPLE = "SIMPLE"
+    KLEISTER_CHARITY_PARSER = KleisterCharityParser()

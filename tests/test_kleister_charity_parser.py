@@ -1,7 +1,6 @@
 import pytest
 
-from uni_kie.constants import KLEISTER_CHARITY
-from uni_kie.parser import KleisterCharityParser
+from uni_kie.constants import PARSERS
 
 # line 2 from dev-0/expected.tsv
 dev_example_expected_output = (
@@ -18,6 +17,6 @@ def test_parse_single_output():
         "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nReport "
         "Date (YYYY-MM-DD, ISO8601): 2016-03-31\nAnnual Spending: 9415000.00"
     )
-    parser = KleisterCharityParser()
+    parser = PARSERS.KLEISTER_CHARITY_PARSER
     parsed_output = parser.parse_single_model_output(model_output)
     assert parsed_output == dev_example_expected_output
