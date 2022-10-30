@@ -1,5 +1,5 @@
 from uni_kie.models.gpt import GPT3_Davinci
-from uni_kie.parser import KleisterCharityParser
+from uni_kie.parser import JSONParser, KleisterCharityParser
 from uni_kie.pdf_to_text.pdf_to_text import PyMuPDFWrapper
 
 
@@ -26,3 +26,4 @@ class PDF_TO_TEXT_MODELS:
 
 class PARSERS:
     KLEISTER_CHARITY_PARSER = KleisterCharityParser()
+    JSON_PARSER = JSONParser()
