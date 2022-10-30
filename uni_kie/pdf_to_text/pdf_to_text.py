@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import fitz as PyMuPDF
+import pandas as pd
 
 
 class AbstractPDFToTextModel:
@@ -77,6 +78,21 @@ class KleisterCharityWrapper(AbstractPDFToTextModel):
             "report_date": "Report Date (YYYY-MM-DD, ISO8601)",
             "spending_annually_in_british_pounds": "Annual Spending",
         }
+        self.data = self._load_data()
+
+    def __repr__(self):
+        return f"KleisterCharityWrapper(AbstractPDFToTextModel)"
+
+    @staticmethod
+    def _load_data() -> pd.DataFrame:
+        path_to_data = "./datasets/kleister_charity_test_set/in-for-testing.tsv"
+        path_to_headers = "./datasets/kleister_charity_test_set/in-header.tsv"
+
+        data = pd.read_csv(path_to_data, sep="\t", header=None)
+        headers = pd.read_csv(path_to_headers, sep="\t", header=None)
+        data.columns = headers.iloc[0]
+        data = data.drop(columns=["text_djvu", "text_tesseract", "text_textract"])
+        return data
 
     def get_text(self, file_path: Path) -> str:
         pass
