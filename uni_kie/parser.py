@@ -13,7 +13,7 @@ class Parser:
     def __init__(self):
         pass
 
-    def parse_single_model_output(self, model_output: str, gold_keys: List[str]):
+    def parse_single_model_output(self, model_output: str, prompt_keys: List[str]):
         raise NotImplementedError
 
 
@@ -22,39 +22,47 @@ class KleisterCharityParser(Parser, KleisterCharityWrapper):
         super().__init__()
         KleisterCharityWrapper.__init__(self)
 
-    def parse_single_model_output(self, model_output: str, gold_keys: List[str]) -> str:
+    def parse_single_model_output(
+        self, model_output: str, prompt_keys: List[str]
+    ) -> str:
         """
         Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks)
 
         The value for some keys will be "null". These are *not* transferred to the expected_output.
         Note that the model output *never includes* the first key.
         """
-        model_output = self.gold_key_to_prompt_key[gold_keys[0]] + ":" + model_output
+        model_output = prompt_keys[0] + ":" + model_output
         out = []
-        for i in range(len(gold_keys) - 1):
-            key = gold_keys[i]
-            prompt_key = self.gold_key_to_prompt_key[key]
-            next_prompt_key = self.gold_key_to_prompt_key[gold_keys[i + 1]]
+        for i in range(len(prompt_keys) - 1):
+            gold_key = self.gold_keys[i]  # the gold keys of the KleisterCharity dataset
+            prompt_key = prompt_keys[i]
+            next_prompt_key = prompt_keys[i + 1]
+            try:
+                value = (
+                    model_output.split(prompt_key + ":")[1]
+                    .split(next_prompt_key)[0]
+                    .strip()
+                    .replace(" ", "_")
+                    .replace(":", "_")
+                )
+                if value != "null":
+                    out.append(gold_key + "=" + value)
+            except IndexError:
+                print(f"Key {prompt_key} not found in model output.")
+
+        # last key
+        try:
             value = (
-                model_output.split(prompt_key + ":")[1]
-                .split(next_prompt_key)[0]
+                model_output.split(prompt_keys[-1] + ":")[1]
                 .strip()
                 .replace(" ", "_")
                 .replace(":", "_")
             )
+
             if value != "null":
-                out.append(key + "=" + value)
-
-        # last key
-        value = (
-            model_output.split(self.gold_key_to_prompt_key[gold_keys[-1]] + ":")[1]
-            .strip()
-            .replace(" ", "_")
-            .replace(":", "_")
-        )
-
-        if value != "null":
-            out.append(gold_keys[-1] + "=" + value)
+                out.append(self.gold_keys[-1] + "=" + value)
+        except IndexError:
+            print(f"Key {prompt_keys[-1]} not found in model output")
 
         return " ".join(out)
 
@@ -78,7 +86,7 @@ class JSONParser(Parser):
         super().__init__()
 
     @staticmethod
-    def parse_single_model_output(model_output: str, gold_keys: List[str]) -> dict:
+    def parse_single_model_output(model_output: str, prompt_keys: List[str]) -> dict:
         """
         Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks)
 
@@ -87,19 +95,25 @@ class JSONParser(Parser):
 
         Assumes that model_output is ordered according to gold_keys.
         """
-        model_output = gold_keys[0] + ":" + model_output
+        model_output = prompt_keys[0] + ":" + model_output
         out = {}
-        for i in range(len(gold_keys) - 1):
-            key = gold_keys[i]
-            next_key = gold_keys[i + 1]
-            value = model_output.split(key + ":")[1].split(next_key)[0].strip()
-            if value != "null":
-                out[key] = value
+        try:
+            for i in range(len(prompt_keys) - 1):
+                key = prompt_keys[i]
+                next_key = prompt_keys[i + 1]
+                value = model_output.split(key + ":")[1].split(next_key)[0].strip()
+                if value != "null":
+                    out[key] = value
+        except IndexError:
+            print(f"Key {key} not found in model output.")
 
         # last key (no next key) but still check if it's null
-        value = model_output.split(gold_keys[-1] + ":")[1].strip()
-        if value != "null":
-            out[gold_keys[-1]] = value
+        try:
+            value = model_output.split(prompt_keys[-1] + ":")[1].strip()
+            if value != "null":
+                out[prompt_keys[-1]] = value
+        except IndexError:
+            print(f"Key {prompt_keys[-1]} not found in model output")
 
         return out
 

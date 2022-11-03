@@ -8,7 +8,7 @@ dev_example_expected_output = {
     "Address (street)": "47 SECOND AVENUE",
     "Charity Name": "Havens Christian Hospice",
     "Annual Income": "10348000.00",
-    "Report Date (YYYY-MM-DD, ISO8601)": "2016-03-31",
+    "Report Date": "2016-03-31",
 }
 
 
@@ -16,20 +16,20 @@ def test_parse_single_output():
     model_output = (
         " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47 SECOND AVENUE\nCharity Name: "
         "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nReport "
-        "Date (YYYY-MM-DD, ISO8601): 2016-03-31\nAnnual Spending:   null "
+        "Date: 2016-03-31\nAnnual Spending:   null "
     )
     parser = JSONParser()
 
     parsed_output = parser.parse_single_model_output(
         model_output,
-        gold_keys=[
+        prompt_keys=[
             "Address (post town)",
             "Address (post code)",
             "Address (street)",
             "Charity Name",
             "Charity Number",
             "Annual Income",
-            "Report Date (YYYY-MM-DD, ISO8601)",
+            "Report Date",
             "Annual Spending",
         ],
     )
