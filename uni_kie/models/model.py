@@ -1,6 +1,6 @@
 class AbstractModel:
     def __init__(self):
-        pass
+        self.max_input_tokens: int
 
     def predict(self, input: str) -> str:
         raise NotImplementedError
