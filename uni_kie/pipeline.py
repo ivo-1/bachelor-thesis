@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List, Union
 
-from uni_kie.constants import MODELS, PARSERS, PROMPT_VARIANTS
+from uni_kie.constants import MODELS, PARSERS, PROMPT_VARIANTS, TOKENIZERS
 from uni_kie.models.baseline import BaselineModel
 from uni_kie.models.model import AbstractModel, LargeLanguageModel
 from uni_kie.parser import Parser
@@ -61,21 +61,33 @@ class LLMPipeline(AbstractPipeline):
     def _key_list_to_string(key_list: List):
         return ", ".join([f'"{key}"' for key in key_list])
 
-    def _generate_prompt(self, ocr_text: str, keys: List) -> str:
+    def _generate_prompt(self, ocr_text: str, prompt_keys: List) -> str:
         if self.prompt_variant == PROMPT_VARIANTS.NEUTRAL:
-            return (
-                f"{ocr_text}\nExtract {self._key_list_to_string(keys)} from the document above. If you can't find "
-                f'a key-value pair in the document set the value to "null".\n\nKey: Value\n{keys[0]}:'
+            prompt = f'{ocr_text}\n\nExtract {self._key_list_to_string(prompt_keys)} from the document above. If you can\'t find a key-value pair in the document set the value to "null".\n\nKey: Value\n{prompt_keys[0]}:'
+
+        tokenized_prompt = TOKENIZERS.GPT2_TOKENIZER_FAST(prompt)
+        prompt_number_of_tokens = len(tokenized_prompt["input_ids"])
+
+        if prompt_number_of_tokens > self.model.max_input_tokens:
+            # subtracting 5 to make sure that the prompt is not too long
+            truncated_tokenized_prompt = (
+                tokenized_prompt["input_ids"][: self.model.max_input_tokens // 2 - 5]
+                + tokenized_prompt["input_ids"][-self.model.max_input_tokens // 2 - 5 :]
             )
+            prompt = TOKENIZERS.GPT2_TOKENIZER_FAST.decode(truncated_tokenized_prompt)
+
+        return prompt
 
     def _parse_model_output(self, model_output: str, gold_keys) -> Union[dict, str]:
         return self.parser.parse_single_model_output(model_output, gold_keys)
 
-    def predict(self, file_path: Union[str, Path], gold_keys: List) -> Union[dict, str]:
+    def predict(
+        self, file_path: Union[str, Path], prompt_keys: List[str]
+    ) -> Union[dict, str]:
         text = self.pdf_to_text_model.get_text(file_path)
-        prompt = self._generate_prompt(text, gold_keys)
+        prompt = self._generate_prompt(text, prompt_keys)
         model_output = self.model.predict(prompt)
-        parsed_output = self._parse_model_output(model_output, gold_keys)
+        parsed_output = self._parse_model_output(model_output, prompt_keys)
         return parsed_output
 
     def predict_directory(self, directory_path: Union[str, Path]):
