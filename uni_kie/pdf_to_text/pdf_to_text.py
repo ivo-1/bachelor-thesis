@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Union
 
 import fitz as PyMuPDF
 import pandas as pd
@@ -8,7 +9,7 @@ class AbstractPDFToTextModel:
     def __init__(self):
         pass
 
-    def get_text(self, file_path: Path) -> str:
+    def get_text(self, file_path: Union[Path, str]) -> str:
         raise NotImplementedError
 
 
@@ -19,7 +20,7 @@ class PyMuPDFWrapper(AbstractPDFToTextModel):
     def __repr__(self):
         return f"PyMuPDFWrapper(AbstractPDFToTextModel)"
 
-    def get_text(self, file_path: Path) -> str:
+    def get_text(self, file_path: Union[Path, str]) -> str:
         """
         Extracts text from a PDF file using PY_MU_PDF.
 
@@ -48,36 +49,21 @@ class KleisterCharityWrapper(AbstractPDFToTextModel):
 
     def __init__(self):
         super().__init__()
-        self.gold_keys = [
-            "address__post_town",
-            "address__postcode",
-            "address__street_line",
-            "charity_name",
-            "charity_number",
-            "income_annually_in_british_pounds",
-            "report_date",
-            "spending_annually_in_british_pounds",
-        ]
         self.prompt_key_to_gold_key = {
             "Address (post town)": "address__post_town",
-            "Address (post code)": "address__post_code",
+            "Address (post code)": "address__postcode",
             "Address (street)": "address__street_line",
             "Charity Name": "charity_name",
             "Charity Number": "charity_number",
             "Annual Income": "income_annually_in_british_pounds",
-            "Report Date (YYYY-MM-DD, ISO8601)": "report_date",
+            "Report Date": "report_date",
             "Annual Spending": "spending_annually_in_british_pounds",
         }
         self.gold_key_to_prompt_key = {
-            "address__post_town": "Address (post town)",
-            "address__postcode": "Address (post code)",
-            "address__street_line": "Address (street)",
-            "charity_name": "Charity Name",
-            "charity_number": "Charity Number",
-            "income_annually_in_british_pounds": "Annual Income",
-            "report_date": "Report Date (YYYY-MM-DD, ISO8601)",
-            "spending_annually_in_british_pounds": "Annual Spending",
+            v: k for k, v in self.prompt_key_to_gold_key.items()
         }
+        self.gold_keys = list(self.gold_key_to_prompt_key.keys())
+
         self.data = self._load_data()
 
     def __repr__(self):
@@ -94,5 +80,6 @@ class KleisterCharityWrapper(AbstractPDFToTextModel):
         data = data.drop(columns=["text_djvu", "text_tesseract", "text_textract"])
         return data
 
-    def get_text(self, file_path: Path) -> str:
-        pass
+    def get_text(self, file_path: Union[Path, str]) -> str:
+        text = self.data[self.data["filename"] == file_path]["text_best"].values[0]
+        return text
