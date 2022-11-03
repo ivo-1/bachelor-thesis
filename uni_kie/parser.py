@@ -105,23 +105,29 @@ class JSONParser(Parser):
         """
         model_output = prompt_keys[0] + ":" + model_output
         out = {}
-        try:
-            for i in range(len(prompt_keys) - 1):
-                key = prompt_keys[i]
-                next_key = prompt_keys[i + 1]
-                value = model_output.split(key + ":")[1].split(next_key)[0].strip()
-                if value != "null":
-                    out[key] = value
-        except IndexError:
-            print(f"Key {key} not found in model output.")
+        for i in range(len(prompt_keys) - 1):
+            prompt_key = prompt_keys[i]
 
-        # last key (no next key) but still check if it's null
-        try:
-            value = model_output.split(prompt_keys[-1] + ":")[1].strip()
-            if value != "null":
-                out[prompt_keys[-1]] = value
-        except IndexError:
-            print(f"Key {prompt_keys[-1]} not found in model output")
+            if prompt_key not in model_output:
+                continue
+
+            next_key = None
+            for j in range(i + 1, len(prompt_keys)):
+                if prompt_keys[j] in model_output:
+                    next_key = prompt_keys[j]
+                    break
+
+            if next_key is not None:
+                value = model_output.split(prompt_key + ":")[1].split(next_key + ":")[0]
+            else:
+                value = model_output.split(prompt_key + ":")[1]
+
+            value = value.strip()
+
+            if value == "null":
+                continue
+
+            out[prompt_key] = value
 
         return out
 
