@@ -18,7 +18,8 @@ class Parser:
 
     def _parse_date_to_iso_format(self, date: str) -> Union[str, None]:
         parsed_date = dateparser.parse(date)
-        return parsed_date.strftime("%Y-%m-%d")
+        if parsed_date:
+            return parsed_date.strftime("%Y-%m-%d")
 
     def parse_single_model_output(self, model_output: str, prompt_keys: List[str]):
         raise NotImplementedError
@@ -43,8 +44,9 @@ class KleisterCharityParser(Parser, KleisterCharityWrapper):
         Note that the model output *never includes* the first key hence we add it to the model_output manually.
         """
         model_output = prompt_keys[0] + ":" + model_output
+        # print(f"model_output:\n{model_output}")
         out = []
-        for i in range(len(prompt_keys) - 1):
+        for i in range(len(prompt_keys)):
             gold_key = self.gold_keys[i]  # the gold keys of the KleisterCharity dataset
             prompt_key = prompt_keys[i]
 
@@ -105,7 +107,7 @@ class JSONParser(Parser):
         """
         model_output = prompt_keys[0] + ":" + model_output
         out = {}
-        for i in range(len(prompt_keys) - 1):
+        for i in range(len(prompt_keys)):
             prompt_key = prompt_keys[i]
 
             if prompt_key not in model_output:
