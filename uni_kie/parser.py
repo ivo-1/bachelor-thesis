@@ -33,48 +33,44 @@ class KleisterCharityParser(Parser, KleisterCharityWrapper):
         self, model_output: str, prompt_keys: List[str]
     ) -> str:
         """
-        Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks)
+        Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks).
+        If the next key is not in the model output we continue looking for the next key after that one and so on until we
+        find a key that is in the model output or we reach the end of the model output.
+
+        The value is then cleaned up by removing line breaks and leading and trailing whitespaces.
 
         The value for some keys will be "null". These are *not* transferred to the expected_output.
-        Note that the model output *never includes* the first key.
+        Note that the model output *never includes* the first key hence we add it to the model_output manually.
         """
         model_output = prompt_keys[0] + ":" + model_output
         out = []
         for i in range(len(prompt_keys) - 1):
             gold_key = self.gold_keys[i]  # the gold keys of the KleisterCharity dataset
             prompt_key = prompt_keys[i]
-            next_prompt_key = prompt_keys[i + 1]
-            try:
-                value = (
-                    model_output.split(prompt_key + ":")[1]
-                    .split(next_prompt_key)[0]
-                    .strip()
-                    .replace(" ", "_")
-                    .replace(":", "_")
-                )
 
-                if gold_key == "report_date":
-                    value = self._parse_date_to_iso_format(value)
+            if prompt_key not in model_output:
+                continue
 
-                if value != "null" and value is not None:
-                    out.append(gold_key + "=" + value)
+            next_key = None
+            for j in range(i + 1, len(prompt_keys)):
+                if prompt_keys[j] in model_output:
+                    next_key = prompt_keys[j]
+                    break
 
-            except IndexError:
-                print(f"Key {prompt_key} not found in model output.")
+            if next_key is not None:
+                value = model_output.split(prompt_key + ":")[1].split(next_key + ":")[0]
+            else:
+                value = model_output.split(prompt_key + ":")[1]
 
-        # last key
-        try:
-            value = (
-                model_output.split(prompt_keys[-1] + ":")[1]
-                .strip()
-                .replace(" ", "_")
-                .replace(":", "_")
-            )
+            value = value.strip().replace(" ", "_").replace(":", "_")
 
-            if value != "null":
-                out.append(self.gold_keys[-1] + "=" + value)
-        except IndexError:
-            print(f"Key {prompt_keys[-1]} not found in model output")
+            if gold_key == "report_date":
+                value = self._parse_date_to_iso_format(value)
+
+            if value == "null" or value is None:
+                continue
+
+            out.append(f"{gold_key}={value}")
 
         return " ".join(out)
 
