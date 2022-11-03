@@ -1,6 +1,9 @@
 import csv
 import json
+from datetime import datetime
 from typing import List, Union
+
+import dateparser
 
 from uni_kie.pdf_to_text.pdf_to_text import KleisterCharityWrapper
 
@@ -12,6 +15,10 @@ class Parser:
 
     def __init__(self):
         pass
+
+    def _parse_date_to_iso_format(self, date: str) -> Union[str, None]:
+        parsed_date = dateparser.parse(date)
+        return parsed_date.strftime("%Y-%m-%d")
 
     def parse_single_model_output(self, model_output: str, prompt_keys: List[str]):
         raise NotImplementedError
@@ -45,8 +52,13 @@ class KleisterCharityParser(Parser, KleisterCharityWrapper):
                     .replace(" ", "_")
                     .replace(":", "_")
                 )
-                if value != "null":
+
+                if gold_key == "report_date":
+                    value = self._parse_date_to_iso_format(value)
+
+                if value != "null" and value is not None:
                     out.append(gold_key + "=" + value)
+
             except IndexError:
                 print(f"Key {prompt_key} not found in model output.")
 
