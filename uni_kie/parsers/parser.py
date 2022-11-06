@@ -1,11 +1,10 @@
 import csv
 import json
-from datetime import datetime
 from typing import List, Union
 
 import dateparser
 
-from uni_kie.pdf_to_text.pdf_to_text import KleisterCharityWrapper
+from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
 
 
 class Parser:
@@ -25,10 +24,9 @@ class Parser:
         raise NotImplementedError
 
 
-class KleisterCharityParser(Parser, KleisterCharityWrapper):
+class KleisterCharityParser(Parser):
     def __init__(self):
         super().__init__()
-        KleisterCharityWrapper.__init__(self)
 
     def parse_single_model_output(
         self, model_output: str, prompt_keys: List[str]
@@ -44,10 +42,12 @@ class KleisterCharityParser(Parser, KleisterCharityWrapper):
         Note that the model output *never includes* the first key hence we add it to the model_output manually.
         """
         model_output = prompt_keys[0] + ":" + model_output
-        # print(f"model_output:\n{model_output}")
+        print(f"model_output:\n{model_output}")
         out = []
         for i in range(len(prompt_keys)):
-            gold_key = self.gold_keys[i]  # the gold keys of the KleisterCharity dataset
+            gold_key = KLEISTER_CHARITY_CONSTANTS.gold_keys[
+                i
+            ]  # the gold keys of the KleisterCharity dataset
             prompt_key = prompt_keys[i]
 
             if prompt_key not in model_output:
@@ -69,11 +69,12 @@ class KleisterCharityParser(Parser, KleisterCharityWrapper):
             if gold_key == "report_date":
                 value = self._parse_date_to_iso_format(value)
 
-            if value == "null" or value is None:
+            if value == "null" or value == "" or value is None:
                 continue
 
             out.append(f"{gold_key}={value}")
 
+        print(f"out: {out}")
         return " ".join(out)
 
     @staticmethod
@@ -126,7 +127,7 @@ class JSONParser(Parser):
 
             value = value.strip()
 
-            if value == "null":
+            if value == "null" or value == "" or value is None:
                 continue
 
             out[prompt_key] = value
