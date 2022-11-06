@@ -1,7 +1,7 @@
 import pytest
 
 from uni_kie.constants import PARSERS
-from uni_kie.pdf_to_text.pdf_to_text import KleisterCharityWrapper
+from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
 
 # line 2 from dev-0/expected.tsv
 dev_example_expected_output = (
@@ -28,7 +28,7 @@ def test_parse_single_model_output():
     )
     parser = PARSERS.KLEISTER_CHARITY_PARSER
     parsed_output = parser.parse_single_model_output(
-        model_output, list(KleisterCharityWrapper().gold_key_to_prompt_key.values())
+        model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert parsed_output == dev_example_expected_output
 
@@ -41,7 +41,7 @@ def test_parse_single_model_output_skips_key():
     )  # missing charity number (not just "null" but not even in the output)
     parser = PARSERS.KLEISTER_CHARITY_PARSER
     parsed_output = parser.parse_single_model_output(
-        model_output, list(KleisterCharityWrapper().gold_key_to_prompt_key.values())
+        model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert parsed_output == dev_example_expected_output
 
@@ -54,6 +54,15 @@ def test_parse_single_model_output_skips_key():
     )  # missing charity number (not just "null" but not even in the output)
     parser = PARSERS.KLEISTER_CHARITY_PARSER
     parsed_output = parser.parse_single_model_output(
-        model_output, list(KleisterCharityWrapper().gold_key_to_prompt_key.values())
+        model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert parsed_output == dev_example_expected_output_with_last_key
+
+
+def test_parse_single_model_output_empty():
+    model_output = ""
+    parser = PARSERS.KLEISTER_CHARITY_PARSER
+    parsed_output = parser.parse_single_model_output(
+        model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
+    )
+    assert parsed_output == ""
