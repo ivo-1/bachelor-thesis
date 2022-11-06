@@ -1,4 +1,4 @@
-# from transformers import GPT2TokenizerFast
+from transformers import GPT2TokenizerFast
 
 from uni_kie.models.gpt import GPT3_Davinci, GPT_NeoX
 from uni_kie.parsers.parser import JSONParser, KleisterCharityParser
@@ -33,10 +33,9 @@ class PARSERS:
 
 
 class TOKENIZERS:
-    # GPT2_TOKENIZER_FAST = GPT2TokenizerFast.from_pretrained(
-    #    "gpt2"
-    # )  # this is the same tokenizer that openai uses for their instructGPT model family
-    FOO = "FOO"
+    GPT2_TOKENIZER_FAST = GPT2TokenizerFast.from_pretrained(
+        "gpt2"
+    )  # this is the same tokenizer that openai uses for their instructGPT model family
 
 
 class NER_TAGGERS:
