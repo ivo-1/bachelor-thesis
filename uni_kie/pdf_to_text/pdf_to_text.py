@@ -47,39 +47,31 @@ class KleisterCharityWrapper(AbstractPDFToTextModel):
     that is already provided with the dataset.
     """
 
-    def __init__(self):
+    def __init__(self, split: str = "dev"):
         super().__init__()
-        self.prompt_key_to_gold_key = {
-            "Address (post town)": "address__post_town",
-            "Address (post code)": "address__postcode",
-            "Address (street)": "address__street_line",
-            "Charity Name": "charity_name",
-            "Charity Number": "charity_number",
-            "Annual Income": "income_annually_in_british_pounds",
-            "Report Date": "report_date",
-            "Annual Spending": "spending_annually_in_british_pounds",
-        }
-        self.gold_key_to_prompt_key = {
-            v: k for k, v in self.prompt_key_to_gold_key.items()
-        }
-        self.gold_keys = list(self.gold_key_to_prompt_key.keys())
-
+        self.split = split
         self.data = self._load_data()
 
     def __repr__(self):
         return f"KleisterCharityWrapper(AbstractPDFToTextModel)"
 
-    @staticmethod
-    def _load_data() -> pd.DataFrame:
-        path_to_data = "./datasets/kleister_charity_test_set/in-for-testing.tsv"
-        path_to_headers = "./datasets/kleister_charity_test_set/in-header.tsv"
+    def _load_data(self) -> pd.DataFrame:
+        if self.split == "dev":
+            path_to_data = "./datasets/kleister_charity_dev_set/in_dev-0_extended.tsv"
+            print(">>>>>>>>>>>>>> LOADING DEV SET")
 
-        data = pd.read_csv(path_to_data, sep="\t", header=None)
-        headers = pd.read_csv(path_to_headers, sep="\t", header=None)
-        data.columns = headers.iloc[0]
-        data = data.drop(columns=["text_djvu", "text_tesseract", "text_textract"])
+        elif self.split == "test":
+            path_to_data = "./datasets/kleister_charity_test_set/in_extended.tsv"
+            print(">>>>>>>>>>>>>> LOADING TEST SET")
+
+        else:
+            raise ValueError(f"Split {self.split} not supported.")
+
+        data = pd.read_csv(path_to_data, sep="\t")
         return data
 
     def get_text(self, file_path: Union[Path, str]) -> str:
-        text = self.data[self.data["filename"] == file_path]["text_best"].values[0]
+        text = self.data.loc[
+            self.data["filename"] == file_path, "text_best_cleaned"
+        ].values[0]
         return text
