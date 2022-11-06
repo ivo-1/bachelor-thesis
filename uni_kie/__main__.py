@@ -7,15 +7,15 @@ from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
 if __name__ == "__main__":
     print(__version__)
     llm_pipeline = LLMPipeline(
-        model=MODELS.GPT.Davinci,
+        model=MODELS.GPT.Davinci(),
         pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(),
         prompt_variant=PROMPT_VARIANTS.NEUTRAL,
-        parser=PARSERS.KLEISTER_CHARITY_PARSER,
+        parser=PARSERS.KLEISTER_CHARITY_PARSER(),
     )
 
     baseline_pipeline = BaselinePipeline(
         pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(),
-        parser=PARSERS.KLEISTER_CHARITY_PARSER,
+        parser=PARSERS.KLEISTER_CHARITY_PARSER(),
         ner_tagger=NER_TAGGERS.SPACY_WEB_SM,
     )
 

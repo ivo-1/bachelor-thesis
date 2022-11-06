@@ -18,18 +18,18 @@ class MODELS:
     T0pp = "T0pp"
 
     class GPT:
-        NeoX = GPT_NeoX()
-        Davinci = GPT3_Davinci()
+        NeoX = GPT_NeoX
+        Davinci = GPT3_Davinci
 
 
 class PDF_TO_TEXT_MODELS:
-    PY_MU_PDF = PyMuPDFWrapper()
+    PY_MU_PDF = PyMuPDFWrapper
     KLEISTER_CHARITY_WRAPPER = KleisterCharityWrapper
 
 
 class PARSERS:
-    KLEISTER_CHARITY_PARSER = KleisterCharityParser()
-    JSON_PARSER = JSONParser()
+    KLEISTER_CHARITY_PARSER = KleisterCharityParser
+    JSON_PARSER = JSONParser
 
 
 class TOKENIZERS:
