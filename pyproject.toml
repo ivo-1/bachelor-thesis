@@ -17,6 +17,7 @@ jupyter = "^1.0.0"
 transformers = "^4.24.0"
 seaborn = "^0.12.1"
 dateparser = "^1.1.3"
+spacy = "^3.4.2"
 
 [tool.poetry.dev-dependencies]
 
