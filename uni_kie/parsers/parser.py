@@ -42,7 +42,6 @@ class KleisterCharityParser(Parser):
         Note that the model output *never includes* the first key hence we add it to the model_output manually.
         """
         model_output = prompt_keys[0] + ":" + model_output
-        print(f"model_output:\n{model_output}")
         out = []
         for i in range(len(prompt_keys)):
             gold_key = KLEISTER_CHARITY_CONSTANTS.gold_keys[
@@ -64,7 +63,7 @@ class KleisterCharityParser(Parser):
             else:
                 value = model_output.split(prompt_key + ":")[1]
 
-            value = value.strip().replace(" ", "_").replace(":", "_")
+            value = value.strip().replace("\n", " ").replace(" ", "_").replace(":", "_")
 
             if gold_key == "report_date":
                 value = self._parse_date_to_iso_format(value)
@@ -73,8 +72,6 @@ class KleisterCharityParser(Parser):
                 continue
 
             out.append(f"{gold_key}={value}")
-
-        print(f"out: {out}")
         return " ".join(out)
 
     @staticmethod
