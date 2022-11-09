@@ -8,13 +8,15 @@ if __name__ == "__main__":
     print(__version__)
     llm_pipeline = LLMPipeline(
         model=MODELS.GPT.Davinci(),
-        pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(),
+        pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(split="dev"),
         prompt_variant=PROMPT_VARIANTS.NEUTRAL,
         parser=PARSERS.KLEISTER_CHARITY_PARSER(),
     )
 
     baseline_pipeline = BaselinePipeline(
-        pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(),
+        pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(
+            split="dev"
+        ),  # TODO: change this to test later
         parser=PARSERS.KLEISTER_CHARITY_PARSER(),
         ner_tagger=NER_TAGGERS.SPACY_WEB_SM,
     )
@@ -22,11 +24,18 @@ if __name__ == "__main__":
     # KLEISTER CHARITY EXAMPLE
     prompt_keys = KLEISTER_CHARITY_CONSTANTS.prompt_keys
 
-    # predict on the first 3 rows
-    for i in range(3):
-        print(
-            f"Predicted key-value pairs: {baseline_pipeline.predict(baseline_pipeline.pdf_to_text_model.data.iloc[i]['filename'], prompt_keys)}"
-        )
+    # create ./datasets/kleister_charity_dev_set/predictions/baseline_predictions.tsv file
+    with open(
+        "datasets/kleister_charity_dev_set/predictions/baseline_predictions.tsv", "w"
+    ) as f:
+        for i in range(3):  # len(baseline_pipeline.pdf_to_text_model.data)
+            prediction = baseline_pipeline.predict(
+                baseline_pipeline.pdf_to_text_model.data.iloc[i]["filename"],
+                prompt_keys,
+            )
+
+            # write prediction to file
+            f.write(f"{prediction}\n")
 
     # # OWN INVOICE EXAMPLE
     # gold_keys = ['Invoice Number', 'Total', 'Capital of Cyprus']
