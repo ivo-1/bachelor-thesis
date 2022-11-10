@@ -57,11 +57,11 @@ class KleisterCharityWrapper(AbstractPDFToTextModel):
 
     def _load_data(self) -> pd.DataFrame:
         if self.split == "dev":
-            path_to_data = "./datasets/kleister_charity_dev_set/in_dev-0_extended.tsv"
+            path_to_data = "./datasets/kleister_charity/dev-0/in_extended.tsv"
             print(">>>>>>>>>>>>>> LOADING DEV SET")
 
         elif self.split == "test":
-            path_to_data = "./datasets/kleister_charity_test_set/in_extended.tsv"
+            path_to_data = "./datasets/kleister_charity/test-A/in_extended.tsv"
             print(">>>>>>>>>>>>>> LOADING TEST SET")
 
         else:
