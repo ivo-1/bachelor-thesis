@@ -26,7 +26,9 @@ if __name__ == "__main__":
 
     # create ./datasets/kleister_charity_dev_set/predictions/baseline_predictions.tsv file
     with open("datasets/kleister_charity/dev-0/predictions/baseline_out.tsv", "w") as f:
-        for i in range(3):  # len(baseline_pipeline.pdf_to_text_model.data)
+        for i in range(
+            len(baseline_pipeline.pdf_to_text_model.data)
+        ):  # len(baseline_pipeline.pdf_to_text_model.data)
             prediction = baseline_pipeline.predict(
                 baseline_pipeline.pdf_to_text_model.data.iloc[i]["filename"],
                 prompt_keys,
