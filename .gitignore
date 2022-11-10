@@ -132,5 +132,7 @@ dmypy.json
 .DS_STORE
 
 # dataset (uncompressed)
-uni_kie/datasets/kleister_charity_test_set/in.tsv
-uni_kie/datasets/kleister_charity_test_set/in_extended.tsv
+uni_kie/datasets/kleister_charity/dev-0/in.tsv
+uni_kie/datasets/kleister_charity/dev-0/in_extended.tsv
+uni_kie/datasets/kleister_charity/test-A/in.tsv
+uni_kie/datasets/kleister_charity/test-A/in_extended.tsv
