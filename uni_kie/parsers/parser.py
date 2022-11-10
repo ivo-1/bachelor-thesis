@@ -20,7 +20,9 @@ class Parser:
         if parsed_date:
             return parsed_date.strftime("%Y-%m-%d")
 
-    def parse_single_model_output(self, model_output: str, prompt_keys: List[str]):
+    def parse_single_model_output(
+        self, model_output: str, prompt_keys: List[str]
+    ) -> Union[str, dict]:
         raise NotImplementedError
 
 
@@ -73,20 +75,6 @@ class KleisterCharityParser(Parser):
 
             out.append(f"{gold_key}={value}")
         return " ".join(out)
-
-    @staticmethod
-    def parse_model_outputs_to_tsv(model_outputs: List[str], model_name: str) -> None:
-        """
-        Saves into {model_name}_predicted.tsv.
-
-        :param model_outputs: The list of single line strings that come from parse_single_model_output_for_evaluation
-        :param model_name: The name of the model
-        :return:
-        """
-        with open(f"{model_name}_predicted.tsv", "w") as tsv_file:
-            writer = csv.writer(tsv_file, delimiter="\t", quoting=csv.QUOTE_NONE)
-            for model_output in model_outputs:
-                writer.writerow([model_output])
 
 
 class JSONParser(Parser):
