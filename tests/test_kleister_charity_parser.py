@@ -27,7 +27,7 @@ def test_parse_single_model_output():
         "Date: 2016-03-31\nAnnual Spending:   null  "
     )
     parser = PARSERS.KLEISTER_CHARITY_PARSER
-    parsed_output = parser.parse_single_model_output(
+    parsed_output = parser.parse_model_output(
         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert parsed_output == dev_example_expected_output
@@ -40,7 +40,7 @@ def test_parse_single_model_output_skips_key():
         "Date: 2016-03-31\nAnnual Spending:   null  "
     )  # missing charity number (not just "null" but not even in the output)
     parser = PARSERS.KLEISTER_CHARITY_PARSER
-    parsed_output = parser.parse_single_model_output(
+    parsed_output = parser.parse_model_output(
         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert parsed_output == dev_example_expected_output
@@ -53,7 +53,7 @@ def test_parse_single_model_output_skips_key():
         "Date: 2016-03-31\nAnnual Spending:   null FOO BAR"
     )  # missing charity number (not just "null" but not even in the output)
     parser = PARSERS.KLEISTER_CHARITY_PARSER
-    parsed_output = parser.parse_single_model_output(
+    parsed_output = parser.parse_model_output(
         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert parsed_output == dev_example_expected_output_with_last_key
@@ -62,7 +62,7 @@ def test_parse_single_model_output_skips_key():
 def test_parse_single_model_output_empty():
     model_output = ""
     parser = PARSERS.KLEISTER_CHARITY_PARSER
-    parsed_output = parser.parse_single_model_output(
+    parsed_output = parser.parse_model_output(
         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert parsed_output == ""
