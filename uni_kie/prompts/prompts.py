@@ -18,12 +18,6 @@ class Prompt:
         """
         raise NotImplementedError
 
-    # def remove_prompt_from_model_input(self, model_input: str) -> str:
-    #     """
-    #     Removes the prompt from the model input.
-    #     """
-    #     raise NotImplementedError
-
     def _key_list_to_string(self, key_list: List) -> str:
         return ", ".join([f'"{key}"' for key in key_list])
 
