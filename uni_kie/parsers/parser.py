@@ -1,6 +1,6 @@
 import csv
 import json
-from typing import List, Union
+from typing import List, Optional, Union
 
 import dateparser
 
@@ -15,7 +15,24 @@ class Parser:
     def __init__(self):
         pass
 
-    def _parse_date_to_iso_format(self, date: str) -> Union[str, None]:
+    @staticmethod
+    def _parse_money(money: str) -> Optional[str]:
+        money = "".join([c for c in money if c.isnumeric() or c == "."])
+        money = money.lstrip("0")
+
+        if money.startswith("."):
+            money = "0" + money
+
+        if "." not in money and len(money) > 0:
+            money += ".00"
+
+        if money.strip() == "":
+            return None
+
+        return money
+
+    @staticmethod
+    def _parse_date_to_iso_format(date: str) -> Union[str, None]:
         parsed_date = dateparser.parse(date)
         if parsed_date:
             return parsed_date.strftime("%Y-%m-%d")
@@ -60,7 +77,8 @@ class KleisterCharityParser(Parser):
     def __init__(self):
         super().__init__()
 
-    def parse_model_output(self, model_output: str, prompt_keys: List[str]) -> str:
+    @staticmethod
+    def parse_model_output(model_output: str, prompt_keys: List[str]) -> str:
         """
         Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks). Also
         assumes that model_output is ordered according to gold_keys.
@@ -99,14 +117,20 @@ class KleisterCharityParser(Parser):
             else:
                 value = model_output.split(prompt_key + ":")[1]
 
-            value = value.strip().replace("\n", " ").replace(" ", "_").replace(":", "_")
-
-            if gold_key == "report_date":
-                value = self._parse_date_to_iso_format(value)
-
+            value = value.strip().replace("\n", " ").replace("  ", " ")
             if value == "null" or value == "" or value is None:
                 continue
 
+            if gold_key == "report_date":
+                value = Parser._parse_date_to_iso_format(value)
+
+            if "income" in gold_key or "spending" in gold_key:
+                value = Parser._parse_money(value)
+
+            if value is None:
+                continue
+
+            value = value.replace(" ", "_").replace(":", "_")
             out.append(f"{gold_key}={value}")
         return " ".join(out)
 
@@ -152,7 +176,14 @@ class DictParser(Parser):
             else:
                 value = model_output.split(prompt_key + ":")[1]
 
-            value = value.strip()
+            value = value.strip().replace("  ", " ")
+
+            parsed_date = Parser._parse_date_to_iso_format(value)
+            if parsed_date:
+                value = parsed_date
+
+            if "Income" in prompt_key or "Spending" in prompt_key:
+                value = Parser._parse_money(value)
 
             if value == "null" or value == "" or value is None:
                 continue
