@@ -2,7 +2,7 @@ from typing import List, Union
 
 from transformers import GPT2TokenizerFast
 
-STOP_KEY = "<|stop key|>"
+STOP_KEY = "\n<|stop key|>"
 
 
 class Prompt:
