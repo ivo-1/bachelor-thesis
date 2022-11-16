@@ -19,13 +19,13 @@ class GPT3_Davinci(LargeLanguageModel):
 
     def predict(self, prompt: str) -> str:
         response = openai.Completion.create(
-            model="text-babbage-001",
+            model="text-babbage-001",  # TODO: make sure this is actually davinci
             prompt=prompt,
-            temperature=0,
-            top_p=1,
+            temperature=0.1,
+            # top_p=1,
             max_tokens=256,
-            presence_penalty=-0.5,
-            frequency_penalty=-0.5,
+            presence_penalty=-0.75,
+            frequency_penalty=-0.75,
         )["choices"][0]["text"]
         return response
 
@@ -49,7 +49,7 @@ class GPT_NeoX(LargeLanguageModel):
             json={
                 "prompt": prompt,
                 "temperature": 0,
-                "top_p": 0.01,
+                "top_p": 1,
                 "max_tokens": self.max_generated_tokens,
                 "presence_penalty": -0.5,
                 "frequency_penalty": -0.5,
