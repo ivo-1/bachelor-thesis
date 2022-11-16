@@ -148,8 +148,6 @@ class LLMPipeline(AbstractPipeline):
                 model_input_without_prompt_input_ids = tokenized_model_input[
                     "input_ids"
                 ][:-prompt_length]
-
-                print(f"number of tokens: {number_of_tokens_model_input}")
                 subdocuments = []
 
                 for i in range(
