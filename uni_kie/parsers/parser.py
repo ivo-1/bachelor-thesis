@@ -20,7 +20,37 @@ class Parser:
         if parsed_date:
             return parsed_date.strftime("%Y-%m-%d")
 
-    def parse_single_model_output(
+    def _dict_to_kleister_charity(
+        self, parsed_dict: dict, prompt_keys: List[str]
+    ) -> str:
+        out = []
+        for i in range(len(prompt_keys)):
+            gold_key = KLEISTER_CHARITY_CONSTANTS.gold_keys[
+                i
+            ]  # the gold keys of the KleisterCharity dataset
+            prompt_key = prompt_keys[i]  # the prompt key of the prompt
+
+            try:
+                value = (
+                    parsed_dict[prompt_key]
+                    .strip()
+                    .replace("\n", " ")
+                    .replace(" ", "_")
+                    .replace(":", "_")
+                )
+            except KeyError:  # dict may not contain all keys
+                continue
+
+            if gold_key == "report_date":
+                value = self._parse_date_to_iso_format(value)
+
+            if value == "null" or value == "" or value is None:
+                continue
+
+            out.append(f"{gold_key}={value}")
+        return " ".join(out)
+
+    def parse_model_output(
         self, model_output: str, prompt_keys: List[str]
     ) -> Union[str, dict]:
         raise NotImplementedError
@@ -30,18 +60,22 @@ class KleisterCharityParser(Parser):
     def __init__(self):
         super().__init__()
 
-    def parse_single_model_output(
-        self, model_output: str, prompt_keys: List[str]
-    ) -> str:
+    def parse_model_output(self, model_output: str, prompt_keys: List[str]) -> str:
         """
-        Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks).
+        Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks). Also
+        assumes that model_output is ordered according to gold_keys.
+
         If the next key is not in the model output we continue looking for the next key after that one and so on until we
         find a key that is in the model output or we reach the end of the model output.
 
         The value is then cleaned up by removing line breaks and leading and trailing whitespaces.
 
-        The value for some keys will be "null". These are *not* transferred to the expected_output.
-        Note that the model output *never includes* the first key hence we add it to the model_output manually.
+        Note that any given model output *never includes* the first key hence we add it to the model_output manually.
+
+        The format for Kleister Charity is a single line like so: "{gold_key_1}={value_1} {gold_key_2}={value_2}" with spaces
+        separating the key-value pairs. If a value for a key is an empty string or "null", the key-value pair is left out.
+
+        This is important because not every key can be found in the document.
         """
         model_output = prompt_keys[0] + ":" + model_output
         out = []
@@ -77,19 +111,27 @@ class KleisterCharityParser(Parser):
         return " ".join(out)
 
 
-class JSONParser(Parser):
+class DictParser(Parser):
     def __init__(self):
         super().__init__()
 
     @staticmethod
-    def parse_single_model_output(model_output: str, prompt_keys: List[str]) -> dict:
+    def parse_model_output(model_output: str, prompt_keys: List[str]) -> dict:
         """
-        Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks)
+        Assumes that the value for a key is whatever comes after it and before the next key (independent of line breaks). Also
+        assumes that model_output is ordered according to gold_keys.
 
-        The value for some keys will be "null". These are *not* transferred to the expected_output.
-        Note that the model output *never includes* the first key.
+        If the next key is not in the model output we continue looking for the next key after that one and so on until we
+        find a key that is in the model output or we reach the end of the model output.
 
-        Assumes that model_output is ordered according to gold_keys.
+        The value is then cleaned up by removing line breaks and leading and trailing whitespaces.
+
+        Note that any given model output *never includes* the first key hence we add it to the model_output manually.
+
+        The format for Kleister Charity is a single line like so: "{gold_key_1}={value_1} {gold_key_2}={value_2}" with spaces
+        separating the key-value pairs. If a value for a key is an empty string or "null", the key-value pair is left out.
+
+        This is important because not every key can be found in the document.
         """
         model_output = prompt_keys[0] + ":" + model_output
         out = {}
