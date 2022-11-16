@@ -1,42 +1,58 @@
+from datetime import datetime
+
 from constants import MODELS, NER_TAGGERS, PARSERS, PDF_TO_TEXT_MODELS, PROMPT_VARIANTS
 from pipeline import BaselinePipeline, LLMPipeline
 
 from uni_kie import __version__
-from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
+from uni_kie.constants import LONG_DOCUMENT_HANDLING_VARIANTS
+from uni_kie.kleister_charity_constants import (
+    KLEISTER_CHARITY_CONSTANTS,
+    PATH_KLEISTER_CHARITY,
+)
 
 if __name__ == "__main__":
     print(__version__)
-    llm_pipeline = LLMPipeline(
+    pipeline = LLMPipeline(
+        keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,
         model=MODELS.GPT.Davinci(),
-        pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(split="dev"),
-        prompt_variant=PROMPT_VARIANTS.NEUTRAL,
-        parser=PARSERS.KLEISTER_CHARITY_PARSER(),
-    )
-
-    baseline_pipeline = BaselinePipeline(
         pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(
-            split="dev"
-        ),  # TODO: change this to test later
+            split="dev-0"
+        ),  # TODO: change to test
+        prompt_variant=PROMPT_VARIANTS.NEUTRAL,
+        long_document_handling_variant=LONG_DOCUMENT_HANDLING_VARIANTS.SPLIT_TO_SUBDOCUMENTS,
         parser=PARSERS.KLEISTER_CHARITY_PARSER(),
-        ner_tagger=NER_TAGGERS.SPACY_WEB_SM,
     )
 
-    # KLEISTER CHARITY EXAMPLE
-    prompt_keys = KLEISTER_CHARITY_CONSTANTS.prompt_keys
+    # baseline_pipeline = BaselinePipeline(
+    #     keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,
+    #     pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(
+    #         split="dev-0"
+    #     ),  # TODO: change this to test later
+    #     parser=PARSERS.KLEISTER_CHARITY_PARSER(),
+    #     ner_tagger=NER_TAGGERS.SPACY_WEB_SM,
+    # )
+    now = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
 
-    # create ./datasets/kleister_charity_dev_set/predictions/baseline_predictions.tsv file
-    with open("datasets/kleister_charity/dev-0/predictions/baseline_out.tsv", "w") as f:
+    # f"datasets/{kleister_charity}/{pipeline.pdf_to_text_model.split}/predictions/test.tsv"
+    path = (
+        PATH_KLEISTER_CHARITY
+        / pipeline.pdf_to_text_model.split
+        / "predictions"
+        / f"{pipeline}_{now}.tsv"
+    )
+    with open(path, "w") as f:
         for i in range(
-            len(baseline_pipeline.pdf_to_text_model.data)
+            len(pipeline.pdf_to_text_model.data)
         ):  # len(baseline_pipeline.pdf_to_text_model.data)
-            prediction = baseline_pipeline.predict(
-                baseline_pipeline.pdf_to_text_model.data.iloc[i]["filename"],
-                prompt_keys,
+            prediction = pipeline.predict(
+                pipeline.pdf_to_text_model.data.iloc[i]["filename"]
             )
 
             # write prediction to file
             f.write(f"{prediction}\n")
-            print(f"Progress: {i+1}/{len(baseline_pipeline.pdf_to_text_model.data)}")
+            print(f"Progress: {i+1}/{len(pipeline.pdf_to_text_model.data)}")
+            if i == 10:
+                break
 
     # # OWN INVOICE EXAMPLE
     # gold_keys = ['Invoice Number', 'Total', 'Capital of Cyprus']

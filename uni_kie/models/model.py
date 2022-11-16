@@ -11,5 +11,8 @@ class LargeLanguageModel(AbstractModel):
         super().__init__()
         self.max_input_tokens: int
 
+    def __repr__(self):
+        return self.__class__.__name__
+
     def predict(self, input: str) -> str:
         raise NotImplementedError

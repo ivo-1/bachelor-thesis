@@ -15,6 +15,9 @@ class Parser:
     def __init__(self):
         pass
 
+    def __repr__(self):
+        return self.__class__.__name__
+
     @staticmethod
     def _parse_money(money: str) -> Optional[str]:
         money = "".join([c for c in money if c.isnumeric() or c == "."])
@@ -77,6 +80,9 @@ class KleisterCharityParser(Parser):
     def __init__(self):
         super().__init__()
 
+    def __repr__(self) -> str:
+        return super().__repr__()
+
     @staticmethod
     def parse_model_output(model_output: str, prompt_keys: List[str]) -> str:
         """
@@ -138,6 +144,9 @@ class KleisterCharityParser(Parser):
 class DictParser(Parser):
     def __init__(self):
         super().__init__()
+
+    def __repr__(self) -> str:
+        return super().__repr__()
 
     @staticmethod
     def parse_model_output(model_output: str, prompt_keys: List[str]) -> dict:

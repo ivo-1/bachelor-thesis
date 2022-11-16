@@ -9,6 +9,9 @@ class Prompt:
     def __init__(self, prompt_keys: List[str]):
         self.prompt_keys = prompt_keys
 
+    def __repr__(self):
+        return self.__class__.__name__
+
     def get_model_input(input_doc: str) -> str:
         """
         Essentially adds the prompt (e.g. "Extract Invoice number from the document below: {input_doc}") to a given document.
@@ -34,6 +37,9 @@ class NeutralPrompt(Prompt):
         )  # TODO: use constants.py (can't because circular import)
         self.prompt_number_of_tokens = len(self.tokenized_prompt_text["input_ids"])
         self.prompt_char_length = len(self.prompt_text)
+
+    def __repr__(self):
+        return super().__repr__()
 
     def get_model_input(self, input_doc: str) -> str:
         return f"{input_doc}{self.prompt_text}"

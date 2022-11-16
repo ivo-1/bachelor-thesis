@@ -17,7 +17,7 @@ class GPT3_Davinci(LargeLanguageModel):
         self.max_input_tokens = 768  # 3840 # 768
 
     def __repr__(self):
-        return f"GPT_3_Davinci(LargeLanguageModel)"
+        return super().__repr__()
 
     def predict(self, prompt: str) -> str:
         response = openai.Completion.create(
@@ -43,7 +43,7 @@ class GPT_NeoX(LargeLanguageModel):
         self.max_input_tokens = 768
 
     def __repr__(self):
-        return f"GPT_NeoX(LargeLanguageModel)"
+        return super().__repr__()
 
     def predict(self, prompt: str) -> str:
         response = requests.post(
