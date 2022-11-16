@@ -1,8 +1,10 @@
 from transformers import GPT2TokenizerFast
 
 from uni_kie.models.gpt import GPT3_Davinci, GPT_NeoX
-from uni_kie.parsers.parser import JSONParser, KleisterCharityParser
+from uni_kie.models.t0pp import T0pp
+from uni_kie.parsers.parser import DictParser, KleisterCharityParser
 from uni_kie.pdf_to_text.pdf_to_text import KleisterCharityWrapper, PyMuPDFWrapper
+from uni_kie.prompts.prompts import NeutralPrompt
 
 
 class OCR_MODELS:
@@ -10,12 +12,12 @@ class OCR_MODELS:
 
 
 class PROMPT_VARIANTS:
-    NEUTRAL = "NEUTRAL"
+    NEUTRAL = NeutralPrompt
 
 
 class MODELS:
     BASELINE = "BASELINE"
-    T0pp = "T0pp"
+    T0pp = T0pp
 
     class GPT:
         NeoX = GPT_NeoX
@@ -29,7 +31,7 @@ class PDF_TO_TEXT_MODELS:
 
 class PARSERS:
     KLEISTER_CHARITY_PARSER = KleisterCharityParser
-    JSON_PARSER = JSONParser
+    DICT_PARSER = DictParser
 
 
 class TOKENIZERS:
@@ -45,3 +47,16 @@ class NER_TAGGERS:
     NLTK = None
     STANZA = None
     TORCHTEXT = None  # torchtext.datasets.CoNLL2000Chunking
+
+
+class LONG_DOCUMENT_HANDLING_VARIANTS:
+    TRUNCATE_END = "TRUNCATE_END"
+    TRUNCATE_START = "TRUNCATE_START"
+    TRUNCATE_MIDDLE = "TRUNCATE_MIDDLE"
+    SPLIT_TO_SUBDOCUMENTS = "SPLIT_TO_SUBDOCUMENTS"
+
+
+# TODO: add class that defines dependency between prompt versions and parsers
+# e.g. NEUTRAL works with KLEISTER_CHARITY_PARSER
+
+# or maybe parsers should be subclasses of prompt variants?
