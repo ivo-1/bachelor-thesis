@@ -3,11 +3,15 @@ from typing import Union
 
 import fitz as PyMuPDF
 import pandas as pd
+from kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
 
 
 class AbstractPDFToTextModel:
     def __init__(self):
         pass
+
+    def __repr__(self):
+        return self.__class__.__name__
 
     def get_text(self, file_path: Union[Path, str]) -> str:
         raise NotImplementedError
@@ -18,7 +22,7 @@ class PyMuPDFWrapper(AbstractPDFToTextModel):
         super().__init__()
 
     def __repr__(self):
-        return f"PyMuPDFWrapper(AbstractPDFToTextModel)"
+        return super().__repr__()
 
     def get_text(self, file_path: Union[Path, str]) -> str:
         """
@@ -47,27 +51,20 @@ class KleisterCharityWrapper(AbstractPDFToTextModel):
     that is already provided with the dataset.
     """
 
-    def __init__(self, split: str = "dev"):
+    def __init__(self, split: str = "dev-0"):
         super().__init__()
         self.split = split
         self.data = self._load_data()
 
     def __repr__(self):
-        return f"KleisterCharityWrapper(AbstractPDFToTextModel)"
+        return super().__repr__()
 
     def _load_data(self) -> pd.DataFrame:
-        if self.split == "dev":
-            path_to_data = "./datasets/kleister_charity/dev-0/in_extended.tsv"
-            print(">>>>>>>>>>>>>> LOADING DEV SET")
+        print(f">>>>>>>>>>>>>> LOADING {self.split} SET")
 
-        elif self.split == "test":
-            path_to_data = "./datasets/kleister_charity/test-A/in_extended.tsv"
-            print(">>>>>>>>>>>>>> LOADING TEST SET")
-
-        else:
-            raise ValueError(f"Split {self.split} not supported.")
-
-        data = pd.read_csv(path_to_data, sep="\t")
+        data = pd.read_csv(
+            KLEISTER_CHARITY_CONSTANTS.split_to_path[self.split], sep="\t"
+        )
         return data
 
     def get_text(self, file_path: Union[Path, str]) -> str:
