@@ -213,7 +213,7 @@ class BaselinePipeline(AbstractPipeline):
         )
 
     def __repr__(self):
-        return f"BaselinePipeline(pdf_to_text_model={self.pdf_to_text_model}, model={self.model})"
+        return f"BaselinePipeline(pdf_to_text_model={self.pdf_to_text_model}, model={self.model}, parser={self.parser}, ner_tagger={self.model.ner_tagger})"
 
     def predict(self, file_path: Union[str, Path]) -> Union[dict, str]:
         text = self.pdf_to_text_model.get_text(file_path)

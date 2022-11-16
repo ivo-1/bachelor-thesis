@@ -25,7 +25,7 @@ class BaselineModel(AbstractModel):
                 sys.exit(1)
 
     def __repr__(self):
-        return f"BaselineModel(AbstractModel)"
+        return super().__repr__()
 
     def get_ner_tags(self, text: str) -> List[Tuple[int, int, str]]:
         if self.ner_tagger == NER_TAGGERS.SPACY_WEB_SM:

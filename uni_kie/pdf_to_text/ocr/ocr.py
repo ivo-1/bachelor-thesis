@@ -9,6 +9,9 @@ class AbstractOCRModel(AbstractPDFToTextModel):
     def __init__(self):
         super().__init__()
 
+    def __repr__(self):
+        return super().__repr__()
+
     def _convert_pdf_to_images(self, file_path: Path):
         return pdf2image.convert_from_path(file_path, dpi=300)
 
