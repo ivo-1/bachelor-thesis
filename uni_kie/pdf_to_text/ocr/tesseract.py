@@ -10,7 +10,7 @@ class Tesseract(AbstractOCRModel):
         super().__init__()
 
     def __repr__(self):
-        return f"Tesseract(AbstractOCRModel)"
+        return super().__repr__()
 
     def ocr(self, file_path: Path) -> str:
         images = self._convert_pdf_to_images(file_path)
