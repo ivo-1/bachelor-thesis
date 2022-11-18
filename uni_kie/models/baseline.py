@@ -47,7 +47,9 @@ class BaselineModel(AbstractModel):
         {e<n} -> up to n errors (subs, inserts, dels). if more -> None
         (1) -> the span of the best match
         """
-        match_span = regex.search(f"(?b)(?i)({key}){{e<5}}", text)
+        key_length = len(key)
+        max_errors = round(key_length * 0.25)  # 25% of the key length
+        match_span = regex.search(f"(?b)(?i)({key}){{e<{max_errors}}}", text)
 
         if match_span:
             return match_span.span(1)
@@ -78,8 +80,12 @@ class BaselineModel(AbstractModel):
                 first_entity_after_key = None
 
                 for ner_tag in ner_tags:
-                    if ner_tag[0] >= last_char_of_match:
-                        first_entity_after_key = ner_tag
+                    if (
+                        ner_tag[0] >= last_char_of_match
+                    ):  # TODO: make this more efficient
+                        first_entity_after_key = (
+                            ner_tag  # TODO: within the next 50 chars
+                        )
                         break
 
                 if first_entity_after_key is None:
