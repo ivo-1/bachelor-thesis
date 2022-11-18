@@ -204,10 +204,16 @@ class BaselinePipeline(AbstractPipeline):
         pdf_to_text_model: AbstractPDFToTextModel,
         parser: Parser,
         ner_tagger: NER_TAGGERS,
+        error_percentage: float,
+        allowed_entity_range: int,
     ):
         super().__init__(
             keys=keys,
-            model=BaselineModel(ner_tagger=ner_tagger),
+            model=BaselineModel(
+                ner_tagger=ner_tagger,
+                error_percentage=error_percentage,
+                allowed_entity_range=allowed_entity_range,
+            ),
             pdf_to_text_model=pdf_to_text_model,
             parser=parser,
         )
