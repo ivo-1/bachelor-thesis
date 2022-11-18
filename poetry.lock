@@ -1178,14 +1178,6 @@ python-versions = ">=3.6.2"
 wcwidth = "*"
 
 [[package]]
-name = "protobuf"
-version = "3.20.3"
-description = "Protocol Buffers"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[[package]]
 name = "psutil"
 version = "5.9.4"
 description = "Cross-platform lib for process and system monitoring in Python."
@@ -1488,14 +1480,6 @@ objc = ["pyobjc-framework-cocoa"]
 win32 = ["pywin32"]
 
 [[package]]
-name = "sentencepiece"
-version = "0.1.97"
-description = "SentencePiece python wrapper"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "setuptools-scm"
 version = "7.0.5"
 description = "the blessed package to manage your versions by scm tags"
@@ -1763,17 +1747,6 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
-name = "torch"
-version = "1.12.1"
-description = "Tensors and Dynamic neural networks in Python with strong GPU acceleration"
-category = "main"
-optional = false
-python-versions = ">=3.7.0"
-
-[package.dependencies]
-typing-extensions = "*"
-
-[[package]]
 name = "tornado"
 version = "6.2"
 description = "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed."
@@ -1994,7 +1967,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "bcbd4492ae1aaad515ef2b7e8bbfd42ede6c027e0406d41371814ca9d8b881af"
+content-hash = "0fc3cf92c9486493a5e3bbc2fdd75d83f9c98e66eba544781c17e990c3191451"
 
 [metadata.files]
 anyio = []
@@ -2116,7 +2089,6 @@ pluggy = [
 preshed = []
 prometheus-client = []
 prompt-toolkit = []
-protobuf = []
 psutil = []
 ptyprocess = [
     {file = "ptyprocess-0.7.0-py2.py3-none-any.whl", hash = "sha256:4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35"},
@@ -2236,7 +2208,6 @@ regex = [
 requests = []
 seaborn = []
 send2trash = []
-sentencepiece = []
 setuptools-scm = []
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
@@ -2259,7 +2230,6 @@ thinc = []
 tinycss2 = []
 tokenizers = []
 tomli = []
-torch = []
 tornado = []
 tqdm = []
 traitlets = []
