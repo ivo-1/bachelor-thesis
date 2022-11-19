@@ -2,6 +2,7 @@ import pytest
 
 from uni_kie.constants import PARSERS
 from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
+from uni_kie.parsers.parser import Parser
 
 # line 2 from dev-0/expected.tsv
 dev_example_expected_output = (
@@ -77,3 +78,19 @@ def test_parse_single_model_output_money_parser():
         parsed_output
         == "address__post_town=£1,034,800.00 income_annually_in_british_pounds=12345.00 report_date=2016-03-31 spending_annually_in_british_pounds=1034800.23"
     )
+
+
+def test__dict_to_kleister_charity():
+    model_output = (
+        " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47:SECOND AVENUE\nCharity Name: "
+        "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nReport "
+        "Date: 2016-03-31\nAnnual Spending:   null  "
+    )
+    parser = PARSERS.DICT_PARSER
+    parsed_output = parser.parse_model_output(
+        model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
+    )
+    translated_parsed_output = Parser()._dict_to_kleister_charity(
+        parsed_dict=parsed_output, prompt_keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys
+    )
+    assert translated_parsed_output == dev_example_expected_output
