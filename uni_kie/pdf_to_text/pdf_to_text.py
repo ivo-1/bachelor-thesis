@@ -3,7 +3,8 @@ from typing import Union
 
 import fitz as PyMuPDF
 import pandas as pd
-from kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
+
+from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
 
 
 class AbstractPDFToTextModel:
