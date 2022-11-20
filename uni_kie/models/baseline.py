@@ -9,6 +9,14 @@ from uni_kie.models.model import AbstractModel
 
 
 class BaselineModel(AbstractModel):
+    """
+    *General* BaselineModel that is data set agnostic.
+
+    :param ner_tagger: The NER tagger to use. Currently only spacy is supported.
+    :param error_percentage: The percentage of errors allowed in the best match (regex). Errors are defined as the sum of substitutions, insertions, and deletions (i.e. the Levenstein distance).
+    :param allowed_entity_range: The maximum distance between the end of the best match and the start of the next entity.
+    """
+
     def __init__(
         self,
         ner_tagger: NER_TAGGERS,
@@ -19,23 +27,27 @@ class BaselineModel(AbstractModel):
         self.ner_tagger = ner_tagger
         self.error_percentage = error_percentage
         self.allowed_entity_range = allowed_entity_range
-        if ner_tagger == NER_TAGGERS.SPACY_WEB_SM:
-            try:
-                self.nlp = spacy.load("en_core_web_sm")
 
-            except OSError:
-                print(
-                    f"Missing model. Installing en_core_web_sm. You will need to restart the \
-                    Python process after installation."
-                )
-                spacy.cli.download("en_core_web_sm")  # type: ignore
-                sys.exit(1)
+        # TODO: load spacy model in a better way
+        try:
+            self.nlp = spacy.load(ner_tagger)
+        except OSError:
+            print(
+                f"Missing model. Installing {ner_tagger}. You will need to restart the \
+                Python process after installation."
+            )
+            spacy.cli.download(ner_tagger)
+            sys.exit(1)
 
     def __repr__(self):
         return f"Baseline(error_percentage={self.error_percentage}, allowed_entity_range={self.allowed_entity_range})"
 
     def get_ner_tags(self, text: str) -> List[Tuple[int, int, str, str]]:
-        if self.ner_tagger == NER_TAGGERS.SPACY_WEB_SM:
+        if self.ner_tagger in (
+            NER_TAGGERS.SPACY_WEB_SM,
+            NER_TAGGERS.SPACY_WEB_LG,
+            NER_TAGGERS.SPACY_WEB_TRF,
+        ):
             doc = self.nlp(text)
             return [
                 (ent.start_char, ent.end_char, ent.label_, ent.text) for ent in doc.ents

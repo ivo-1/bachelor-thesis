@@ -35,14 +35,17 @@ class PARSERS:
 
 
 class TOKENIZERS:
-    GPT2_TOKENIZER_FAST = GPT2TokenizerFast.from_pretrained(
-        "gpt2"
-    )  # this is the same tokenizer that openai uses for their instructGPT model family
+    a = 1
+    # TODO: speed this up, it costs a lot of time to load this. cache this maybe in a smarter way?
+    # GPT2_TOKENIZER_FAST = GPT2TokenizerFast.from_pretrained(
+    #    "gpt2"
+    # )  # this is the same tokenizer that openai uses for their instructGPT model family
 
 
 class NER_TAGGERS:
-    SPACY_WEB_SM = "SPACY_WEB_SM"
-    # SPACY_WEB_TRF = spacy.load("en_core_web_trf")
+    SPACY_WEB_SM = "en_core_web_sm"
+    SPACY_WEB_LG = "en_core_web_lg"
+    SPACY_WEB_TRF = "en_core_web_trf"
     FLAIR = None
     NLTK = None
     STANZA = None
