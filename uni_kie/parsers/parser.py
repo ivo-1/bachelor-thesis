@@ -1,10 +1,15 @@
 import csv
 import json
+import re
 from typing import List, Optional, Union
 
 import dateparser
+import regex
 
+from uni_kie import create_logger
 from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
+
+logger = create_logger(__name__)
 
 
 class Parser:
@@ -22,9 +27,6 @@ class Parser:
     def _parse_money(money: str) -> Optional[str]:
         money = "".join([c for c in money if c.isnumeric() or c == "."])
         money = money.lstrip("0")
-
-        if money.startswith("."):
-            money = "0" + money
 
         if "." not in money and len(money) > 0:
             money += ".00"
@@ -103,27 +105,54 @@ class KleisterCharityParser(Parser):
         """
         model_output = prompt_keys[0] + ":" + model_output
         out = []
+        logger.info("Parsing single model output")
         for i in range(len(prompt_keys)):
             gold_key = KLEISTER_CHARITY_CONSTANTS.gold_keys[
                 i
             ]  # the gold keys of the KleisterCharity dataset
             prompt_key = prompt_keys[i]
 
-            if prompt_key not in model_output:
+            if prompt_key.lower() not in model_output.lower():
                 continue
 
             next_key = None
             for j in range(i + 1, len(prompt_keys)):
-                if prompt_keys[j] in model_output:
+                if prompt_keys[j].lower() in model_output.lower():
                     next_key = prompt_keys[j]
                     break
 
+            # escape parentheses in keys to prevent them from being interpreted as regex groups
+            prompt_key_escaped = prompt_key.replace("(", "\(").replace(")", "\)")
+
             if next_key is not None:
-                value = model_output.split(prompt_key + ":")[1].split(next_key + ":")[0]
+                next_key_escaped = next_key.replace("(", "\(").replace(")", "\)")
+
+                # use regex split to split on prompt_key and find the start of the value
+                start = regex.split(
+                    prompt_key_escaped + ":", model_output, flags=regex.IGNORECASE
+                )[1]
+
+                # use regex split to split on next_key to find the end of the value
+                value = regex.split(next_key_escaped, start, flags=regex.IGNORECASE)[0]
+
             else:
-                value = model_output.split(prompt_key + ":")[1]
+                value = regex.split(
+                    prompt_key_escaped + ":", model_output, flags=regex.IGNORECASE
+                )[1]
 
             value = value.strip().replace("\n", " ").replace("  ", " ")
+
+            # remove potential leading and trailing quotation marks
+            if (
+                value.startswith('"')
+                and value.endswith('"')
+                or value.startswith("'")
+                and value.endswith("'")
+            ):
+                value = value[1:-1]
+
+            logger.info(f"Key: {prompt_key}")
+            logger.info(f"Stripped value: {value}")
             if value == "null" or value == "" or value is None:
                 continue
 
@@ -176,7 +205,7 @@ class DictParser(Parser):
 
             next_key = None
             for j in range(i + 1, len(prompt_keys)):
-                if prompt_keys[j] in model_output:
+                if prompt_keys[j].lower() in model_output.lower():
                     next_key = prompt_keys[j]
                     break
 
@@ -186,6 +215,9 @@ class DictParser(Parser):
                 value = model_output.split(prompt_key + ":")[1]
 
             value = value.strip().replace("  ", " ")
+
+            logger.info(f"Key: {prompt_key}")
+            logger.info(f"Stripped value: {value}")
 
             parsed_date = Parser._parse_date_to_iso_format(value)
             if parsed_date:

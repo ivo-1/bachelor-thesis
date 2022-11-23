@@ -23,8 +23,8 @@ dev_example_expected_output_with_last_key = (
 def test_parse_single_model_output():
     model_output = (
         " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47:SECOND AVENUE\nCharity Name: "
-        "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nReport "
-        "Date: 2016-03-31\nAnnual Spending:   null  "
+        "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nPeriod "
+        "End Date: 2016-03-31\nAnnual Spending:   null  "
     )
     parser = PARSERS.KLEISTER_CHARITY_PARSER
     parsed_output = parser.parse_model_output(
@@ -36,8 +36,8 @@ def test_parse_single_model_output():
 def test_parse_single_model_output_skips_key():
     model_output = (
         " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47:SECOND AVENUE\nCharity Name: "
-        "Havens Christian Hospice\n\n Annual Income: \n\n  10348000.00\nReport "
-        "Date: 2016-03-31\nAnnual Spending:   null  "
+        "Havens Christian Hospice\n\n Annual Income: \n\n  10348000.00\nPeriod "
+        "End Date: 2016-03-31\nAnnual Spending:   null  "
     )  # missing charity number (not just "null" but not even in the output)
     parser = PARSERS.KLEISTER_CHARITY_PARSER
     parsed_output = parser.parse_model_output(
@@ -49,8 +49,8 @@ def test_parse_single_model_output_skips_key():
 def test_parse_single_model_output_skips_key_last_key_with_value():
     model_output = (
         " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47:SECOND AVENUE\nCharity Name: "
-        "Havens Christian Hospice\n\n Annual Income: \n\n  10348000.00\nReport "
-        "Date: 2016-03-31\nAnnual Spending:  1234"
+        "Havens Christian Hospice\n\n Annual Income: \n\n  10348000.00\nPeriod "
+        "End Date: 2016-03-31\nAnnual Spending:  1234"
     )  # missing charity number (not just "null" but not even in the output)
     parser = PARSERS.KLEISTER_CHARITY_PARSER
     parsed_output = parser.parse_model_output(
@@ -69,7 +69,7 @@ def test_parse_single_model_output_empty():
 
 
 def test_parse_single_model_output_money_parser():
-    model_output = "  £1,034,800.00\nAnnual Income: \n\n  £12 345\nReport Date: 2016-03-31\nAnnual Spending:  £1,034,800.23"
+    model_output = "  £1,034,800.00\nAnnual Income: \n\n  £12 345\n Period End Date: 2016-03-31\nAnnual Spending:  £1,034,800.23"
     parser = PARSERS.KLEISTER_CHARITY_PARSER
     parsed_output = parser.parse_model_output(
         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
@@ -83,8 +83,8 @@ def test_parse_single_model_output_money_parser():
 def test__dict_to_kleister_charity():
     model_output = (
         " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47:SECOND AVENUE\nCharity Name: "
-        "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nReport "
-        "Date: 2016-03-31\nAnnual Spending:   null  "
+        "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nPeriod "
+        "End Date: 2016-03-31\nAnnual Spending:   null  "
     )
     parser = PARSERS.DICT_PARSER
     parsed_output = parser.parse_model_output(
@@ -94,3 +94,12 @@ def test__dict_to_kleister_charity():
         parsed_dict=parsed_output, prompt_keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert translated_parsed_output == dev_example_expected_output
+
+
+# def test_parse_single_model_output():
+#     model_output = " \nAddress (post code):\nAddress (street):\nCharity name:\nCharity number:\nAnnual income:\nPeriod end date:\nAnnual spending:."
+#     parser = PARSERS.KLEISTER_CHARITY_PARSER
+#     parsed_output = parser.parse_model_output(
+#         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
+#     )
+#     assert parsed_output == "spending_annually_in_british_pounds=."

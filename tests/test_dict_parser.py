@@ -10,7 +10,7 @@ dev_example_expected_output = {
     "Address (street)": "47 SECOND AVENUE",
     "Charity Name": "Havens Christian Hospice",
     "Annual Income": "10348000.00",
-    "Report Date": "2016-03-31",
+    "Period End Date": "2016-03-31",
 }
 
 
@@ -31,7 +31,7 @@ def test_parse_single_model_output():
             "Charity Name",
             "Charity Number",
             "Annual Income",
-            "Report Date",
+            "Period End Date",
             "Annual Spending",
         ],
     )
