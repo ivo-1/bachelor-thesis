@@ -17,7 +17,7 @@ dev_example_expected_output = {
 def test_parse_single_model_output():
     model_output = (
         " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47 SECOND AVENUE\nCharity Name: "
-        "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nReport "
+        "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nPeriod End "
         "Date: 2016-03-31\nAnnual Spending:   null "
     )
     parser = PARSERS.DICT_PARSER

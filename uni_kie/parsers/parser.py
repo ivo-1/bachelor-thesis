@@ -200,7 +200,7 @@ class DictParser(Parser):
         for i in range(len(prompt_keys)):
             prompt_key = prompt_keys[i]
 
-            if prompt_key not in model_output:
+            if prompt_key.lower() not in model_output.lower():
                 continue
 
             next_key = None
@@ -209,12 +209,20 @@ class DictParser(Parser):
                     next_key = prompt_keys[j]
                     break
 
-            if next_key is not None:
-                value = model_output.split(prompt_key + ":")[1].split(next_key + ":")[0]
-            else:
-                value = model_output.split(prompt_key + ":")[1]
+            prompt_key_escaped = prompt_key.replace("(", "\(").replace(")", "\)")
 
-            value = value.strip().replace("  ", " ")
+            if next_key is not None:
+                next_key_escaped = next_key.replace("(", "\(").replace(")", "\)")
+                start = regex.split(
+                    prompt_key_escaped + ":", model_output, flags=regex.IGNORECASE
+                )[1]
+                value = regex.split(next_key_escaped, start, flags=regex.IGNORECASE)[0]
+            else:
+                value = regex.split(
+                    prompt_key_escaped + ":", model_output, flags=regex.IGNORECASE
+                )[1]
+
+            value = value.strip().replace("\n", " ").replace("  ", " ")
 
             logger.info(f"Key: {prompt_key}")
             logger.info(f"Stripped value: {value}")
@@ -223,7 +231,7 @@ class DictParser(Parser):
             if parsed_date:
                 value = parsed_date
 
-            if "Income" in prompt_key or "Spending" in prompt_key:
+            if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
                 value = Parser._parse_money(value)
 
             if value == "null" or value == "" or value is None:
