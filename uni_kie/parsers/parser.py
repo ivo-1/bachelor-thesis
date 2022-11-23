@@ -111,6 +111,7 @@ class KleisterCharityParser(Parser):
                 i
             ]  # the gold keys of the KleisterCharity dataset
             prompt_key = prompt_keys[i] + ":"
+            logger.info(f"Key: {prompt_key}")
 
             if prompt_key.lower() not in model_output.lower():
                 continue
@@ -150,8 +151,6 @@ class KleisterCharityParser(Parser):
                 and value.endswith("'")
             ):
                 value = value[1:-1]
-
-            logger.info(f"Key: {prompt_key}")
             logger.info(f"Stripped value: {value}")
             if value.lower() == "null" or value == "" or value is None:
                 continue
