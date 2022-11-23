@@ -3,15 +3,18 @@ from datetime import datetime
 from constants import MODELS, NER_TAGGERS, PARSERS, PDF_TO_TEXT_MODELS, PROMPT_VARIANTS
 from pipeline import BaselinePipeline, LLMPipeline
 
-from uni_kie import __version__
+from uni_kie import __version__, create_logger
 from uni_kie.constants import LONG_DOCUMENT_HANDLING_VARIANTS
 from uni_kie.kleister_charity_constants import (
     KLEISTER_CHARITY_CONSTANTS,
     PATH_KLEISTER_CHARITY,
 )
 
+logger = create_logger(__name__)
+
 if __name__ == "__main__":
     print(__version__)
+    logger.info(f"Using version {__version__}")
     pipeline = LLMPipeline(
         keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,
         model=MODELS.GPT.NeoX(),
@@ -31,8 +34,12 @@ if __name__ == "__main__":
     #     error_percentage=0.24,
     #     allowed_entity_range=40, # entity has to be within 40 chars of a found key
     # )
-    now = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
 
+    logger.info(
+        f"Using pipeline {pipeline} on {pipeline.pdf_to_text_model.split} split"
+    )
+
+    now = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
     path = (
         PATH_KLEISTER_CHARITY
         / pipeline.pdf_to_text_model.split
@@ -45,7 +52,10 @@ if __name__ == "__main__":
                 pipeline.pdf_to_text_model.data.iloc[i]["filename"]
             )
 
-            print(f"prediction: {prediction}")
+            if i == 19:
+                break
+
+            logger.info(f"prediction for file {i}: {prediction}")
             f.write(f"{prediction}\n")
             print(f"Progress: {i+1}/{len(pipeline.pdf_to_text_model.data)}")
     print("======================== DONE ============================")
