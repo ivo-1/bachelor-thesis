@@ -153,7 +153,7 @@ class KleisterCharityParser(Parser):
 
             logger.info(f"Key: {prompt_key}")
             logger.info(f"Stripped value: {value}")
-            if value == "null" or value == "" or value is None:
+            if value.lower() == "null" or value == "" or value is None:
                 continue
 
             if gold_key == "report_date":
@@ -234,7 +234,7 @@ class DictParser(Parser):
             if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
                 value = Parser._parse_money(value)
 
-            if value == "null" or value == "" or value is None:
+            if value.lower() == "null" or value == "" or value is None:
                 continue
 
             out[prompt_key] = value
