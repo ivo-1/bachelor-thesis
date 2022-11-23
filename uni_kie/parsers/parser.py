@@ -110,14 +110,14 @@ class KleisterCharityParser(Parser):
             gold_key = KLEISTER_CHARITY_CONSTANTS.gold_keys[
                 i
             ]  # the gold keys of the KleisterCharity dataset
-            prompt_key = prompt_keys[i]
+            prompt_key = prompt_keys[i] + ":"
 
             if prompt_key.lower() not in model_output.lower():
                 continue
 
             next_key = None
             for j in range(i + 1, len(prompt_keys)):
-                if prompt_keys[j].lower() in model_output.lower():
+                if prompt_keys[j].lower() + ":" in model_output.lower():
                     next_key = prompt_keys[j]
                     break
 
@@ -129,7 +129,7 @@ class KleisterCharityParser(Parser):
 
                 # use regex split to split on prompt_key and find the start of the value
                 start = regex.split(
-                    prompt_key_escaped + ":", model_output, flags=regex.IGNORECASE
+                    prompt_key_escaped, model_output, flags=regex.IGNORECASE
                 )[1]
 
                 # use regex split to split on next_key to find the end of the value
@@ -137,7 +137,7 @@ class KleisterCharityParser(Parser):
 
             else:
                 value = regex.split(
-                    prompt_key_escaped + ":", model_output, flags=regex.IGNORECASE
+                    prompt_key_escaped, model_output, flags=regex.IGNORECASE
                 )[1]
 
             value = value.strip().replace("\n", " ").replace("  ", " ")
@@ -198,14 +198,14 @@ class DictParser(Parser):
         model_output = prompt_keys[0] + ":" + model_output
         out = {}
         for i in range(len(prompt_keys)):
-            prompt_key = prompt_keys[i]
+            prompt_key = prompt_keys[i] + ":"
 
             if prompt_key.lower() not in model_output.lower():
                 continue
 
             next_key = None
             for j in range(i + 1, len(prompt_keys)):
-                if prompt_keys[j].lower() in model_output.lower():
+                if prompt_keys[j].lower() + ":" in model_output.lower():
                     next_key = prompt_keys[j]
                     break
 
@@ -214,12 +214,12 @@ class DictParser(Parser):
             if next_key is not None:
                 next_key_escaped = next_key.replace("(", "\(").replace(")", "\)")
                 start = regex.split(
-                    prompt_key_escaped + ":", model_output, flags=regex.IGNORECASE
+                    prompt_key_escaped, model_output, flags=regex.IGNORECASE
                 )[1]
                 value = regex.split(next_key_escaped, start, flags=regex.IGNORECASE)[0]
             else:
                 value = regex.split(
-                    prompt_key_escaped + ":", model_output, flags=regex.IGNORECASE
+                    prompt_key_escaped, model_output, flags=regex.IGNORECASE
                 )[1]
 
             value = value.strip().replace("\n", " ").replace("  ", " ")
@@ -237,7 +237,7 @@ class DictParser(Parser):
             if value is None or value == "" or value.lower() == "null":
                 continue
 
-            out[prompt_key] = value
+            out[prompt_key[:-1]] = value  # remove trailing colon
 
         return out
 
