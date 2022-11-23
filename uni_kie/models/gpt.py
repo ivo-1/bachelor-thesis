@@ -18,6 +18,11 @@ class GPT3_Davinci(LargeLanguageModel):
         # babbage + curie: 2048 - 256 = 1792
         self.max_input_tokens = 3840
         self.max_generated_tokens = 256
+        self.temperature = 0
+        self.top_p = 1
+        self.presence_penalty = -0.5
+        self.frequency_penalty = -0.5
+        self.stop = [STOP_KEY]
 
     def __repr__(self):
         return super().__repr__()
@@ -26,12 +31,12 @@ class GPT3_Davinci(LargeLanguageModel):
         response = openai.Completion.create(
             model="text-davinci-002",
             prompt=prompt,
-            # temperature=0.1,
-            # top_p=1,
+            # temperature=self.temperature,
+            # top_p=self.top_p,
             max_tokens=self.max_generated_tokens,
-            # presence_penalty=-0.75,
-            # frequency_penalty=-0.75,
-            stop=[STOP_KEY],
+            # presence_penalty=self.presence_penalty,
+            # frequency_penalty=self.frequency_penalty,
+            stop=self.stop,
         )["choices"][0]["text"]
         return response
 
@@ -42,11 +47,17 @@ class GPT_NeoX(LargeLanguageModel):
         self.api_url = "https://api.textsynth.com"
         self.api_engine = "gptneox_20B"
         self.api_key = os.environ["TEXTSYNTH_API_SECRET_KEY"]
+
         self.max_input_tokens = 1792
         self.max_generated_tokens = 256
+        self.temperature = 0
+        self.top_p = 1
+        self.presence_penalty = -0.5
+        self.frequency_penalty = -0.5
+        self.stop = [STOP_KEY]
 
     def __repr__(self):
-        return super().__repr__()
+        return f"GPT_NeoX("
 
     def predict(self, prompt: str) -> str:
         response = requests.post(
@@ -54,12 +65,12 @@ class GPT_NeoX(LargeLanguageModel):
             headers={"Authorization": "Bearer " + self.api_key},
             json={
                 "prompt": prompt,
-                # "temperature": 0,
-                # "top_p": 1,
+                # "temperature": self.temperature,
+                # "top_p": self.top_p,
                 "max_tokens": self.max_generated_tokens,
-                # "presence_penalty": -0.5,
-                # "frequency_penalty": -0.5,
-                "stop": [STOP_KEY],
+                # "presence_penalty": self.presence_penalty,
+                # "frequency_penalty": self.frequency_penalty,
+                "stop": self.stop,
             },
         )
         resp = response.json()
