@@ -18,14 +18,14 @@ class GPT3_Davinci(LargeLanguageModel):
         # babbage + curie: 2048 - 256 = 1792
         self.max_input_tokens = 3840
         self.max_generated_tokens = 256
-        self.temperature = 0
-        self.top_p = 1
-        self.presence_penalty = -0.5
-        self.frequency_penalty = -0.5
+        self.temperature = 1  # default: 1
+        self.top_p = 0.9  # default: 1
+        self.presence_penalty = 0  # default: 0
+        self.frequency_penalty = 0  # default: 0
         self.stop = [STOP_KEY]
 
     def __repr__(self):
-        return super().__repr__()
+        return f"GPT3_Davinci(max_input_tokens={self.max_input_tokens}, temperature={self.temperature}, top_p={self.top_p}, presence_penalty={self.presence_penalty}, frequency_penalty={self.frequency_penalty})"
 
     def predict(self, prompt: str) -> str:
         response = openai.Completion.create(
@@ -50,14 +50,15 @@ class GPT_NeoX(LargeLanguageModel):
 
         self.max_input_tokens = 1792
         self.max_generated_tokens = 256
-        self.temperature = 0
-        self.top_p = 1
-        self.presence_penalty = -0.5
-        self.frequency_penalty = -0.5
+        self.temperature = 1  # default: 1
+        self.top_p = 0.9  # default: 0.9
+        self.top_k = 40  # default: 40
+        self.presence_penalty = 0  # default: 0
+        self.frequency_penalty = 0  # default: 0
         self.stop = [STOP_KEY]
 
     def __repr__(self):
-        return f"GPT_NeoX("
+        return f"GPT_NeoX(max_input_tokens={self.max_input_tokens}, temperature={self.temperature}, top_p={self.top_p}, top_k={self.top_k}, presence_penalty={self.presence_penalty}, frequency_penalty={self.frequency_penalty})"
 
     def predict(self, prompt: str) -> str:
         response = requests.post(
