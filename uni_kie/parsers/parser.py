@@ -139,7 +139,7 @@ class KleisterCharityParser(Parser):
                 value = regex.split(
                     prompt_key_escaped, model_output, flags=regex.IGNORECASE
                 )[1]
-
+            logger.info(f"Raw value: {value}")
             value = value.strip().replace("\n", " ").replace("  ", " ")
 
             # remove potential leading and trailing quotation marks

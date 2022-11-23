@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import List, Union
 
+from uni_kie import create_logger
 from uni_kie.constants import (
     LONG_DOCUMENT_HANDLING_VARIANTS,
     MODELS,
@@ -14,6 +15,8 @@ from uni_kie.models.model import AbstractModel, LargeLanguageModel
 from uni_kie.parsers.parser import Parser
 from uni_kie.pdf_to_text.pdf_to_text import AbstractPDFToTextModel
 from uni_kie.prompts.prompts import Prompt
+
+logger = create_logger(__name__)
 
 
 class AbstractPipeline:
@@ -117,6 +120,9 @@ class LLMPipeline(AbstractPipeline):
         tokenized_model_input = TOKENIZERS.GPT2_TOKENIZER_FAST(model_input)
         number_of_tokens_model_input = len(tokenized_model_input["input_ids"])
         if number_of_tokens_model_input > self.model.max_input_tokens:
+            logger.info(
+                f"Document is too long for the model. Number of tokens: {number_of_tokens_model_input}. Max number of tokens: {self.model.max_input_tokens}."
+            )
             if (
                 self.long_document_handling_variant
                 == LONG_DOCUMENT_HANDLING_VARIANTS.TRUNCATE_MIDDLE
@@ -168,15 +174,19 @@ class LLMPipeline(AbstractPipeline):
                     self.prompt_variant.get_model_input(subdocument)
                     for subdocument in subdocuments
                 ]
+                logger.info(
+                    f"Split document into {len(subdocuments_with_prompt)} subdocuments."
+                )
                 subdocuments_predictions = [
                     self.model.predict(subdocument)
                     for subdocument in subdocuments_with_prompt
                 ]
-
                 return subdocuments_predictions
 
         else:
-            return [self.model.predict(model_input)]
+            prediction = self.model.predict(model_input)
+            logger.info(f"Raw prediction for document: {prediction}")
+            return [prediction]
 
     def predict(self, file_path: Union[str, Path]) -> Union[dict, str]:
         """

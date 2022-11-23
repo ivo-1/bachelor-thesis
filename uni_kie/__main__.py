@@ -36,7 +36,13 @@ if __name__ == "__main__":
     # )
 
     logger.info(
-        f"Using pipeline {pipeline} on {pipeline.pdf_to_text_model.split} split"
+        f"Using pipeline {pipeline} on {pipeline.pdf_to_text_model.split} split",
+    )
+    logger.info(
+        f"Using long_document_handling_variant: {pipeline.long_document_handling_variant}",
+    )
+    logger.info(
+        f"Searching for keys: {pipeline.keys}",
     )
 
     now = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
@@ -48,14 +54,16 @@ if __name__ == "__main__":
     )
     with open(path, "w") as f:
         for i in range(len(pipeline.pdf_to_text_model.data)):
+            logger.info(f"Predicting document {i}...")
             prediction = pipeline.predict(
                 pipeline.pdf_to_text_model.data.iloc[i]["filename"]
             )
 
-            if i == 19:
+            if i == 5:
                 break
 
-            logger.info(f"prediction for file {i}: {prediction}")
+            logger.info(f"Final prediction for document {i}: {prediction}")
             f.write(f"{prediction}\n")
             print(f"Progress: {i+1}/{len(pipeline.pdf_to_text_model.data)}")
+    logger.info("================== DONE ==================")
     print("======================== DONE ============================")
