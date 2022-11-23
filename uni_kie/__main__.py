@@ -58,10 +58,6 @@ if __name__ == "__main__":
             prediction = pipeline.predict(
                 pipeline.pdf_to_text_model.data.iloc[i]["filename"]
             )
-
-            if i == 5:
-                break
-
             logger.info(f"Final prediction for document {i}: {prediction}")
             f.write(f"{prediction}\n")
             print(f"Progress: {i+1}/{len(pipeline.pdf_to_text_model.data)}")
