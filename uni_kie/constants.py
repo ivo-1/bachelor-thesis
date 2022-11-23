@@ -35,11 +35,11 @@ class PARSERS:
 
 
 class TOKENIZERS:
-    a = 1
     # TODO: speed this up, it costs a lot of time to load this. cache this maybe in a smarter way?
-    # GPT2_TOKENIZER_FAST = GPT2TokenizerFast.from_pretrained(
-    #    "gpt2"
-    # )  # this is the same tokenizer that openai uses for their instructGPT model family
+    GPT2_TOKENIZER_FAST = GPT2TokenizerFast.from_pretrained(
+        "gpt2"
+    )  # this is the same tokenizer that openai uses for their instructGPT model family
+    a = 1
 
 
 class NER_TAGGERS:
