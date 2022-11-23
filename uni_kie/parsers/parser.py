@@ -66,7 +66,7 @@ class Parser:
             if gold_key == "report_date":
                 value = self._parse_date_to_iso_format(value)
 
-            if value == "null" or value == "" or value is None:
+            if value is None or value == "" or value.lower() == "null":
                 continue
 
             out.append(f"{gold_key}={value}")
@@ -234,7 +234,7 @@ class DictParser(Parser):
             if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
                 value = Parser._parse_money(value)
 
-            if value.lower() == "null" or value == "" or value is None:
+            if value is None or value == "" or value.lower() == "null":
                 continue
 
             out[prompt_key] = value
