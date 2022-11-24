@@ -10,7 +10,7 @@ from uni_kie.constants import (
     PROMPT_VARIANTS,
     TOKENIZERS,
 )
-from uni_kie.models.baseline import BaselineModel
+from uni_kie.models.baseline import AbstractBaselineModel, BaselineModel
 from uni_kie.models.model import AbstractModel, LargeLanguageModel
 from uni_kie.parsers.parser import Parser
 from uni_kie.pdf_to_text.pdf_to_text import AbstractPDFToTextModel
@@ -120,7 +120,7 @@ class LLMPipeline(AbstractPipeline):
             elif isinstance(self.parser, PARSERS.KLEISTER_CHARITY_PARSER):
                 return self.parser._dict_to_kleister_charity(unified_dict, prompt_keys)
 
-        else:  # doc was short enough to be processed in one go
+        else:
             logger.info("No subdocs necessary")
             return self.parser.parse_model_output(model_output[0], prompt_keys)
 
@@ -231,6 +231,7 @@ class BaselinePipeline(AbstractPipeline):
     def __init__(
         self,
         keys: List[str],
+        model: AbstractBaselineModel,
         pdf_to_text_model: AbstractPDFToTextModel,
         parser: Parser,
         ner_tagger: NER_TAGGERS,
@@ -239,7 +240,7 @@ class BaselinePipeline(AbstractPipeline):
     ):
         super().__init__(
             keys=keys,
-            model=BaselineModel(
+            model=model(
                 ner_tagger=ner_tagger,
                 error_percentage=error_percentage,
                 allowed_entity_range=allowed_entity_range,

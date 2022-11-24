@@ -110,11 +110,14 @@ class KleisterCharityParser(Parser):
         """
         model_output = prompt_keys[0] + ":" + model_output
         out = []
+        gold_keys = None
+        if prompt_keys[0] == "Address (post code)":
+            gold_keys = KLEISTER_CHARITY_CONSTANTS.SPECIFIC_BASELINE.gold_keys
+        else:
+            gold_keys = KLEISTER_CHARITY_CONSTANTS.gold_keys
         logger.info("Parsing single model output")
         for i in range(len(prompt_keys)):
-            gold_key = KLEISTER_CHARITY_CONSTANTS.gold_keys[
-                i
-            ]  # the gold keys of the KleisterCharity dataset
+            gold_key = gold_keys[i]  # the gold keys of the KleisterCharity dataset
             prompt_key = prompt_keys[i] + ":"
             logger.info(f"Key: {prompt_key}")
 
