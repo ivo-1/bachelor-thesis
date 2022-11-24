@@ -173,10 +173,16 @@ class LLMPipeline(AbstractPipeline):
                 for i in range(
                     0,
                     number_of_tokens_model_input,
-                    self.model.max_input_tokens - overlap_no_tokens - prompt_length,
+                    self.model.max_input_tokens
+                    - overlap_no_tokens
+                    - prompt_length
+                    - 5,  # subtracting 5 to make sure that the prompt is not too long
                 ):
                     subdocument = model_input_without_prompt_input_ids[
-                        i : i + self.model.max_input_tokens - prompt_length
+                        i : i
+                        + self.model.max_input_tokens
+                        - prompt_length
+                        - 5  # subtracting 5 to make sure that the prompt is not too long
                     ]
                     subdocuments.append(subdocument)
 
