@@ -30,9 +30,9 @@ if __name__ == "__main__":
     #         split="dev-0"
     #     ),
     #     parser=PARSERS.KLEISTER_CHARITY_PARSER(),
-    #     ner_tagger=NER_TAGGERS.SPACY_WEB_LG,
-    #     error_percentage=0.24,
-    #     allowed_entity_range=40, # entity has to be within 40 chars of a found key
+    #     ner_tagger=NER_TAGGERS.SPACY_WEB_SM,
+    #     error_percentage=0.18,
+    #     allowed_entity_range=40, # entity has to be within this amount of chars of a found key
     # )
 
     logger.info(
