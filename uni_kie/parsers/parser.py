@@ -203,6 +203,7 @@ class DictParser(Parser):
         out = {}
         for i in range(len(prompt_keys)):
             prompt_key = prompt_keys[i] + ":"
+            logger.info(f"Key: {prompt_key}")
 
             if prompt_key.lower() not in model_output.lower():
                 continue
@@ -226,9 +227,9 @@ class DictParser(Parser):
                     prompt_key_escaped, model_output, flags=regex.IGNORECASE
                 )[1]
 
+            logger.info(f"Raw value: {value}")
             value = value.strip().replace("\n", " ").replace("  ", " ")
 
-            logger.info(f"Key: {prompt_key}")
             logger.info(f"Stripped value: {value}")
 
             parsed_date = Parser._parse_date_to_iso_format(value)
