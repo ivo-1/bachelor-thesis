@@ -31,7 +31,12 @@ class Parser:
         if "." not in money and len(money) > 0:
             money += ".00"
 
-        if money.strip() == "":
+        # if it's an empty string or contains only dots or doesn't contain any numbers
+        if (
+            money.strip() == ""
+            or money.strip(".") == ""
+            or not any(c.isnumeric() for c in money)
+        ):
             return None
 
         return money
