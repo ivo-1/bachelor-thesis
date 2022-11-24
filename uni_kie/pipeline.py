@@ -96,11 +96,17 @@ class LLMPipeline(AbstractPipeline):
                 if (
                     len(values) == 0
                 ):  # if in no subdoc the key was found, we don't put it in the unified dict
+                    logger.info(f"Key not found in any subdoc {key}")
                     continue
                 else:
+                    logger.info(f"Unification necessary for key {key}")
+                    logger.info(f"Unifying {len(values)} values {values}")
+
                     unified_dict[key] = max(
-                        set(values), key=values.count
-                    )  # picks the first one if there are multiple max values
+                        list(dict.fromkeys(values)), key=values.count
+                    )  # picks the first one (according to the order of the list (-> earlier pages are preferred)) if there are multiple max values
+
+                    logger.info(f"Unified value {unified_dict[key]}")
 
             if isinstance(self.parser, PARSERS.DICT_PARSER):
                 return unified_dict
@@ -108,6 +114,7 @@ class LLMPipeline(AbstractPipeline):
                 return self.parser._dict_to_kleister_charity(unified_dict, prompt_keys)
 
         else:  # doc was short enough to be processed in one go
+            logger.info("No subdocs necessary")
             return self.parser.parse_model_output(model_output[0], prompt_keys)
 
     def get_model_output(self, model_input: str) -> List[str]:
