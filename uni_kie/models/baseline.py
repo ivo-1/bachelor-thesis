@@ -3,6 +3,7 @@ from typing import List, Optional, Tuple
 
 import regex
 import spacy
+from Levenshtein import distance
 
 from uni_kie import create_logger
 from uni_kie.constants import NER_TAGGERS
@@ -228,8 +229,6 @@ class KleisterCharitySpecificBaselineModel(AbstractBaselineModel):
             "Annual Spending": ["MONEY", "CARDINAL"],
         }
 
-        # TODO: if charity name is not found, just take the first ORG or NORP entity
-
     def __repr__(self):
         return f"SpecificBaseline(error_percentage={self.error_percentage}, allowed_entity_range={self.allowed_entity_range})"
 
@@ -344,40 +343,61 @@ class KleisterCharitySpecificBaselineModel(AbstractBaselineModel):
                     continue
 
             else:
-                continue
                 # try all synonyms for the given key
-                synonym_match_spans = []
+                synonym_entities = []
+                best_match_spans = []
                 for synonym in self.synonyms[key]:
                     synonym_match_span = self.get_best_match_span(input, synonym)
                     if synonym_match_span is not None:
-                        synonym_match_spans.append(synonym_match_span)
+                        last_char_of_match = synonym_match_span[1]
+                        first_entity_after_key = None
 
-                if len(synonym_match_spans) == 0:
-                    continue
+                        for j, idx in enumerate(ner_tags_first_char_idx):
+                            if idx > last_char_of_match:
+                                if (
+                                    idx - last_char_of_match
+                                    <= self.allowed_entity_range
+                                ):
+                                    first_entity_after_key = ner_tags[j]
+                                    break
+                                else:
+                                    break
 
-                else:
-                    best_match_span = None
+                        if first_entity_after_key is not None:
+                            synonym_entities.append(first_entity_after_key)
+                            best_match_spans.append(synonym_match_span)
 
+                    else:
+                        continue
+
+                if len(synonym_entities) > 0:
                     # find a way to determine which match span is the best
                     # considerations:
-                    # * most important: is the first entity (within allowed_entity_range) after the match span of the right type?
-                    # * the closer the match is to the key synonym, the better (i.e. the lower the levenstein distance)
-                    # * the closer to the beginning of the document, the better
+                    # * most important: is the entity of the right type?
+                    # * the closer the match_span is to the key synonym, the better (i.e. the lower the levenstein distance)
+                    best_entity = None
+                    best_entity_score = -1000000
+                    for i, entity in enumerate(synonym_entities):
+                        entity_score = 0
+                        if entity[2] in self.type_validation[key]:
+                            entity_score += 3
+                        # subtract levensthein distance from entity_score
+                        entity_score -= distance(
+                            input[
+                                best_match_spans[i][0] : best_match_spans[i][1]
+                            ].lower(),
+                            self.synonyms[key][i].lower(),
+                        )
+                        if entity_score > best_entity_score:
+                            best_entity = entity
+                            best_entity_score = entity_score
 
-                last_char_of_best_match = best_match_span[1]
-                first_entity_after_key = None
-
-                for j, idx in enumerate(ner_tags_first_char_idx):
-                    if idx > last_char_of_best_match:
-                        if idx - last_char_of_best_match <= self.allowed_entity_range:
-                            first_entity_after_key = ner_tags[j]
-                            break
-                        else:
-                            break
-
-                if first_entity_after_key is None:
+                else:  # no match found for any synonym
                     continue
 
-                output.append(f"{key}: {first_entity_after_key[3]}")
+                if len(output) > 0:
+                    output.append(f"{key}: {best_entity[3]}")
+                else:
+                    output.append(f"{best_entity[3]}")
 
         return "\n".join(output)
