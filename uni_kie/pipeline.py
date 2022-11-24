@@ -99,13 +99,20 @@ class LLMPipeline(AbstractPipeline):
                     logger.info(f"Key not found in any subdoc {key}")
                     continue
                 else:
+                    lower_values = [value.lower() for value in values]
                     logger.info(f"Unification necessary for key {key}")
-                    logger.info(f"Unifying {len(values)} values {values}")
+                    logger.info(
+                        f"Unifying {len(values)} (lowered) values {lower_values}"
+                    )
 
-                    unified_dict[key] = max(
-                        list(dict.fromkeys(values)), key=values.count
-                    )  # picks the first one (according to the order of the list (-> earlier pages are preferred)) if there are multiple max values
+                    most_common = max(
+                        list(dict.fromkeys(lower_values)),
+                        key=lower_values.count,  # picks the first one (according to the order of the list (-> earlier pages are preferred)) if there are multiple max values
+                    )
 
+                    unified_dict[key] = values[
+                        lower_values.index(most_common)
+                    ]  # pick the first one in the not lowered list (restores the original casing)
                     logger.info(f"Unified value {unified_dict[key]}")
 
             if isinstance(self.parser, PARSERS.DICT_PARSER):
