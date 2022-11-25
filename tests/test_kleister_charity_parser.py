@@ -102,4 +102,4 @@ def test_parse_single_model_output_another_one():
     parsed_output = parser.parse_model_output(
         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
-    assert parsed_output == "spending_annually_in_british_pounds=."
+    assert parsed_output == ""
