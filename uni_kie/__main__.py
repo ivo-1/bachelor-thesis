@@ -25,7 +25,8 @@ if __name__ == "__main__":
     )
 
     # pipeline = BaselinePipeline(
-    #     keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,
+    #     keys=KLEISTER_CHARITY_CONSTANTS.SPECIFIC_BASELINE.prompt_keys,
+    #     model=KleisterCharitySpecificBaselineModel,
     #     pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(
     #         split="dev-0"
     #     ),
