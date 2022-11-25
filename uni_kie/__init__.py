@@ -26,7 +26,7 @@ def create_logger(
 ):
     logger = logging.getLogger(name)
     handler = logging.StreamHandler()
-    file_handler = logging.FileHandler(filename)
+    file_handler = logging.FileHandler(filename, delay=True)
     formatter = logging.Formatter(logformat)
     handler.setFormatter(formatter)
     file_handler.setFormatter(formatter)
