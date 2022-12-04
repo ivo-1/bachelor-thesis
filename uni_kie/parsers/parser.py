@@ -98,7 +98,10 @@ class KleisterCharityParser(Parser):
         If the next key is not in the model output we continue looking for the next key after that one and so on until we
         find a key that is in the model output or we reach the end of the model output.
 
-        The value is then cleaned up by removing line breaks and leading and trailing whitespaces.
+        The value is then cleaned up by removing line breaks and leading and trailing whitespaces. Also, for the "income"
+        and "spending" keys, there is an additional parser which expects some kind of number which, among other things,
+        removes leading £ symbol (because that's what the solution expects). If it can't find any number, there won't be
+        any value for those keys and they are left out of the final answer.
 
         Note that any given model output *never includes* the first key hence we add it to the model_output manually.
 
@@ -158,8 +161,17 @@ class KleisterCharityParser(Parser):
                 and value.endswith("'")
             ):
                 value = value[1:-1]
+
+            value = (
+                value.strip()
+            )  # strip again because there may have been spaces just before/after the quotation marks
             logger.info(f"Stripped value: {value}")
-            if value.lower() == "null" or value == "" or value is None:
+            if (
+                value.lower() == "null"
+                or value == ""
+                or value is None
+                or value.startswith("null ")
+            ):
                 continue
 
             if gold_key == "report_date":

@@ -22,8 +22,8 @@ dev_example_expected_output_with_last_key = (
 
 def test_parse_single_model_output():
     model_output = (
-        " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47:SECOND AVENUE\nCharity Name: "
-        "Havens Christian Hospice\nCharity Number:   \nnull  \n\nAnnual Income: \n\n  10348000.00\nPeriod "
+        " null\n Address Address (post code): 'SS0 8HX'\n\nAddress (street):    47:SECOND AVENUE\nCharity Name: "
+        'Havens Christian Hospice\nCharity Number:   \n"null \n 123" \n\nAnnual Income: \n\n  10348000.00\nPeriod '
         "End Date: 2016-03-31\nAnnual Spending:   null  "
     )
     parser = PARSERS.KLEISTER_CHARITY_PARSER
@@ -35,7 +35,7 @@ def test_parse_single_model_output():
 
 def test_parse_single_model_output_skips_key():
     model_output = (
-        " null\nAddress (post code): SS0 8HX\n\nAddress (street):    47:SECOND AVENUE\nCharity Name: "
+        ' null\nAddress (post code): "SS0 8HX" \n\nAddress (street):    47:SECOND AVENUE\nCharity Name: '
         "Havens Christian Hospice\n\n Annual Income: \n\n  10348000.00\nPeriod "
         "End Date: 2016-03-31\nAnnual Spending:   null  "
     )  # missing charity number (not just "null" but not even in the output)
