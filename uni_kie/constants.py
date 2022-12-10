@@ -1,7 +1,7 @@
 from transformers import GPT2TokenizerFast
 
+from uni_kie.models.flan_t5 import FLAN_T5
 from uni_kie.models.gpt import GPT3_Davinci, GPT_NeoX
-from uni_kie.models.t0pp import T0pp
 from uni_kie.parsers.parser import DictParser, KleisterCharityParser
 from uni_kie.pdf_to_text.pdf_to_text import KleisterCharityWrapper, PyMuPDFWrapper
 from uni_kie.prompts.prompts import NeutralPrompt
@@ -17,7 +17,7 @@ class PROMPT_VARIANTS:
 
 class MODELS:
     BASELINE = "BASELINE"
-    T0pp = T0pp
+    FLAN_T5 = FLAN_T5
 
     class GPT:
         NeoX = GPT_NeoX
