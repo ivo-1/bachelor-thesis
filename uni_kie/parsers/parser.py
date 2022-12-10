@@ -273,6 +273,9 @@ class DictParser(Parser):
             if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
                 value = Parser._parse_money(value)
 
+            if value is None:
+                continue
+
             out[prompt_key[:-1]] = value  # remove trailing colon
 
         return out
