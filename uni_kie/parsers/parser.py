@@ -258,14 +258,6 @@ class DictParser(Parser):
             )  # strip again because there may have been spaces just before/after the quotation marks
 
             logger.info(f"Stripped value: {value}")
-
-            parsed_date = Parser._parse_date_to_iso_format(value)
-            if parsed_date:
-                value = parsed_date
-
-            if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
-                value = Parser._parse_money(value)
-
             if (
                 value.lower() == "null"
                 or value == ""
@@ -273,6 +265,13 @@ class DictParser(Parser):
                 or value.startswith("null ")
             ):
                 continue
+
+            parsed_date = Parser._parse_date_to_iso_format(value)
+            if parsed_date:
+                value = parsed_date
+
+            if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
+                value = Parser._parse_money(value)
 
             out[prompt_key[:-1]] = value  # remove trailing colon
 
