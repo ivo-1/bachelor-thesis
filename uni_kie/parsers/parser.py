@@ -244,6 +244,19 @@ class DictParser(Parser):
             logger.info(f"Raw value: {value}")
             value = value.strip().replace("\n", " ").replace("  ", " ")
 
+            # remove potential leading and trailing quotation marks
+            if (
+                value.startswith('"')
+                and value.endswith('"')
+                or value.startswith("'")
+                and value.endswith("'")
+            ):
+                value = value[1:-1]
+
+            value = (
+                value.strip()
+            )  # strip again because there may have been spaces just before/after the quotation marks
+
             logger.info(f"Stripped value: {value}")
 
             parsed_date = Parser._parse_date_to_iso_format(value)
@@ -253,7 +266,12 @@ class DictParser(Parser):
             if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
                 value = Parser._parse_money(value)
 
-            if value is None or value == "" or value.lower() == "null":
+            if (
+                value.lower() == "null"
+                or value == ""
+                or value is None
+                or value.startswith("null ")
+            ):
                 continue
 
             out[prompt_key[:-1]] = value  # remove trailing colon
