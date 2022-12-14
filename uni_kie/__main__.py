@@ -51,7 +51,7 @@ if __name__ == "__main__":
         PATH_KLEISTER_CHARITY
         / pipeline.pdf_to_text_model.split
         / "predictions"
-        / f"{pipeline}_{now}.tsv"
+        / f"{now}_{pipeline}.tsv"
     )
     with open(path, "w") as f:
         for i in range(len(pipeline.pdf_to_text_model.data)):
