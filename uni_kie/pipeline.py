@@ -75,7 +75,7 @@ class LLMPipeline(AbstractPipeline):
         self.long_document_handling_variant = long_document_handling_variant
 
     def __repr__(self):
-        return f"LLMPipeline(pdf_to_text_model={self.pdf_to_text_model}, prompt_variant={self.prompt_variant}, model={self.model}, parser={self.parser})"
+        return f"LLMPipeline(prompt_variant={self.prompt_variant}, model={self.model}, parser={self.parser})"
 
     def get_parsed_output(self, model_output: List[str], prompt_keys: List[str]) -> str:
         if (

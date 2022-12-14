@@ -18,7 +18,7 @@ class GPT3_Davinci(LargeLanguageModel):
         # babbage + curie: 2048 - 256 = 1792
         self.max_input_tokens = 3840
         self.max_generated_tokens = 256
-        self.temperature = 0.1  # default: 1
+        self.temperature = 0  # default: 1
         self.top_p = 0.9  # default: 1 but using 0.9 to compare to gpt-neox
         self.presence_penalty = 0  # default: 0
         self.frequency_penalty = 0  # default: 0
@@ -31,11 +31,11 @@ class GPT3_Davinci(LargeLanguageModel):
         response = openai.Completion.create(
             model="text-davinci-002",
             prompt=prompt,
-            # temperature=self.temperature,
-            # top_p=self.top_p,
+            temperature=self.temperature,
+            top_p=self.top_p,
             max_tokens=self.max_generated_tokens,
-            # presence_penalty=self.presence_penalty,
-            # frequency_penalty=self.frequency_penalty,
+            presence_penalty=self.presence_penalty,
+            frequency_penalty=self.frequency_penalty,
             stop=self.stop,
         )["choices"][0]["text"]
         return response
@@ -50,7 +50,7 @@ class GPT_NeoX(LargeLanguageModel):
 
         self.max_input_tokens = 1792
         self.max_generated_tokens = 256
-        self.temperature = 0.1  # default: 1
+        self.temperature = 1  # default: 1
         self.top_p = 0.9  # default: 0.9
         self.top_k = 40  # default: 40
         self.presence_penalty = 0  # default: 0
@@ -66,13 +66,17 @@ class GPT_NeoX(LargeLanguageModel):
             headers={"Authorization": "Bearer " + self.api_key},
             json={
                 "prompt": prompt,
-                # "temperature": self.temperature,
-                # "top_p": self.top_p,
+                "temperature": self.temperature,
+                "top_p": self.top_p,
                 "max_tokens": self.max_generated_tokens,
-                # "presence_penalty": self.presence_penalty,
-                # "frequency_penalty": self.frequency_penalty,
+                "presence_penalty": self.presence_penalty,
+                "frequency_penalty": self.frequency_penalty,
                 "stop": self.stop,
             },
         )
         resp = response.json()
-        return resp["text"]
+        try:
+            return resp["text"]
+        except KeyError:
+            print(resp)
+            sys.exit(1)
