@@ -29,7 +29,7 @@ class GPT3_Davinci(LargeLanguageModel):
 
     def predict(self, prompt: str) -> str:
         response = openai.Completion.create(
-            model="text-davinci-002",
+            model="text-davinci-003",
             prompt=prompt,
             temperature=self.temperature,
             top_p=self.top_p,
@@ -50,7 +50,7 @@ class GPT_NeoX(LargeLanguageModel):
 
         self.max_input_tokens = 1792
         self.max_generated_tokens = 256
-        self.temperature = 1  # default: 1
+        self.temperature = 0.1  # default: 1
         self.top_p = 0.9  # default: 0.9
         self.top_k = 40  # default: 40
         self.presence_penalty = 0  # default: 0

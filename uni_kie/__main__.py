@@ -17,7 +17,7 @@ if __name__ == "__main__":
     logger.info(f"Using version {__version__}")
     pipeline = LLMPipeline(
         keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,
-        model=MODELS.GPT.NeoX(),
+        model=MODELS.GPT.Davinci(),
         pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(split="dev-0"),
         prompt_variant=PROMPT_VARIANTS.NEUTRAL,
         long_document_handling_variant=LONG_DOCUMENT_HANDLING_VARIANTS.SPLIT_TO_SUBDOCUMENTS,
