@@ -132,9 +132,9 @@ dmypy.json
 .DS_STORE
 
 # dataset (uncompressed)
+uni_kie/datasets/kleister_charity/train/in.tsv
+uni_kie/datasets/kleister_charity/train/in_extended.tsv
 uni_kie/datasets/kleister_charity/dev-0/in.tsv
 uni_kie/datasets/kleister_charity/dev-0/in_extended.tsv
 uni_kie/datasets/kleister_charity/test-A/in.tsv
 uni_kie/datasets/kleister_charity/test-A/in_extended.tsv
-uni_kie/datasets/kleister_charity/dev-0/predictions/smLLMPipeline(pdf_to_text_model=KleisterCharityWrapper, prompt_variant=NeutralPrompt, model=GPT3_Davinci(max_input_tokens=3840, temperature=1, top_p=0.9, presence_penalty=0, frequency_penalty=0), parser=KleisterCharityParser)_2022-11-24T01-32-39.tsv
-uni_kie/datasets/kleister_charity/dev-0/predictions/smLLMPipeline(pdf_to_text_model=KleisterCharityWrapper, prompt_variant=NeutralPrompt, model=GPT_NeoX(max_input_tokens=1792, temperature=1, top_p=0.9, top_k=40, presence_penalty=0, frequency_penalty=0), parser=KleisterCharityParser)_2022-11-24T01-31-47.tsv
