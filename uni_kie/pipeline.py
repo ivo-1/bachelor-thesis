@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Union
+from typing import List, Optional, Union
 
 from uni_kie import create_logger
 from uni_kie.constants import (
@@ -57,6 +57,7 @@ class LLMPipeline(AbstractPipeline):
         prompt_variant: Prompt,
         long_document_handling_variant: LONG_DOCUMENT_HANDLING_VARIANTS,
         parser: Parser,
+        shots: Optional[List[str]],
     ):
         """
         Initializes the inference pipeline.
@@ -71,7 +72,7 @@ class LLMPipeline(AbstractPipeline):
         super().__init__(
             keys=keys, model=model, pdf_to_text_model=pdf_to_text_model, parser=parser
         )
-        self.prompt_variant = prompt_variant(prompt_keys=keys)
+        self.prompt_variant = prompt_variant(prompt_keys=keys, shots=shots)
         self.long_document_handling_variant = long_document_handling_variant
 
     def __repr__(self):
@@ -141,7 +142,10 @@ class LLMPipeline(AbstractPipeline):
                 self.long_document_handling_variant
                 == LONG_DOCUMENT_HANDLING_VARIANTS.TRUNCATE_MIDDLE
             ):
-                # subtracting 5 to make sure that the prompt is not too long
+                raise NotImplementedError(
+                    "This doesn't handle prompt and shots correctly yet."
+                )
+                # subtracting 5 to make sure that the model input is not too long
                 truncated_tokenized_model_input = (
                     tokenized_model_input["input_ids"][
                         : self.model.max_input_tokens // 2 - 5
@@ -160,46 +164,111 @@ class LLMPipeline(AbstractPipeline):
                 == LONG_DOCUMENT_HANDLING_VARIANTS.SPLIT_TO_SUBDOCUMENTS
             ):
                 prompt_length = self.prompt_variant.prompt_number_of_tokens
+                print(f"prompt_length: {prompt_length}")
+                model_input_shots_length = (
+                    self.prompt_variant.model_input_shots_number_of_tokens
+                )  # how many tokens are used for shots
+                print(f"model_input_shots_length: {model_input_shots_length}")
+
+                # raise NotImplementedError("This doesn't handle prompt and shots correctly yet.")
+
+                if model_input_shots_length > 0.5 * self.model.max_input_tokens:
+                    raise ValueError(
+                        "model_input_shots_length is too long for the model, can not be more than half of the model's max_input_tokens"
+                    )
+
+                print(
+                    f"start_of_document_length: {self.prompt_variant.start_of_document_number_of_tokens}"
+                )
+                print(
+                    f"end_of_document_length: {self.prompt_variant.end_of_document_number_of_tokens}"
+                )
                 overlap_no_tokens = (
                     20  # how many tokens to overlap between subdocuments
                 )
 
                 # cut off the prompt from the model input
-                model_input_without_prompt_input_ids = tokenized_model_input[
+                model_input_without_prompt_and_shots_input_ids = tokenized_model_input[
                     "input_ids"
                 ][:-prompt_length]
-                subdocuments = []
 
+                # cut off the model_input_shots (which can be 0) (they are in front of the model input)
+                model_input_without_prompt_and_shots_input_ids = (
+                    model_input_without_prompt_and_shots_input_ids[
+                        model_input_shots_length:
+                    ]
+                )
+
+                # cut off the self.prompt_variant.start_of_document and self.prompt_variant.end_of_document
+                model_input_without_prompt_and_shots_input_ids = (
+                    model_input_without_prompt_and_shots_input_ids[
+                        self.prompt_variant.start_of_document_number_of_tokens
+                        + 1 : -self.prompt_variant.end_of_document_number_of_tokens
+                    ]
+                )
+
+                subdocuments = []
+                print(
+                    f"len(model_input_without_prompt_and_shots_input_ids): {len(model_input_without_prompt_and_shots_input_ids)}"
+                )
                 for i in range(
                     0,
                     number_of_tokens_model_input,
                     self.model.max_input_tokens
                     - overlap_no_tokens
                     - prompt_length
-                    - 5,  # subtracting 5 to make sure that the prompt is not too long
+                    - model_input_shots_length
+                    - self.prompt_variant.start_of_document_number_of_tokens
+                    - 1
+                    - self.prompt_variant.end_of_document_number_of_tokens
+                    - 5,  # subtracting 5 to make sure that the model input is not too long
                 ):
-                    subdocument = model_input_without_prompt_input_ids[
+                    print(f"i: {i}")
+                    subdocument = model_input_without_prompt_and_shots_input_ids[
                         i : i
                         + self.model.max_input_tokens
                         - prompt_length
-                        - 5  # subtracting 5 to make sure that the prompt is not too long
+                        - model_input_shots_length
+                        - self.prompt_variant.start_of_document_number_of_tokens
+                        - 1
+                        - self.prompt_variant.end_of_document_number_of_tokens
+                        - 5  # subtracting 5 to make sure that the model input is not too long
                     ]
+                    print(
+                        f"i+self.model.max_input_tokens - prompt_length - model_input_shots_length - self.prompt_variant.start_of_document_number_of_tokens - self.prompt_variant.end_of_document_number_of_tokens - 5: {i+self.model.max_input_tokens - prompt_length - model_input_shots_length - self.prompt_variant.start_of_document_number_of_tokens - self.prompt_variant.end_of_document_number_of_tokens - 5}"
+                    )
                     subdocuments.append(subdocument)
-
+                print(f"len(subdocuments): {len(subdocuments)}")
+                for subdoc in subdocuments:
+                    print(
+                        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+                    )
+                    print(f"len(subdoc): {len(subdoc)}")
                 subdocuments = [
                     TOKENIZERS.GPT2_TOKENIZER_FAST.decode(subdocument)
                     for subdocument in subdocuments
+                    if len(subdocument)
+                    > 0  # it can happen that the last subdocument is empty
                 ]
-                subdocuments_with_prompt = [
+                subdocuments_with_prompt_and_shots = [
                     self.prompt_variant.get_model_input(subdocument)
                     for subdocument in subdocuments
                 ]
+                print(">>>>>>>>>>>>>>>> SUBDOCS WITH PROMPT AND SHOTS <<<<<<<<<<<<<<<<")
+                for subdoc in subdocuments_with_prompt_and_shots:
+                    print(
+                        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+                    )
+                    print(subdoc)
+                    print("number of tokens in this subdoc:")
+                    print(len(TOKENIZERS.GPT2_TOKENIZER_FAST(subdoc)["input_ids"]))
+
                 logger.info(
-                    f"Split document into {len(subdocuments_with_prompt)} subdocuments."
+                    f"Split document into {len(subdocuments_with_prompt_and_shots)} subdocuments."
                 )
                 subdocuments_predictions = [
                     self.model.predict(subdocument)
-                    for subdocument in subdocuments_with_prompt
+                    for subdocument in subdocuments_with_prompt_and_shots
                 ]
                 return subdocuments_predictions
 
@@ -217,6 +286,8 @@ class LLMPipeline(AbstractPipeline):
         """
         text = self.pdf_to_text_model.get_text(file_path)
         model_input = self.prompt_variant.get_model_input(text)
+        print(">>>>>>>>>>>> WHOLE MODEL INPUT <<<<<<<<<<<<<<<<")
+        print(model_input)
         model_output = self.get_model_output(model_input)
         parsed_output = self.get_parsed_output(model_output, self.keys)
         return parsed_output
