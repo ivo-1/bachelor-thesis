@@ -144,6 +144,38 @@ python-versions = "*"
 numpy = ">=1.15.0"
 
 [[package]]
+name = "boto3"
+version = "1.26.33"
+description = "The AWS SDK for Python"
+category = "main"
+optional = false
+python-versions = ">= 3.7"
+
+[package.dependencies]
+botocore = ">=1.29.33,<1.30.0"
+jmespath = ">=0.7.1,<2.0.0"
+s3transfer = ">=0.6.0,<0.7.0"
+
+[package.extras]
+crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
+
+[[package]]
+name = "botocore"
+version = "1.29.33"
+description = "Low-level, data-driven core of boto 3."
+category = "main"
+optional = false
+python-versions = ">= 3.7"
+
+[package.dependencies]
+jmespath = ">=0.7.1,<2.0.0"
+python-dateutil = ">=2.1,<3.0.0"
+urllib3 = ">=1.25.4,<1.27"
+
+[package.extras]
+crt = ["awscrt (==0.15.3)"]
+
+[[package]]
 name = "catalogue"
 version = "2.0.8"
 description = "Super lightweight function registries for your library"
@@ -211,6 +243,14 @@ python-versions = ">=3.6"
 [package.dependencies]
 pydantic = ">=1.7.4,<1.8 || >1.8,<1.8.1 || >1.8.1,<1.11.0"
 srsly = ">=2.4.0,<3.0.0"
+
+[[package]]
+name = "contextlib2"
+version = "21.6.0"
+description = "Backports and enhancements for the contextlib module"
+category = "main"
+optional = false
+python-versions = ">=3.6"
 
 [[package]]
 name = "contourpy"
@@ -288,6 +328,17 @@ description = "XML bomb protection for Python stdlib modules"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[[package]]
+name = "dill"
+version = "0.3.6"
+description = "serialize all of python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+graph = ["objgraph (>=1.7.2)"]
 
 [[package]]
 name = "entrypoints"
@@ -373,6 +424,17 @@ unicode = ["unicodedata2 (>=14.0.0)"]
 woff = ["zopfli (>=0.1.4)", "brotlicffi (>=0.8.0)", "brotli (>=1.0.1)"]
 
 [[package]]
+name = "google-pasta"
+version = "0.2.0"
+description = "pasta is an AST-based Python refactoring library"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = "*"
+
+[[package]]
 name = "huggingface-hub"
 version = "0.11.0"
 description = "Client library to download and publish models, datasets and other repos on the huggingface.co hub"
@@ -409,7 +471,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "importlib-metadata"
-version = "5.0.0"
+version = "4.13.0"
 description = "Read metadata from Python packages"
 category = "main"
 optional = false
@@ -560,6 +622,14 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[[package]]
+name = "jmespath"
+version = "1.0.1"
+description = "JSON Matching Expressions"
+category = "main"
+optional = false
+python-versions = ">=3.7"
 
 [[package]]
 name = "jsonschema"
@@ -771,6 +841,17 @@ description = "A sane Markdown parser with useful plugins and renderers"
 category = "main"
 optional = false
 python-versions = "*"
+
+[[package]]
+name = "multiprocess"
+version = "0.70.14"
+description = "better multiprocessing and multithreading in python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+dill = ">=0.3.6"
 
 [[package]]
 name = "murmurhash"
@@ -1051,6 +1132,20 @@ qa = ["flake8 (==3.8.3)", "mypy (==0.782)"]
 testing = ["docopt", "pytest (<6.0.0)"]
 
 [[package]]
+name = "pathos"
+version = "0.3.0"
+description = "parallel graph management and execution in heterogeneous computing"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+dill = ">=0.3.6"
+multiprocess = ">=0.70.14"
+pox = ">=0.3.2"
+ppft = ">=1.7.6.6"
+
+[[package]]
 name = "pathy"
 version = "0.8.1"
 description = "pathlib.Path subclasses for local and cloud bucket storage"
@@ -1144,6 +1239,25 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "pox"
+version = "0.3.2"
+description = "utilities for filesystem exploration and automated builds"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "ppft"
+version = "1.7.6.6"
+description = "distributed and parallel python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+dill = ["dill (>=0.3.6)"]
+
+[[package]]
 name = "preshed"
 version = "3.0.8"
 description = "Cython hash table that trusts the keys are pre-hashed"
@@ -1176,6 +1290,26 @@ python-versions = ">=3.6.2"
 
 [package.dependencies]
 wcwidth = "*"
+
+[[package]]
+name = "protobuf"
+version = "3.20.3"
+description = "Protocol Buffers"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "protobuf3-to-dict"
+version = "0.1.5"
+description = "Ben Hodgson: A teeny Python library for creating Python dicts from protocol buffers and the reverse. Useful as an intermediate step before serialisation (e.g. to JSON). Kapor: upgrade it to PB3 and PY3, rename it to protobuf3-to-dict"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+protobuf = ">=2.3.0"
+six = "*"
 
 [[package]]
 name = "psutil"
@@ -1449,6 +1583,59 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "s3transfer"
+version = "0.6.0"
+description = "An Amazon S3 Transfer Manager"
+category = "main"
+optional = false
+python-versions = ">= 3.7"
+
+[package.dependencies]
+botocore = ">=1.12.36,<2.0a.0"
+
+[package.extras]
+crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
+
+[[package]]
+name = "sagemaker"
+version = "2.125.0"
+description = "Open source library for training and deploying models on Amazon SageMaker."
+category = "main"
+optional = false
+python-versions = ">= 3.6"
+
+[package.dependencies]
+attrs = ">=20.3.0,<23"
+boto3 = ">=1.26.28,<2.0"
+google-pasta = "*"
+importlib-metadata = ">=1.4.0,<5.0"
+numpy = ">=1.9.0,<2.0"
+packaging = ">=20.0"
+pandas = "*"
+pathos = "*"
+protobuf = ">=3.1,<4.0"
+protobuf3-to-dict = ">=0.1.5,<1.0"
+schema = "*"
+smdebug_rulesconfig = "1.0.1"
+
+[package.extras]
+all = ["urllib3 (==1.26.8)", "docker-compose (==1.29.2)", "docker (>=5.0.2,<7.0.0)", "PyYAML (==5.4.1)", "scipy (==1.7.3)"]
+local = ["urllib3 (==1.26.8)", "docker-compose (==1.29.2)", "docker (>=5.0.2,<7.0.0)", "PyYAML (==5.4.1)"]
+scipy = ["scipy (==1.7.3)"]
+test = ["urllib3 (==1.26.8)", "docker-compose (==1.29.2)", "docker (>=5.0.2,<7.0.0)", "PyYAML (==5.4.1)", "scipy (==1.7.3)", "tox (==3.24.5)", "flake8 (==4.0.1)", "pytest (==6.2.5)", "pytest-cov (==3.0.0)", "pytest-rerunfailures (==10.2)", "pytest-timeout (==2.1.0)", "pytest-xdist (==2.4.0)", "coverage (>=5.2,<6.2)", "mock (==4.0.3)", "contextlib2 (==21.6.0)", "awslogs (==0.14.0)", "black (==22.3.0)", "stopit (==1.1.2)", "apache-airflow (==2.4.1)", "apache-airflow-providers-amazon (==4.0.0)", "attrs (==22.1.0)", "fabric (==2.6.0)", "requests (==2.27.1)", "sagemaker-experiments (==0.1.35)", "Jinja2 (==3.0.3)", "pandas (>=1.3.5,<1.5)", "scikit-learn (==1.0.2)"]
+
+[[package]]
+name = "schema"
+version = "0.7.5"
+description = "Simple data validation library"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+contextlib2 = ">=0.5.5"
+
+[[package]]
 name = "seaborn"
 version = "0.12.1"
 description = "Statistical data visualization"
@@ -1520,6 +1707,14 @@ http = ["requests"]
 s3 = ["boto3"]
 test = ["boto3", "google-cloud-storage", "azure-storage-blob", "azure-common", "azure-core", "requests", "moto[server] (==1.3.14)", "pathlib2", "responses", "paramiko", "parameterizedtestcase", "pytest", "pytest-rerunfailures"]
 webhdfs = ["requests"]
+
+[[package]]
+name = "smdebug-rulesconfig"
+version = "1.0.1"
+description = "SMDebug RulesConfig"
+category = "main"
+optional = false
+python-versions = ">=2.7"
 
 [[package]]
 name = "sniffio"
@@ -1967,7 +2162,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "0fc3cf92c9486493a5e3bbc2fdd75d83f9c98e66eba544781c17e990c3191451"
+content-hash = "2675f092add42d54699ed8bdbe4fe62ddc88073c78b7e62bd1817d83662829ff"
 
 [metadata.files]
 anyio = []
@@ -1984,6 +2179,8 @@ backcall = [
 beautifulsoup4 = []
 bleach = []
 blis = []
+boto3 = []
+botocore = []
 catalogue = []
 certifi = []
 cffi = []
@@ -1991,6 +2188,7 @@ charset-normalizer = []
 click = []
 colorama = []
 confection = []
+contextlib2 = []
 contourpy = []
 cycler = [
     {file = "cycler-0.11.0-py3-none-any.whl", hash = "sha256:3a27e95f763a428a739d2add979fa7494c912a32c17c4c38c4d5f082cad165a3"},
@@ -2004,6 +2202,7 @@ decorator = [
     {file = "decorator-5.1.1.tar.gz", hash = "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330"},
 ]
 defusedxml = []
+dill = []
 entrypoints = []
 et-xmlfile = []
 exceptiongroup = []
@@ -2011,6 +2210,11 @@ executing = []
 fastjsonschema = []
 filelock = []
 fonttools = []
+google-pasta = [
+    {file = "google-pasta-0.2.0.tar.gz", hash = "sha256:c9f2c8dfc8f96d0d5808299920721be30c9eec37f2389f28904f454565c8a16e"},
+    {file = "google_pasta-0.2.0-py2-none-any.whl", hash = "sha256:4612951da876b1a10fe3960d7226f0c7682cf901e16ac06e473b267a5afa8954"},
+    {file = "google_pasta-0.2.0-py3-none-any.whl", hash = "sha256:b32482794a366b5366a32c92a9a9201b107821889935a02b3e51f6b432ea84ed"},
+]
 huggingface-hub = []
 idna = []
 importlib-metadata = []
@@ -2028,6 +2232,7 @@ jedi = [
     {file = "jedi-0.18.1.tar.gz", hash = "sha256:74137626a64a99c8eb6ae5832d99b3bdd7d29a3850fe2aa80a4126b2a7d949ab"},
 ]
 jinja2 = []
+jmespath = []
 jsonschema = []
 jupyter = []
 jupyter-client = []
@@ -2046,6 +2251,7 @@ markupsafe = []
 matplotlib = []
 matplotlib-inline = []
 mistune = []
+multiprocess = []
 murmurhash = []
 nbclassic = []
 nbclient = []
@@ -2069,6 +2275,7 @@ parso = [
     {file = "parso-0.8.3-py2.py3-none-any.whl", hash = "sha256:c001d4636cd3aecdaf33cbb40aebb59b094be2a74c556778ef5576c175e19e75"},
     {file = "parso-0.8.3.tar.gz", hash = "sha256:8c07be290bb59f03588915921e29e8a50002acaf2cdc5fa0e0114f91709fafa0"},
 ]
+pathos = []
 pathy = []
 pdf2image = []
 pexpect = [
@@ -2086,9 +2293,13 @@ pluggy = [
     {file = "pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
 ]
+pox = []
+ppft = []
 preshed = []
 prometheus-client = []
 prompt-toolkit = []
+protobuf = []
+protobuf3-to-dict = []
 psutil = []
 ptyprocess = [
     {file = "ptyprocess-0.7.0-py2.py3-none-any.whl", hash = "sha256:4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35"},
@@ -2206,6 +2417,9 @@ regex = [
     {file = "regex-2021.11.10.tar.gz", hash = "sha256:f341ee2df0999bfdf7a95e448075effe0db212a59387de1a70690e4acb03d4c6"},
 ]
 requests = []
+s3transfer = []
+sagemaker = []
+schema = []
 seaborn = []
 send2trash = []
 setuptools-scm = []
@@ -2217,6 +2431,7 @@ smart-open = [
     {file = "smart_open-5.2.1-py3-none-any.whl", hash = "sha256:71d14489da58b60ce12fc3ecb823facc59a8b23cd1b58edb97175640350d3a62"},
     {file = "smart_open-5.2.1.tar.gz", hash = "sha256:75abf758717a92a8f53aa96953f0c245c8cedf8e1e4184903db3659b419d4c17"},
 ]
+smdebug-rulesconfig = []
 sniffio = []
 soupsieve = []
 spacy = []
