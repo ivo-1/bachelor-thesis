@@ -30,26 +30,15 @@ class KLEISTER_CHARITY_CONSTANTS:
 
     SHOTS = [
         {
-            "input": "GARTH CELYN TRUST /YMDDIRIEDOLAETH GARTH CELYN\nPEN Y BRYN MANOR\nGARTH CELYN\nABERGWYNGREGYN\nGWYNEDD LL33 0LA\nCHARITABLE INCORPORATED ASSOCIATION: 1153355\nAccounts for the year ended 31st March 2014\nIncome from public donations £12,962.00\nExpenditure\nNIL\nBalance in the bank as at 31st March 2014\n£12,962,00\nBank Account: HSBC, High Street, Bangor, Gwynedd\nSort Code: 40-09-03\nAccount number: 61866125\nSigned Howard R. J. Kimberley\nSecretary to the Trustees\nREPORT OF THE TRUSTEES\nThe Trustees are accumulating funds from private donations from members of the public, that\nwill enable them to purchase the land, of historic and archaeological interest and importance,\nCAE CELYN, ABERGWYNGREGYN, GWYNEDD.\nThe Trustees and Friends of the Trust have actively been involved in researching the history\nof the area, and making this available for public benefit.\nHoward R. J . Kimberley\n19 January 2016\nSecretary to the Trustees\nGARTH CELYN TRUST /YMDDIRIEDOLAETH GARTH CELYN\nPEN Y BRYN MANOR\nGARTH CELYN\nABERGWYNGREGYN\nGWYNEDD LL33 0LA\nCHARITABLE INCORPORATED ASSOCIATION: 1153355\nAccounts for the year ended 31st March 2015\nIncome from public donations £17,633.00\nExpenditure (single payment to Brabners)\n£1,200.00\nBalance in the bank as at 31st March 2015\n£29,395.00\nBank Account: HSBC, High Street, Bangor, Gwynedd\nSort Code: 40-09-03\nAccount number: 61866125\nSigned Howard R. J. Kimberley\nSecretary to the Trustees\nREPORT OF THE TRUSTEES\nThe Trustees are accumulating funds from private donations from members of the public, that\nwill enable them to purchase the land, of historic and archaeological interest and importance,\nCAE CELYN, ABERGWYNGREGYN, GWYNEDD.\nThe Trust, as at 31st March 2015, has £29,395 in its bank account collected for this purpose.\nA single payment was made to Brabners, solicitors of Liverpool, for legal advice for the\nTrust.\nThe Trustees and Friends of the Trust have actively been involved in researching the history\nof the area, and making this available for public benefit.\nHoward R. J . Kimberley\n19 January 2016\nSecretary to the Trustees",
+            "input": "=== Begin Example Document ===\nUshaw Moor Pre-School/Childcare\nDurham Road\nUshaw Moor\nDurham\nDH7 7LF\nTelephone 01913737536\nAnnual General Meeting\nOctober\nAttending meeting: Catherine Winn, Julie Davison, Lindsley Davison, Deborah\nMellis, Megan Bowery, Nikki Lowerson, Karen Smith, Janice Laight,\nKayleigh Hughes, Abbie Syers\nApologies from Lynsey Everett.\nUp date on school situation:\nMr Truman has left the school after a along absent, and a new head is now in\nposition, Mrs Maughan has had a chat with Julie, and the girls from the pre-\nschool are more optimistic with the future links between us. As the school have\na new head they will be due an ofsted and Mrs Maughan has put this as her\npriority but has already invited our children to attend their Christmas\nactivities.\nOther ideas included: Stay and play days, with parents and shared outdoor\nactivities.\nPre-School:\nKaren reported the pre-school had now used up all their childcare spaces and\nwould not be taking any September starters from the childcare setting. As the\npre-school taking children doing 3o hours per week number of spaces were less.\nJulie is concerned about turning these younger away may have a impact on next\nyear's intake.\nChildcare:\nLindsley has concerns about the number of children using the childcare during\nthe school holidays, as some days there are more staff than children. Catherine\nreminded the staff that they should take their due holidays outside of term\ntime when the numbers are low. It was agreed that we would monitor the\nsituation and maybe change opening hours.\nNext staff meeting to be arranged\nAgenda: Christmas activities\n=== End Example Document ===",
             "solution": {
-                "address__post_town": "LLANFAIRFECHAN",
-                "address__postcode": "LL33_0LA",
-                "charity_name": "Garth_Celyn_Trust",
-                "charity_number": "153355",
-                "income_annually_in_british_pounds": "17633.00",
-                "report_date": "2015-03-31",
-                "spending_annually_in_british_pounds": "1200.00",
+                "address__post_town": "DURHAM",
+                "address__postcode": "DH7_7LF",
+                "address__street_line": "Durham_Road",
+                "charity_name": "Ushaw_Moor_Pre-School",
             },
-            "target_model_output": " LLANFAIRFECHAN\nAddress (post code): LL33 0LA\nAddress (street): null\nCharity Name: Garth Celyn Trust\nCharity Number: 1153355\nAnnual Income: 17633.00\nPeriod End Date: 2015-03-31\nAnnual Spending: 1200.00\n<|stop key|>",
+            "target_model_output": " DURHAM\nAddress (post code): DH7 7LF\nAddress (street): Durham Road\nCharity Name: Ushaw Moor Pre-School\nCharity Number: null\nAnnual Income: null\nPeriod End Date: null\nAnnual Spending: null\n<|stop key|>",
         },
-        # {
-        #     "input": "FOO BAR",
-        #     "solution": {
-        #         "address__post_town": "FOO",
-        #         "address__postcode": "BAR",
-        #     },
-        #     "target_model_output": " FOO\nAddress (post code): BAR\nAddress (street): null\nCharity Name: null\nCharity Number: null\nAnnual Income: null\nPeriod End Date: null\nAnnual Spending: null\n<|stop key|>"
-        # }
     ]
 
     class SPECIFIC_BASELINE:
