@@ -138,3 +138,4 @@ uni_kie/datasets/kleister_charity/dev-0/in.tsv
 uni_kie/datasets/kleister_charity/dev-0/in_extended.tsv
 uni_kie/datasets/kleister_charity/test-A/in.tsv
 uni_kie/datasets/kleister_charity/test-A/in_extended.tsv
+uni_kie/flan_t5_call_endpoint.py
