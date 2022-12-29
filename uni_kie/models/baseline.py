@@ -250,7 +250,7 @@ class KleisterCharitySpecificBaselineModel(AbstractBaselineModel):
         """
         Takes in a a document and extracts key-value pairs according to the
         keys provided by looking for the best match of the key in the text
-        with some fuzziness defined by error_percentage (i.e. we limit the levenstein distance) and taking
+        with some fuzziness defined by error_percentage (i.e. we limit the levenshtein distance) and taking
         the first entity after the best match within allowed_entity_range.
 
         Returns the key-value pairs like so:
