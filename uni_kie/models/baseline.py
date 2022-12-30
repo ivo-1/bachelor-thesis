@@ -51,7 +51,7 @@ class AbstractBaselineModel(AbstractModel):
     def get_best_match_span(self, text: str, key: str) -> Optional[Tuple[int, int]]:
         """
         Returns the best match for the key in the text with some fuzziness
-        (i.e. we limit the levenstein distance) of the best match.
+        (i.e. we limit the levenshtein distance) of the best match.
 
         (?b) -> BESTMATCH
         (?i) -> IGNORECASE
