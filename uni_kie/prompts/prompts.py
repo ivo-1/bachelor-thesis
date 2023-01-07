@@ -31,7 +31,9 @@ class NeutralPrompt(Prompt):
         )  # TODO: use constants.py (can't because circular import)
         self.prompt_number_of_tokens = len(self.tokenized_prompt_text["input_ids"])
         self.prompt_char_length = len(self.prompt_text)
-        self.start_of_document = ""
+        self.start_of_document = (
+            "Find below the OCR'd text of an example document:\n###\n"
+        )
         self.end_of_document = ""
 
         self.shots = False
@@ -41,7 +43,7 @@ class NeutralPrompt(Prompt):
             self.shots = True
             self.model_input_shots = ""
             for shot in shots:
-                self.model_input_shots += f"{self.start_of_document}{shot['input']}{self.end_of_document}{self.prompt_text}{shot['target_model_output']}\n\n"
+                self.model_input_shots += f"{self.start_of_document}{shot['input']}{self.end_of_document}{self.prompt_text}{shot['target_model_output']}\n"
 
             self.tokenized_model_input_shots = GPT2TokenizerFast.from_pretrained(
                 "gpt2"
@@ -50,8 +52,19 @@ class NeutralPrompt(Prompt):
                 self.tokenized_model_input_shots["input_ids"]
             )
 
-            self.start_of_document = ""
+            # modify the start and end of document for the actual model input (i.e. the new document)
+            self.start_of_document = (
+                "###\nFind below the OCR'd text of a *new* document:\n###\n"
+            )
             self.end_of_document = ""
+
+            # also changing the prompt text for the actual model input (i.e. the new document)
+            self.prompt_text = f'\n\nExtract {self._key_list_to_string(self.prompt_keys + [STOP_KEY[1:]])} from the document above. If you can\'t find a key-value pair in the document set the value to "null". Your solution cannot be identical to the example.\n\nKey: Value\n{self.prompt_keys[0]}:'
+            self.tokenized_prompt_text = GPT2TokenizerFast.from_pretrained("gpt2")(
+                self.prompt_text
+            )  # TODO: use constants.py (can't because circular import)
+            self.prompt_number_of_tokens = len(self.tokenized_prompt_text["input_ids"])
+            self.prompt_char_length = len(self.prompt_text)
 
         self.tokenized_start_of_document = GPT2TokenizerFast.from_pretrained("gpt2")(
             self.start_of_document
