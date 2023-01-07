@@ -9,6 +9,7 @@ from uni_kie.kleister_charity_constants import (
     KLEISTER_CHARITY_CONSTANTS,
     PATH_KLEISTER_CHARITY,
 )
+from uni_kie.models.baseline import BaselineModel, KleisterCharitySpecificBaselineModel
 
 logger = create_logger(__name__)
 
@@ -39,9 +40,6 @@ if __name__ == "__main__":
 
     logger.info(
         f"Using pipeline {pipeline} on {pipeline.pdf_to_text_model.split} split",
-    )
-    logger.info(
-        f"Using long_document_handling_variant: {pipeline.long_document_handling_variant}",
     )
     logger.info(
         f"Searching for keys: {pipeline.keys}",
