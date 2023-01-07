@@ -39,7 +39,7 @@ class NeutralPrompt(Prompt):
         self.shots = False
         self.model_input_shots_number_of_tokens = 0
 
-        if shots:
+        if shots:  # this is not yet perfectly shot-agnostic, but works for shots=1
             self.shots = True
             self.model_input_shots = ""
             for shot in shots:
