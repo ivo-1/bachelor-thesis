@@ -196,10 +196,17 @@ class LLMPipeline(AbstractPipeline):
                 ):
                     model_input_without_prompt_and_shots_input_ids = (
                         model_input_without_prompt_and_shots_input_ids[
-                            self.prompt_variant.start_of_document_number_of_tokens
-                            + 1 : -self.prompt_variant.end_of_document_number_of_tokens
+                            self.prompt_variant.start_of_document_number_of_tokens :
                         ]
                     )
+                    if (
+                        self.prompt_variant.end_of_document_number_of_tokens > 0
+                    ):  # if it is 0 this would yield an empty list
+                        model_input_without_prompt_and_shots_input_ids = (
+                            model_input_without_prompt_and_shots_input_ids[
+                                : -self.prompt_variant.end_of_document_number_of_tokens
+                            ]
+                        )
 
                 subdocuments = []
                 for i in range(
@@ -241,6 +248,9 @@ class LLMPipeline(AbstractPipeline):
                 logger.info(
                     f"Split document into {len(subdocuments_with_prompt_and_shots)} subdocuments."
                 )
+                # for i, subdocument in enumerate(subdocuments_with_prompt_and_shots):
+                #     logger.info(f"Subdocument {i}:\n{subdocument}")
+
                 subdocuments_predictions = [
                     self.model.predict(subdocument)
                     for subdocument in subdocuments_with_prompt_and_shots
