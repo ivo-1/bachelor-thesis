@@ -58,13 +58,13 @@ class NeutralPrompt(Prompt):
             )
             self.end_of_document = ""
 
-            # also changing the prompt text for the actual model input (i.e. the new document)
-            self.prompt_text = f'\n\nExtract {self._key_list_to_string(self.prompt_keys + [STOP_KEY[1:]])} from the document above. If you can\'t find a key-value pair in the document set the value to "null". Your solution cannot be identical to the example.\n\nKey: Value\n{self.prompt_keys[0]}:'
-            self.tokenized_prompt_text = GPT2TokenizerFast.from_pretrained("gpt2")(
-                self.prompt_text
-            )  # TODO: use constants.py (can't because circular import)
-            self.prompt_number_of_tokens = len(self.tokenized_prompt_text["input_ids"])
-            self.prompt_char_length = len(self.prompt_text)
+            # for future work, we might also want to change the prompt text for the actual model input (i.e. the new document)
+            # self.prompt_text = f'\n\nExtract {self._key_list_to_string(self.prompt_keys + [STOP_KEY[1:]])} from the document above. If you can\'t find a key-value pair in the document set the value to "null". Your solution cannot be identical to the example.\n\nKey: Value\n{self.prompt_keys[0]}:'
+            # self.tokenized_prompt_text = GPT2TokenizerFast.from_pretrained("gpt2")(
+            #     self.prompt_text
+            # )
+            # self.prompt_number_of_tokens = len(self.tokenized_prompt_text["input_ids"])
+            # self.prompt_char_length = len(self.prompt_text)
 
         self.tokenized_start_of_document = GPT2TokenizerFast.from_pretrained("gpt2")(
             self.start_of_document
