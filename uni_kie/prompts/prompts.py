@@ -31,9 +31,7 @@ class NeutralPrompt(Prompt):
         )  # TODO: use constants.py (can't because circular import)
         self.prompt_number_of_tokens = len(self.tokenized_prompt_text["input_ids"])
         self.prompt_char_length = len(self.prompt_text)
-        self.start_of_document = (
-            "Find below the OCR'd text of an example document:\n###\n"
-        )
+        self.start_of_document = ""
         self.end_of_document = ""
 
         self.shots = False
@@ -42,6 +40,9 @@ class NeutralPrompt(Prompt):
         if shots:  # this is not yet perfectly shot-agnostic, but works for shots=1
             self.shots = True
             self.model_input_shots = ""
+            self.start_of_document = (
+                "Find below the OCR'd text of an example document:\n###\n"
+            )
             for shot in shots:
                 self.model_input_shots += f"{self.start_of_document}{shot['input']}{self.end_of_document}{self.prompt_text}{shot['target_model_output']}\n"
 
