@@ -39,11 +39,11 @@ def test_parse_single_model_output_empty():
 
 def test_parse_single_model_output_money_parser_ii():
     model_output = "  null\nAnnual Income: \n\n  null\n Period End Date: 31 December 2015\nAnnual Spending:  £19.4m"
-    parser = PARSERS.KLEISTER_CHARITY_PARSER
+    parser = PARSERS.DICT_PARSER
     parsed_output = parser.parse_model_output(
         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
-    assert (
-        parsed_output
-        == "report_date=2015-12-31 spending_annually_in_british_pounds=19.4"
-    )
+    assert parsed_output == {
+        "Period End Date": "2015-12-31",
+        "Annual Spending": "19.4",
+    }
