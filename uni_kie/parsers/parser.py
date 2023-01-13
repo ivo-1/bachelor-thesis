@@ -266,15 +266,19 @@ class DictParser(Parser):
             ):
                 continue
 
-            parsed_date = Parser._parse_date_to_iso_format(value)
-            if parsed_date:
-                value = parsed_date
+            if (
+                KLEISTER_CHARITY_CONSTANTS.prompt_key_to_gold_key[prompt_key[:-1]]
+                == "report_date"
+            ):
+                value = Parser._parse_date_to_iso_format(value)
 
             if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
                 value = Parser._parse_money(value)
 
             if value is None:
                 continue
+
+            value = value.replace(" ", "_").replace(":", "_")
 
             out[prompt_key[:-1]] = value  # remove trailing colon
 
