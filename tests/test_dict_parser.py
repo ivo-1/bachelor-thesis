@@ -2,7 +2,6 @@ import pytest
 
 from uni_kie.constants import PARSERS
 from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
-from uni_kie.parsers.parser import DictParser
 
 # line 2 from dev-0/expected.tsv
 dev_example_expected_output = {
@@ -24,16 +23,7 @@ def test_parse_single_model_output():
 
     parsed_output = parser.parse_model_output(
         model_output,
-        prompt_keys=[
-            "Address (post town)",
-            "Address (post code)",
-            "Address (street)",
-            "Charity Name",
-            "Charity Number",
-            "Annual Income",
-            "Period End Date",
-            "Annual Spending",
-        ],
+        KLEISTER_CHARITY_CONSTANTS.prompt_keys,
     )
     assert parsed_output == dev_example_expected_output
 
@@ -45,3 +35,15 @@ def test_parse_single_model_output_empty():
         model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
     )
     assert parsed_output == {}
+
+
+def test_parse_single_model_output_money_parser_ii():
+    model_output = "  null\nAnnual Income: \n\n  null\n Period End Date: 31 December 2015\nAnnual Spending:  £19.4m"
+    parser = PARSERS.KLEISTER_CHARITY_PARSER
+    parsed_output = parser.parse_model_output(
+        model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
+    )
+    assert (
+        parsed_output
+        == "report_date=2015-12-31 spending_annually_in_british_pounds=19.4"
+    )
