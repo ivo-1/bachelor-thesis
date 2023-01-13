@@ -47,3 +47,17 @@ def test_parse_single_model_output_money_parser_ii():
         "Period End Date": "2015-12-31",
         "Annual Spending": "19.4",
     }
+
+
+def test_parse_single_model_output_money_parser_iii():
+    """
+    NOTE: can use this test to check what the date parser does to non-sensical values, e.g. Period End Date: £19.4m
+    """
+    model_output = "  null\nAnnual Income: \n\n  null\n Period End Date: null\nAnnual Spending:  £19.4m"
+    parser = PARSERS.DICT_PARSER
+    parsed_output = parser.parse_model_output(
+        model_output, KLEISTER_CHARITY_CONSTANTS.prompt_keys
+    )
+    assert parsed_output == {
+        "Annual Spending": "19.4",
+    }
