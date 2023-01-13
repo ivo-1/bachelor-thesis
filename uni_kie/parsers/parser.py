@@ -278,8 +278,6 @@ class DictParser(Parser):
             if value is None:
                 continue
 
-            value = value.replace(" ", "_").replace(":", "_")
-
             out[prompt_key[:-1]] = value  # remove trailing colon
 
         return out
