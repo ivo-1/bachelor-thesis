@@ -2,6 +2,7 @@ import json
 import os
 
 import boto3
+import requests
 from sagemaker.serializers import JSONSerializer
 
 from uni_kie.models.model import LargeLanguageModel
@@ -10,32 +11,50 @@ from uni_kie.models.model import LargeLanguageModel
 class FLAN_T5(LargeLanguageModel):
     def __init__(self):
         super().__init__()
-        self.max_input_tokens = (
-            768  # TODO: find the max input tokens (only limited by memory)
+        self.endpoint_url = (
+            "https://w5jinsyv9isnuqfg.us-east-1.aws.endpoints.huggingface.cloud"
         )
-        self.client = boto3.client("sagemaker-runtime")
-        self.endpoint_name = os.getenv("FLAN_T5_ENDPOINT_NAME")
-        self.content_type = "application/json"
-        self.accept = "application/json"
+        self.api_key = os.environ["HUGGINGFACE_API_KEY"]
+        self.headers = {
+            "Authorization": f"Bearer {self.api_key}",
+        }
+
+        self.max_input_tokens = (
+            1792  # TODO: find the max input tokens (only limited by memory)
+        )
+        self.max_generated_tokens = 256
+        self.temperature = 100  # default: 1
+        self.top_p = 0.9  # default: 0.9
+        self.top_k = 40  # default: 40
+        self.repetition_penalty = 0.0000001  # default: 0.0 (not allowed to be 0.0)
 
     def __repr__(self):
-        return super().__repr__()
+        return f"Flan_T5(max_input_tokens={self.max_input_tokens}, temperature={self.temperature}, top_p={self.top_p}, top_k={self.top_k}"
 
     def predict(self, input: str) -> str:
-        payload = {
-            "inputs": input,
+        data = {
+            "inputs": "Once upon a time, there was",
             "parameters": {
-                "max_length": 3,
-                "temperature": 0.7,
+                "max_length": int(self.max_generated_tokens),
+                "temperature": float(self.temperature),
+                # 'top_p': self.top_p,
+                # 'top_k': self.top_k,
+                # 'repetition_penalty': self.repetition_penalty,
+                # 'return_full_text': True,
             },
             "options": {
                 "use_cache": False,
             },
         }
-        response = self.client.invoke_endpoint(
-            EndpointName=self.endpoint_name,
-            ContentType=self.content_type,
-            Accept=self.accept,
-            Body=JSONSerializer().serialize(payload),
+
+        response = requests.post(
+            self.endpoint_url,
+            headers=self.headers,
+            json=data,
         )
-        return json.loads(response["Body"].read())[0]["generated_text"]
+
+        resp = response.json()
+        try:
+            return resp[0]["generated_text"]
+        except KeyError:
+            print(resp)
