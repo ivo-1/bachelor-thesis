@@ -20,6 +20,7 @@ class GPT3_Davinci(LargeLanguageModel):
         self.max_generated_tokens = 256
         self.temperature = 0  # default: 1
         self.top_p = 0.9  # default: 1 but using 0.9 to compare to gpt-neox
+        # NOTE: top_k is not supported by davinci
         self.presence_penalty = 0  # default: 0
         self.frequency_penalty = 0  # default: 0
         self.stop = [STOP_KEY]
