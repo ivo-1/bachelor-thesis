@@ -1,11 +1,11 @@
 
-charity_name=The_Salvation_Army charity_number=0 income_annually_in_british_pounds=531000.00 spending_annually_in_british_pounds=550000053100031122016.00
+charity_name=The_Salvation_Army charity_number=0 income_annually_in_british_pounds=531000.00 report_date=2016-12-31 spending_annually_in_british_pounds=550000053100031122016.00
 
 charity_name=Sanata_Charitable_Trust
-address__post_town=Bishop's_Stortford address__postcode=CM23_3UZ address__street_line=The_Clock_House charity_name=Cantate charity_number=1039369 income_annually_in_british_pounds=20221214.00 report_date=2013-12-31 spending_annually_in_british_pounds=20221214.00
+address__post_town=Bishop's_Stortford address__postcode=CM23_3UZ address__street_line=The_Clock_House charity_name=Cantate charity_number=1039369 income_annually_in_british_pounds=.00 report_date=2013-12-31 spending_annually_in_british_pounds=.00
 
 
-charity_name=Battersea_Dogs_&_Cats_Home charity_number=020-822-822-822 spending_annually_in_british_pounds=163204732047320473204732047.00
+charity_name=Battersea_Dogs_&_Cats_Home charity_number=020-822-822-822
 address__post_town=Hitchin address__postcode=SG8_1JG address__street_line=The_Priory_School charity_name=Hitchin_Educational_Foundation charity_number=02025 income_annually_in_british_pounds=1344700.00 report_date=2014-03-31 spending_annually_in_british_pounds=1344700.00
 
 
@@ -28,19 +28,19 @@ charity_name=Bloomfield_Learning_Centre_for_Children charity_number=1016894 repo
 
 
 
-address__post_town=Cambridge address__postcode=CB2_3QH address__street_line=Trumpington_Street charity_name=Downing_College charity_number=1068-12-14 income_annually_in_british_pounds=1000000.00 spending_annually_in_british_pounds=1000000.00
-address__post_town=Horsham address__postcode=RH13_OLJ address__street_line=The_Avenue charity_name=Christ's_Hospital report_date=2018-08-31
+address__post_town=Cambridge address__postcode=CB2_3QH address__street_line=Trumpington_Street charity_name=Downing_College charity_number=1068 income_annually_in_british_pounds=1000000.00
+address__post_town=Horsham address__postcode=RH13_OLJ address__street_line=The_Avenue charity_name=Christ's_Hospital
 charity_name=Catch22
 
 
 
 
-address__post_town=Taunton address__postcode=TA1_1JG address__street_line=King's_College charity_name=King's_Schools_Taunton_Limited charity_number=02795 income_annually_in_british_pounds=20221214.00 report_date=2014-08-31 spending_annually_in_british_pounds=.00
+address__post_town=Taunton address__postcode=TA1_1JG address__street_line=King's_College charity_name=King's_Schools_Taunton_Limited charity_number=02795 income_annually_in_british_pounds=.00 report_date=2014-08-31 spending_annually_in_british_pounds=.00
 
 
 
 
-charity_name=London_Transport_Museum charity_number=1123122
+charity_name=London_Transport_Museum charity_number=1123122 report_date=2016-03-31
 
 
 
@@ -48,7 +48,7 @@ charity_name=London_Transport_Museum charity_number=1123122
 address__post_town=Worlingham address__postcode=PE28_0JU address__street_line=Worlingham_Community_Facility charity_name=Worlingham_Community_Facility charity_number=02705_804 report_date=2016-04-05 spending_annually_in_british_pounds=99.00
 
 
-spending_annually_in_british_pounds=131201723120173312017431201753120176.00
+
 
 
 
@@ -58,7 +58,7 @@ address__post_town=Hedon address__postcode=HU12_7TQ address__street_line=Church_
 
 
 charity_name=The_Archive_of_Market_and_Social_Research charity_number=1166619 income_annually_in_british_pounds=25299.00 report_date=2018-03-31 spending_annually_in_british_pounds=25299010420178310234501252994360602252994360603252994360604252994360605252994360606252994360607252994360608252994360609.00
-address__post_town=Scarborough address__postcode=YO11_1UB address__street_line=Scarborough_Trinity_House_Seafarers'_Trust charity_name=Scarborough_Trinity_House_Seafarers'_Trust charity_number=02027 report_date=2015-12-31 spending_annually_in_british_pounds=312015123120151331201514312015153120151631201517.00
+address__post_town=Scarborough address__postcode=YO11_1UB address__street_line=Scarborough_Trinity_House_Seafarers'_Trust charity_name=Scarborough_Trinity_House_Seafarers'_Trust charity_number=02027 report_date=2015-12-31
 
 
 
@@ -78,10 +78,10 @@ charity_name=The_Ehlers-Danlos_Support_UK charity_number=02034 report_date=2016-
 address__post_town=Fleet address__postcode=Hants address__street_line=Fleet_Phoenix charity_name=Fleet_Phoenix charity_number=1144057 income_annually_in_british_pounds=102000.00 report_date=2017-03-31 spending_annually_in_british_pounds=80000.00
 
 
-address__post_town=Grimsby address__postcode=DN33_2JH address__street_line=Freeman_Street charity_name=City_Church charity_number=1931-09-21 income_annually_in_british_pounds=398417.00 report_date=2017-12-31 spending_annually_in_british_pounds=3457886789101112.00
-spending_annually_in_british_pounds=5151431.12.169686118016414229252673219787324012419237511516216182313431.12.151087423123982644162291208324051512446582362985421618
-charity_name=Wythenshawe_Hospital_Transplant_Fund income_annually_in_british_pounds=83000.00 report_date=2016-03-31 spending_annually_in_british_pounds=83000312016.1993.6
-spending_annually_in_british_pounds=...12.34567
+address__post_town=Grimsby address__postcode=DN33_2JH address__street_line=Freeman_Street charity_name=City_Church charity_number=033322j333 income_annually_in_british_pounds=398417.00 report_date=2017-12-31 spending_annually_in_british_pounds=3457886789101112.00
+
+charity_name=Wythenshawe_Hospital_Transplant_Fund spending_annually_in_british_pounds=312016.00
+
 
 address__post_town=London address__postcode=W1W_7PA address__street_line=3rd_Church_of_Christ,_Scientist charity_name=Third_Church_of_Christ,_Scientist,_London charity_number=02735100 income_annually_in_british_pounds=12235475.00 report_date=2014-12-31 spending_annually_in_british_pounds=12793077.00
 
@@ -92,22 +92,22 @@ address__post_town=London address__postcode=W1W_7PA address__street_line=3rd_Chu
 
 
 
-spending_annually_in_british_pounds=.1016.302018112.102162014
-address__post_town=London address__postcode=E1W_1BJ charity_name=Barts_and_The_London_School_of_Medicine_and_Dentistry charity_number=020-827-8200 income_annually_in_british_pounds=20221214.00 report_date=2017-03-31 spending_annually_in_british_pounds=20221214.00
-spending_annually_in_british_pounds=121234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071.00
 
-spending_annually_in_british_pounds=28595216766452379.01789751325..12015
+address__post_town=London address__postcode=E1W_1BJ charity_name=Barts_and_The_London_School_of_Medicine_and_Dentistry charity_number=020-827-8200 income_annually_in_british_pounds=1277.00 report_date=2023-01-15 spending_annually_in_british_pounds=312017.00
+
+
+
 
 
 address__post_town=Northampton address__postcode=NN1_5AJ address__street_line=Billing_Road charity_name=Beckett's_&_Sargeant's_Educational_Foundation charity_number=309766 report_date=2017-12-31
-spending_annually_in_british_pounds=.01234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465
 
 
 
 
 
 
-spending_annually_in_british_pounds=.123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566
+
+
 
 
 
@@ -117,24 +117,24 @@ charity_name=Welsh_Ambulance_Services_NHS_Trust charity_number=01527
 address__post_town=York address__postcode=YO24_4AB address__street_line=Holgate_Road charity_name=Holgate_Pre-School charity_number=1022746 report_date=2018-08-31
 
 
-spending_annually_in_british_pounds=111.2.3.4.5.6.7.8.9.10.11.12.13.14.15.16.17.18.19.20.21.22.23.24.25.26.27.28.29.30.31.32.33.34.35.36.37.38.39.40.41.42.43.44.45.46.47.48.49.50.51.52.53.
 
 
 
-address__post_town=Bishop_Auckland address__postcode=DL14_7SF address__street_line=Bishop_Auckland charity_name=Eleven_Arches charity_number=1159011 income_annually_in_british_pounds=20221214.00 report_date=2018-09-30 spending_annually_in_british_pounds=20221214.00
-spending_annually_in_british_pounds=.11111111111111111111111111111111111111111
-address__post_town=Harlow address__postcode=CM202QJ address__street_line=Leah_Manning_Centre income_annually_in_british_pounds=20221214.00 spending_annually_in_british_pounds=20221214.00
-address__post_town=Oxford address__postcode=OX1_2JL address__street_line=Oxford_Road charity_name=Oxford_Jewish_Congregation charity_number=231853 income_annually_in_british_pounds=20221214.00 report_date=2018-07-31 spending_annually_in_british_pounds=20221214.00
+
+address__post_town=Bishop_Auckland address__postcode=DL14_7SF address__street_line=Bishop_Auckland charity_name=Eleven_Arches charity_number=1159011 income_annually_in_british_pounds=.00 report_date=2018-09-30 spending_annually_in_british_pounds=.00
+
+address__post_town=Harlow address__postcode=CM202QJ address__street_line=Leah_Manning_Centre income_annually_in_british_pounds=.00 spending_annually_in_british_pounds=.00
+address__post_town=Oxford address__postcode=OX1_2JL address__street_line=Oxford_Road charity_name=Oxford_Jewish_Congregation charity_number=231853 income_annually_in_british_pounds=.00 report_date=2018-07-31 spending_annually_in_british_pounds=310720181110680.00
 
 
 
 address__post_town=Bishop's_Stortford address__postcode=CM23_3UZ address__street_line=Bishop's_Stortford charity_name=Cantate_Youth_Choir charity_number=1039369 income_annually_in_british_pounds=52177.00 report_date=2017-12-31 spending_annually_in_british_pounds=52177.00
 address__post_town=Cambridge address__postcode=CB2_3XE address__street_line=Churchill_College charity_name=Churchill_College charity_number=805 income_annually_in_british_pounds=1945000.00 report_date=2015-06-30 spending_annually_in_british_pounds=1945000.00
 
-spending_annually_in_british_pounds=19.00
 
 
-charity_name=Boxer_Dog_Rescue_Northern_England charity_number=1153127 income_annually_in_british_pounds=20221214.00 report_date=2019-12-31 spending_annually_in_british_pounds=20221214.00
+
+charity_name=Boxer_Dog_Rescue_Northern_England charity_number=1153127 income_annually_in_british_pounds=.00 report_date=2019-12-31 spending_annually_in_british_pounds=.00
 
 
 
@@ -145,7 +145,7 @@ charity_name=Pharmaco_Foundation_Ltd charity_number=07016271_(England_and_Wales)
 
 
 address__post_town=EXETER address__postcode=EX1_1HS address__street_line=Cathedral_Offices charity_name=Exeter_Cathedral_Preservation_Trust charity_number=276397 income_annually_in_british_pounds=221461.00 report_date=2013-12-31 spending_annually_in_british_pounds=28245722146120122232011850412012174138.20952012132086020124034265201235815.2824572012330
-address__post_town=EN2_0BU address__postcode=EN2_0BU address__street_line=53_Lancaster_Road charity_name=ENFIELD_LGBT_NETWORK charity_number=1111437 income_annually_in_british_pounds=20221214.00 report_date=2018-07-31 spending_annually_in_british_pounds=.00312018131201823120183312018431201853120186
+address__post_town=EN2_0BU address__postcode=EN2_0BU address__street_line=53_Lancaster_Road charity_name=ENFIELD_LGBT_NETWORK charity_number=1111437 income_annually_in_british_pounds=.00 report_date=2018-07-31 spending_annually_in_british_pounds=.00312018131201823120183312018431201853120186
 
 
 charity_name=The_Sanata_Charitable_Trust income_annually_in_british_pounds=117426.00 report_date=2016-12-31 spending_annually_in_british_pounds=11742631201621174263355220162015161174262443383552113152556549924943757448005258627599524245182375772504800390258654651058627558287275103112634.00
@@ -160,8 +160,8 @@ charity_name=ONE_CHURCH_BRIGHTON charity_number=1158409
 
 
 
-spending_annually_in_british_pounds=5.00
-address__post_town=Bishop_Auckland address__postcode=DL14_0JG address__street_line=Bishop_Auckland charity_name=Eleven_Arches charity_number=1159011 income_annually_in_british_pounds=20221214.00 report_date=2017-09-30 spending_annually_in_british_pounds=.0013020171159011.1159011..
+
+address__post_town=Bishop_Auckland address__postcode=DL14_0JG address__street_line=Bishop_Auckland charity_name=Eleven_Arches charity_number=1159011 income_annually_in_british_pounds=.00 report_date=2017-09-30 spending_annually_in_british_pounds=.0013020171159011.1159011..
 
 charity_name=Juniper_Hill_Voluntary_Fund charity_number=1062941 report_date=2018-12-31
 
@@ -176,7 +176,7 @@ address__post_town=Cheltenham address__postcode=GL52_2HN address__street_line=Vi
 
 
 charity_name=Acorn_Under_Fives charity_number=295296 income_annually_in_british_pounds=94409.12 report_date=2017-12-31 spending_annually_in_british_pounds=106731.7922422422412012..336.
-address__post_town=Cambridge address__postcode=CB2_3QH address__street_line=Trumpington_Street charity_name=Cambridge_University charity_number=1095-12-14 income_annually_in_british_pounds=.0 spending_annually_in_british_pounds=.0
+address__post_town=Cambridge address__postcode=CB2_3QH address__street_line=Trumpington_Street charity_name=Cambridge_University charity_number=1095 income_annually_in_british_pounds=.0
 
 
 
@@ -184,17 +184,17 @@ address__post_town=Cambridge address__postcode=CB2_3QH address__street_line=Trum
 
 
 
-spending_annually_in_british_pounds=1312015.00
-
-spending_annually_in_british_pounds=6789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778.00
 
 
-address__post_town=Lichfield address__postcode=DE14_1JG address__street_line=St_Mary's_Church charity_name=The_Guild_of_St_Mary's_Centre_Lichfield charity_number=01527_811_722 income_annually_in_british_pounds=20221214.00 report_date=2013-12-31 spending_annually_in_british_pounds=.0031201325.26.27.28.29.30.31.32.33.34.35.36.37.38.39.40.41.42.43.44.45.46.47.48.49.50.51.52.53.54.55.56.57.58.59.60.61.62.63.64.65.66.67.68.69.70.71.72.73.74.75.76.77.78.79.80.81.82.83.84.85.86.87.88.89.90.91.92.93.94.95.96.97
-charity_name=Sight_Advice_South_Lakes charity_number=1145818 income_annually_in_british_pounds=20221214.00
 
-charity_name=Hagley_Ramblers_Scout_Group charity_number=504641 income_annually_in_british_pounds=5000.00 report_date=2012-03-31 spending_annually_in_british_pounds=500022012......
 
-charity_name=Camden_Lesbian,_Gay,_Bisexual_and_Transgender_Forum charity_number=02735_033 income_annually_in_british_pounds=20221214.00 report_date=2017-03-31 spending_annually_in_british_pounds=20221214.00
+
+address__post_town=Lichfield address__postcode=DE14_1JG address__street_line=St_Mary's_Church charity_name=The_Guild_of_St_Mary's_Centre_Lichfield charity_number=01527_811_722 income_annually_in_british_pounds=.00 report_date=2013-12-31 spending_annually_in_british_pounds=.0031201325.26.27.28.29.30.31.32.33.34.35.36.37.38.39.40.41.42.43.44.45.46.47.48.49.50.51.52.53.54.55.56.57.58.59.60.61.62.63.64.65.66.67.68.69.70.71.72.73.74.75.76.77.78.79.80.81.82.83.84.85.86.87.88.89.90.91.92.93.94.95.96.97
+charity_name=Sight_Advice_South_Lakes charity_number=1145818 income_annually_in_british_pounds=.00
+
+charity_name=Hagley_Ramblers_Scout_Group charity_number=504641 spending_annually_in_british_pounds=312012.00
+
+charity_name=Camden_Lesbian,_Gay,_Bisexual_and_Transgender_Forum charity_number=02735_033 income_annually_in_british_pounds=.00 report_date=2017-03-31 spending_annually_in_british_pounds=.00
 
 
 
@@ -215,7 +215,7 @@ address__post_town=Swansea address__postcode=SA5_4BN address__street_line=PO_Box
 charity_name=Christian_Aid charity_number=01825_733_933 income_annually_in_british_pounds=1986000.00 report_date=2016-03-31 spending_annually_in_british_pounds=1986000.00
 
 
-spending_annually_in_british_pounds=63120182018207.00
+
 
 
 charity_name=Yorkshire_Proficiency_Tests_Committee charity_number=024-904-904 income_annually_in_british_pounds=35514.00 report_date=2015-08-31 spending_annually_in_british_pounds=35514.00
@@ -234,20 +234,7 @@ charity_name=Droylsden_&_District_Foodbank
 
 
 
-address__post_town=Wigan address__postcode=WN8_1JH address__street_line=Wigan_Road charity_name=Rotary_Club_of_Wigan charity_number=02700 income_annually_in_british_pounds=20221214.00 spending_annually_in_british_pounds=20221214.00
-
-
-
-
-spending_annually_in_british_pounds=120003120171.2000312017.8888888888888888
-
-spending_annually_in_british_pounds=12.12.12.12.12.12.12.12.12.12.12
-spending_annually_in_british_pounds=12.00
-
-
-
-
-charity_name=ChristChurch_Redbourn charity_number=1153148 spending_annually_in_british_pounds=......1
+address__post_town=Wigan address__postcode=WN8_1JH address__street_line=Wigan_Road charity_name=Rotary_Club_of_Wigan charity_number=02700 income_annually_in_british_pounds=.00
 
 
 
@@ -256,15 +243,28 @@ charity_name=ChristChurch_Redbourn charity_number=1153148 spending_annually_in_b
 
 
 
-address__post_town=Cheltenham address__postcode=GL52_0QY address__street_line=The_Promenade charity_name=Cheltenham_College charity_number=1139-12-14 income_annually_in_british_pounds=1905000.00 report_date=2015-08-31 spending_annually_in_british_pounds=1905000.00
-spending_annually_in_british_pounds=1312014.312014312014312014312014312014312014312014312014312014312014312014312014312014
 
 
 
-spending_annually_in_british_pounds=1831201713072105852801048232515.00
 
-spending_annually_in_british_pounds=.123456789
-address__post_town=Selsdon address__postcode=CR0_1JG address__street_line=Selsdon_Road charity_name=Contact charity_number=020_7704_0100 income_annually_in_british_pounds=20221214.00 report_date=2014-03-31 spending_annually_in_british_pounds=20221214.00
+charity_name=ChristChurch_Redbourn charity_number=1153148
+
+
+
+
+
+
+
+
+address__post_town=Cheltenham address__postcode=GL52_0QY address__street_line=The_Promenade charity_name=Cheltenham_College charity_number=1139 income_annually_in_british_pounds=1905000.00 report_date=2015-08-31 spending_annually_in_british_pounds=1905000.00
+
+
+
+
+
+
+
+address__post_town=Selsdon address__postcode=CR0_1JG address__street_line=Selsdon_Road charity_name=Contact charity_number=020_7704_0100 income_annually_in_british_pounds=.00 report_date=2014-03-31 spending_annually_in_british_pounds=.00
 
 
 
@@ -279,13 +279,13 @@ charity_name=Leigh_Lollipops_Nursery charity_number=01306_611381
 
 charity_name=Future_Dharma_Fund report_date=2016-12-31
 
-spending_annually_in_british_pounds=122232425262728292102.00
 
 
 
 
 
-spending_annually_in_british_pounds=431201750415859100131797643712675.00
+
+
 
 charity_name=New_Diorama
 
@@ -296,20 +296,20 @@ charity_name=Kirklees_Active_Leisure charity_number=4331165 income_annually_in_b
 charity_name=Christians_Against_Poverty_Bradford charity_number=014
 
 
-spending_annually_in_british_pounds=3020182018201733.23.33.115015330898825002650153308988179157169128244682500269682502313367755020917226523.3485348534383
+
 
 charity_name=Greasby_Community_Association charity_number=1145588
 
 
 charity_name=Mission_Aviation_Fellowship_International charity_number=01880
-spending_annually_in_british_pounds=.1.10.123
 
 
 
-charity_name=Breast_Cancer_Now charity_number=9347608 spending_annually_in_british_pounds=201718201718201718201718201718201718201718201718201718201718201718201718201718201718201718.00
+
+charity_name=Breast_Cancer_Now charity_number=9347608
 address__post_town=York address__postcode=Y024_4AB address__street_line=Holgate_Road charity_name=Holgate_Pre-School charity_number=1022746 report_date=2017-08-31 spending_annually_in_british_pounds=2.
 charity_name=Lord_Wandsworth_College charity_number=01244 income_annually_in_british_pounds=2739703.00 report_date=2018-08-31 spending_annually_in_british_pounds=2739703.00
-address__post_town=Wymondham address__postcode=PE9_1JX address__street_line=Hope_Community_Church charity_name=Hope_Community_Church charity_number=9845076 report_date=2017-07-31
+address__post_town=Wymondham address__postcode=PE9_1JX address__street_line=Hope_Community_Church charity_name=Hope_Community_Church charity_number=9845076 spending_annually_in_british_pounds=312017.00
 
 
 
@@ -319,14 +319,14 @@ address__post_town=Wymondham address__postcode=PE9_1JX address__street_line=Hope
 
 address__post_town=Canterbury address__postcode=CT1_2EE address__street_line=3_The_Precincts income_annually_in_british_pounds=1923000.00 report_date=2017-03-31 spending_annually_in_british_pounds=192300031201711312017123120171331201714312017153120171631201717.00
 
-charity_name=Sight_Advice_South_Lakes charity_number=1145818 income_annually_in_british_pounds=20221214.00 report_date=2018-03-31 spending_annually_in_british_pounds=20221214.00
+charity_name=Sight_Advice_South_Lakes charity_number=1145818 income_annually_in_british_pounds=.00 report_date=2018-03-31 spending_annually_in_british_pounds=.00
 
 
 
-spending_annually_in_british_pounds=.123120161.1993...........
 
-address__post_town=ENFIELD address__postcode=2022-12-10 address__street_line=ST_ANDREW'S_CHURCH charity_name=St_Andrew's_Church,_Enfield charity_number=1138421 report_date=2016-12-31 spending_annually_in_british_pounds=1138421312016.00
-address__post_town=Lichfield address__postcode=WS14_7JX address__street_line=Market_Square charity_name=Guild_of_St_Mary's_Centre charity_number=02782699 income_annually_in_british_pounds=20221214.00 report_date=2017-12-31 spending_annually_in_british_pounds=.0033120172.3.4.5.6.7
+
+address__post_town=ENFIELD address__postcode=E10 address__street_line=ST_ANDREW'S_CHURCH charity_name=St_Andrew's_Church,_Enfield charity_number=1138421 report_date=2016-12-31 spending_annually_in_british_pounds=1138421312016.00
+address__post_town=Lichfield address__postcode=WS14_7JX address__street_line=Market_Square charity_name=Guild_of_St_Mary's_Centre charity_number=02782699 income_annually_in_british_pounds=.00 report_date=2017-12-31 spending_annually_in_british_pounds=.0033120172.3.4.5.6.7
 
 
 
@@ -335,19 +335,19 @@ address__post_town=Lichfield address__postcode=WS14_7JX address__street_line=Mar
 charity_name=Wormington_Village_Society charity_number=1155074 income_annually_in_british_pounds=24240.88 report_date=2017-07-31 spending_annually_in_british_pounds=24240.88
 
 
-charity_name=Action_on_Pre-Eclampsia_Limited spending_annually_in_british_pounds=18312017......
-
-
-
-spending_annually_in_british_pounds=1312016.3097661512201010201511201011201513200813201312
-
-spending_annually_in_british_pounds=1111111111111111111111111111111111111111111111111111111111111111111111111.00
+charity_name=Action_on_Pre-Eclampsia_Limited
 
 
 
 
-charity_name=Barts_and_The_London_Charity charity_number=1280-12-14
-spending_annually_in_british_pounds=131201623120163312016431201653120166.00
+
+
+
+
+
+
+charity_name=Barts_and_The_London_Charity charity_number=1280
+
 
 
 
@@ -372,25 +372,25 @@ charity_name=Leicester_Print_Workshop_Studios_&_Resource charity_number=02836855
 
 
 
-charity_name=London_Transport_Museum charity_number=020-8207-9000 spending_annually_in_british_pounds=201718669.201820180000000000001.2411241119818671197824313046179219133512628414045422038247845164825221422024416443511441246239028675396592611322121278908655415462166692017186710.20182018
+charity_name=London_Transport_Museum charity_number=020-8207-9000
 
-charity_name=Exeter_Cathedral_Preservation_Trust charity_number=02735 income_annually_in_british_pounds=4300000.00 report_date=2015-12-31 spending_annually_in_british_pounds=1.1102162014..0776980907769809.0776980907769809.0776980907769809.
+charity_name=Exeter_Cathedral_Preservation_Trust charity_number=02735 income_annually_in_british_pounds=4300000.00 report_date=2015-12-31 spending_annually_in_british_pounds=4300000312015.
 address__post_town=ENFIELD address__postcode=EN2_0BU address__street_line=53_Lancaster_Road charity_name=Enfield_LGBT_Network charity_number=1111437 income_annually_in_british_pounds=57379.00 report_date=2016-07-31 spending_annually_in_british_pounds=58039312016.312016.312016.312016.312016.312016.312016.312016.312016.312016.
 
 charity_name=The_Archive_of_Market_and_Social_Research charity_number=1166619 report_date=2017-03-31
 
-charity_name=Litherland_Youth_&_Community_Centre charity_number=07817450 income_annually_in_british_pounds=20221215.00 report_date=2018-03-31 spending_annually_in_british_pounds=.00.1.1.1.1.1.1.1.1.
+charity_name=Litherland_Youth_&_Community_Centre charity_number=07817450 income_annually_in_british_pounds=.00 report_date=2018-03-31 spending_annually_in_british_pounds=.00.1.1.1.1.1.1.1.1.
 
 
 address__post_town=Bishop_Auckland address__postcode=DL14_7NR address__street_line=Auckland_Castle charity_name=Eleven_Arches charity_number=1159011 income_annually_in_british_pounds=10637450.00 report_date=2016-09-30 spending_annually_in_british_pounds=14711590110302016.00
-address__post_town=Reading address__postcode=RG1_5AR address__street_line=Leighton_Park charity_name=Leighton_Park_Trust charity_number=00171900 income_annually_in_british_pounds=55705455121926.00 spending_annually_in_british_pounds=5121926312017.00
+address__post_town=Reading address__postcode=RG1_5AR address__street_line=Leighton_Park charity_name=Leighton_Park_Trust charity_number=00171900 income_annually_in_british_pounds=55705455121926.00 report_date=2017-08-31 spending_annually_in_british_pounds=5121926312017.00
 
 charity_name=Welsh_Ambulance_Services_NHS_Trust charity_number=016-904 income_annually_in_british_pounds=1000000.00 report_date=2018-03-31 spending_annually_in_british_pounds=1000000.00
 address__post_town=Hitchin address__postcode=Hertfordshire address__street_line=Bancroft charity_name=Hitchin_Educational_Foundation charity_number=027-985 income_annually_in_british_pounds=1746342.00 report_date=2018-03-31 spending_annually_in_british_pounds=17463420279851746342312018.00
 address__post_town=Kimbolton address__postcode=PE28_0JH address__street_line=Kimbolton_School charity_name=Kimbolton_School charity_number=66152 income_annually_in_british_pounds=1080000.00 report_date=2018-08-31 spending_annually_in_british_pounds=1080000.00
 
 
-address__post_town=Malvern address__postcode=WR14_3DF address__street_line=College_Road charity_name=Malvern_College_Incorporated charity_number=527578 income_annually_in_british_pounds=16514240.00 report_date=2022-07-31 spending_annually_in_british_pounds=17414643...................
+address__post_town=Malvern address__postcode=WR14_3DF address__street_line=College_Road charity_name=Malvern_College_Incorporated charity_number=527578 income_annually_in_british_pounds=16514240.00 report_date=2023-07-31 spending_annually_in_british_pounds=17414643...................
 
 
 
@@ -398,37 +398,37 @@ address__post_town=Malvern address__postcode=WR14_3DF address__street_line=Colle
 
 
 
-address__post_town=Loughborough address__postcode=LE11_2DU address__street_line=Burton_Walks charity_name=Loughborough_Schools_Foundation_(Formerly_Loughborough_Endowed_Schools) charity_number=1081765 income_annually_in_british_pounds=20221215.00 report_date=2018-08-31 spending_annually_in_british_pounds=20221215.00
+address__post_town=Loughborough address__postcode=LE11_2DU address__street_line=Burton_Walks charity_name=Loughborough_Schools_Foundation_(Formerly_Loughborough_Endowed_Schools) charity_number=1081765 income_annually_in_british_pounds=.00 report_date=2018-08-31 spending_annually_in_british_pounds=.00
 charity_name=FMAAT charity_number=FMAAT
 
 
 
-address__post_town=Oxford address__postcode=OX1_1HJ address__street_line=St_Aldate's charity_name=Oxford_Jewish_Congregation charity_number=1069-12-15 report_date=2017-07-31
+address__post_town=Oxford address__postcode=OX1_1HJ address__street_line=St_Aldate's charity_name=Oxford_Jewish_Congregation charity_number=1069 spending_annually_in_british_pounds=312017.00
 
 
 
-charity_name=HQIP charity_number=0 spending_annually_in_british_pounds=....................0.1
+charity_name=HQIP charity_number=0 report_date=2018-03-31 spending_annually_in_british_pounds=....................0.1
 
 
 address__post_town=Taunton address__postcode=TA1_1JG address__street_line=The_Old_School,_Taunton charity_name=King's_Schools_Taunton charity_number=02735 income_annually_in_british_pounds=1945000.00 report_date=2018-08-31 spending_annually_in_british_pounds=1945000.00
 charity_name=Walsingham_Care charity_number=05814727
-address__post_town=Louth address__postcode=LN1_1JL address__street_line=Victoria_Road charity_name=Louth_Playgoers_Society charity_number=02700 income_annually_in_british_pounds=1690000.00 report_date=2016-05-31 spending_annually_in_british_pounds=.01234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465
+address__post_town=Louth address__postcode=LN1_1JL address__street_line=Victoria_Road charity_name=Louth_Playgoers_Society charity_number=02700 income_annually_in_british_pounds=1690000.00 report_date=2016-05-31 spending_annually_in_british_pounds=1690000.00
 
 
 address__post_town=Bishop's_Stortford address__postcode=CM23_3UZ address__street_line=69_Manston_Drive charity_name=Cantate charity_number=1039369 report_date=2016-12-31 spending_annually_in_british_pounds=1039369031122016.00
 
 
 charity_name=Arnside_Educational_Institute charity_number=526894
-spending_annually_in_british_pounds=312016312017......
 
 
-spending_annually_in_british_pounds=.........24
+
+
 
 address__post_town=Redbourn address__postcode=HP2_2JX address__street_line=Fish_Street charity_name=ChristChurch_Redbourn charity_number=1153148 income_annually_in_british_pounds=44715.00 report_date=2017-09-30 spending_annually_in_british_pounds=57967.84
 
 
 
-address__post_town=Worcester address__postcode=WR3_7SZ address__street_line=The_Hedgerow,_Chestnut_Close,_Fernhill_Heath,_Worcester spending_annually_in_british_pounds=.144.1451455....
+address__post_town=Worcester address__postcode=WR3_7SZ address__street_line=The_Hedgerow,_Chestnut_Close,_Fernhill_Heath,_Worcester
 
 
 address__post_town=Shoreham address__postcode=BN42_4TH address__street_line=The_Corner_House charity_name=Shoreham_and_District_Mental_Health_Association charity_number=02764800 income_annually_in_british_pounds=1230086.00 report_date=2017-03-31 spending_annually_in_british_pounds=1230086.00
@@ -437,4 +437,3 @@ address__post_town=Oxford address__postcode=OX1_1HN address__street_line=Oxford_
 
 
 charity_name=The_Nottingham_Women's_Counselling_Service charity_number=0625984 report_date=2016-05-31
-
