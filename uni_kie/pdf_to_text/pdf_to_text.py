@@ -5,6 +5,7 @@ import fitz as PyMuPDF
 import pandas as pd
 
 from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
+from uni_kie.sroie_constants import PATH_SROIE_TEST, SROIE_CONSTANTS
 
 
 class AbstractPDFToTextModel:
@@ -25,7 +26,7 @@ class PyMuPDFWrapper(AbstractPDFToTextModel):
     def __repr__(self):
         return super().__repr__()
 
-    def get_text(self, file_path: Union[Path, str]) -> str:
+    def get_text(self, file_path: Union[Path, str], filetype: str) -> str:
         """
         Extracts text from a PDF file using PY_MU_PDF.
 
@@ -38,7 +39,7 @@ class PyMuPDFWrapper(AbstractPDFToTextModel):
         :param file_path:
         :return:
         """
-        with PyMuPDF.open(file_path, filetype="pdf") as doc:
+        with PyMuPDF.open(file_path, filetype=filetype) as doc:
             text = ""
             for page in doc:
                 partial_tp = page.get_textpage_ocr(flags=0, full=False)
@@ -73,3 +74,27 @@ class KleisterCharityWrapper(AbstractPDFToTextModel):
             self.data["filename"] == file_path, "text_best_cleaned"
         ].values[0]
         return text
+
+
+class SroieWrapper(PyMuPDFWrapper):
+    """
+    A wrapper of the SROIE dataset which in turn uses PyMuPDFWrapper
+    to extract the text from the JPG files.
+    """
+
+    def __init__(self, split: str = "test"):
+        super().__init__()
+        self.split = split
+        self.data = self._load_data()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def get_text(self, file_path: Union[Path, str]) -> str:
+        text = super().get_text(file_path, filetype="jpg")
+        return text
+
+    def _load_data(self) -> list:  # just a list of file names
+        print(f">>>>>>>>>>>>>> LOADING {self.split} SET")
+        data = list(PATH_SROIE_TEST.iterdir())
+        return data
