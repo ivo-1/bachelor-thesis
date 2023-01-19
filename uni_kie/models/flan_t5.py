@@ -31,7 +31,7 @@ class FLAN_T5(LargeLanguageModel):
         self.stop = [STOP_KEY]
 
     def __repr__(self):
-        return f"Flan_T5(max_input_tokens={self.max_input_tokens}, temperature={self.temperature}, top_p={self.top_p}, top_k={self.top_k}"
+        return f"Flan_T5(max_input_tokens={self.max_input_tokens}, temperature={self.temperature}, top_p={self.top_p}, top_k={self.top_k})"
 
     def predict(self, input: str) -> str:
         data = {
