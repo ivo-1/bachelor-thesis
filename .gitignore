@@ -146,3 +146,4 @@ uni_kie/flan_t5_deploy_parallel.ipynb
 uni_kie/flan-t5-trying out model/model.py
 uni_kie/flan-t5.tar.gz
 uni_kie/test_inference_api.py
+uni_kie/models/flan_t5_local.py
