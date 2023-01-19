@@ -213,7 +213,7 @@ class DictParser(Parser):
 
         This is important because not every key can be found in the document.
         """
-        model_output = prompt_keys[0] + ":" + model_output
+        model_output = prompt_keys[0] + ":" + (model_output if model_output else "")
         out = {}
         for i in range(len(prompt_keys)):
             prompt_key = prompt_keys[i] + ":"

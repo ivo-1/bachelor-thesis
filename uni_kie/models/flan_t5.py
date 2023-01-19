@@ -26,7 +26,7 @@ class FLAN_T5(LargeLanguageModel):
         self.temperature = 0.1  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
         self.top_p = 0.9  # default: 1.0 but 0.9 for comparing to GPT-NeoX
         self.top_k = 40  # default: 50 but 40 for comparing to GPT-NeoX
-        self.min_length = 48
+        self.min_length = 1  # default: 0 but we want at least one token
         self.stop = [STOP_KEY]
 
     def __repr__(self):
