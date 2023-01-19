@@ -26,7 +26,7 @@ class FLAN_T5(LargeLanguageModel):
             2304  # 25% percentile between 1792 (neox) and 3840 (davinci)
         )
         self.max_generated_tokens = 256
-        self.temperature = 1  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
+        self.temperature = 0.1  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
         self.top_p = 0.9  # default: 1.0 but 0.9 for comparing to GPT-NeoX
         self.top_k = 40  # default: 50 but 40 for comparing to GPT-NeoX
         self.min_length = 1  # default: 0 but we want at least one token
@@ -53,6 +53,11 @@ class FLAN_T5(LargeLanguageModel):
             headers=self.headers,
             json=data,
         )
+
+        if response.status_code != 200:
+            logger.info(f"Error: {response.status_code}")
+            logger.info(f"Error: {response.text}")
+            raise Exception("Error: " + str(response.status_code))
 
         resp = response.json()
         try:
