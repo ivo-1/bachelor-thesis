@@ -36,7 +36,7 @@ class FLAN_T5(LargeLanguageModel):
         data = {
             "inputs": input,
             "parameters": {
-                "do_sample": False,  # equivalent to temperature=0
+                "do_sample": True,  # equivalent to temperature=0
                 "min_length": self.min_length,
                 "max_length": int(self.max_generated_tokens),
                 "temperature": float(self.temperature),
