@@ -6,44 +6,42 @@ import requests
 from sagemaker.serializers import JSONSerializer
 
 from uni_kie.models.model import LargeLanguageModel
+from uni_kie.prompts.prompts import STOP_KEY
 
 
 class FLAN_T5(LargeLanguageModel):
     def __init__(self):
         super().__init__()
         self.endpoint_url = (
-            "https://w5jinsyv9isnuqfg.us-east-1.aws.endpoints.huggingface.cloud"
+            "https://rst67e5y0izhf6c5.us-east-1.aws.endpoints.huggingface.cloud"
         )
         self.api_key = os.environ["HUGGINGFACE_API_KEY"]
         self.headers = {
             "Authorization": f"Bearer {self.api_key}",
         }
-
         self.max_input_tokens = (
-            1792  # TODO: find the max input tokens (only limited by memory)
+            2304  # 25% percentile between 1792 (neox) and 3840 (davinci)
         )
         self.max_generated_tokens = 256
-        self.temperature = 100  # default: 1
-        self.top_p = 0.9  # default: 0.9
-        self.top_k = 40  # default: 40
-        self.repetition_penalty = 0.0000001  # default: 0.0 (not allowed to be 0.0)
+        self.temperature = 0.1  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
+        self.top_p = 0.9  # default: 1.0 but 0.9 for comparing to GPT-NeoX
+        self.top_k = 40  # default: 50 but 40 for comparing to GPT-NeoX
+        self.min_length = 48
+        self.stop = [STOP_KEY]
 
     def __repr__(self):
         return f"Flan_T5(max_input_tokens={self.max_input_tokens}, temperature={self.temperature}, top_p={self.top_p}, top_k={self.top_k}"
 
     def predict(self, input: str) -> str:
         data = {
-            "inputs": "Once upon a time, there was",
+            "inputs": input,
             "parameters": {
+                "do_sample": False,  # equivalent to temperature=0
+                "min_length": self.min_length,
                 "max_length": int(self.max_generated_tokens),
                 "temperature": float(self.temperature),
-                # 'top_p': self.top_p,
-                # 'top_k': self.top_k,
-                # 'repetition_penalty': self.repetition_penalty,
-                # 'return_full_text': True,
-            },
-            "options": {
-                "use_cache": False,
+                "top_p": self.top_p,
+                "top_k": self.top_k,
             },
         }
 
