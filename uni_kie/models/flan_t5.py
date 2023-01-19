@@ -5,8 +5,11 @@ import boto3
 import requests
 from sagemaker.serializers import JSONSerializer
 
+from uni_kie import create_logger
 from uni_kie.models.model import LargeLanguageModel
 from uni_kie.prompts.prompts import STOP_KEY
+
+logger = create_logger(__name__)
 
 
 class FLAN_T5(LargeLanguageModel):
@@ -23,7 +26,7 @@ class FLAN_T5(LargeLanguageModel):
             2304  # 25% percentile between 1792 (neox) and 3840 (davinci)
         )
         self.max_generated_tokens = 256
-        self.temperature = 0.1  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
+        self.temperature = 1  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
         self.top_p = 0.9  # default: 1.0 but 0.9 for comparing to GPT-NeoX
         self.top_k = 40  # default: 50 but 40 for comparing to GPT-NeoX
         self.min_length = 1  # default: 0 but we want at least one token
@@ -56,3 +59,4 @@ class FLAN_T5(LargeLanguageModel):
             return resp[0]["generated_text"]
         except KeyError:
             print(resp)
+            logger.info(f"Error: {resp}")

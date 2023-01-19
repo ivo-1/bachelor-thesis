@@ -110,7 +110,9 @@ class KleisterCharityParser(Parser):
 
         This is important because not every key can be found in the document.
         """
-        model_output = prompt_keys[0] + ":" + model_output
+        if model_output is None:
+            logger.info("WARNING: Model output is None")
+        model_output = prompt_keys[0] + ":" + (model_output if model_output else "")
         out = []
         gold_keys = None
         if prompt_keys[0] == "Address (post code)":
@@ -213,6 +215,8 @@ class DictParser(Parser):
 
         This is important because not every key can be found in the document.
         """
+        if model_output is None:
+            logger.info("WARNING: Model output is None")
         model_output = prompt_keys[0] + ":" + (model_output if model_output else "")
         out = {}
         for i in range(len(prompt_keys)):
