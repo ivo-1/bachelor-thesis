@@ -142,19 +142,5 @@ uni_kie/flan_t5_call_endpoint.py
 uni_kie/requirements.txt
 uni_kie/datasets/kleister_charity/dev-0/out.tsv
 uni_kie/datasets/kleister_charity/dev-0/expected_testing_evaluation.tsv
-uni_kie/flan_t5_deploy_parallel.ipynb
-uni_kie/flan-t5-trying out model/model.py
-uni_kie/flan-t5.tar.gz
-uni_kie/test_inference_api.py
-uni_kie/flan_t5_local.py
-uni_kie/flan_t5_deploy.py
-uni_kie/flan_t5_deploy.py
-uni_kie/flan_t5_deploy.py
-uni_kie/flan_t5_deployment/test_inference_api.py
-uni_kie/flan_t5_deployment/requirements.txt
-uni_kie/flan_t5_deployment/flan_t5_local.py
-uni_kie/flan_t5_deployment/flan_t5_deploy_parallel.ipynb
-uni_kie/flan_t5_deployment/flan_t5_deploy.py
-uni_kie/flan_t5_deployment/flan_t5_call_endpoint.py
-uni_kie/flan_t5_deployment/flan-t5.tar.gz
-uni_kie/flan_t5_deploy.py
+
+uni_kie/flan_t5_deployment
