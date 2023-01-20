@@ -16,7 +16,7 @@ class FLAN_T5(LargeLanguageModel):
     def __init__(self):
         super().__init__()
         self.endpoint_url = (
-            "https://rst67e5y0izhf6c5.us-east-1.aws.endpoints.huggingface.cloud"
+            "https://udazl8213890lf1p.us-east-1.aws.endpoints.huggingface.cloud"
         )
         self.api_key = os.environ["HUGGINGFACE_API_KEY"]
         self.headers = {
@@ -24,7 +24,7 @@ class FLAN_T5(LargeLanguageModel):
         }
         self.max_input_tokens = 1792  # same as neox
         self.max_generated_tokens = 256
-        self.temperature = 1  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
+        self.temperature = 0.0001  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
         self.top_p = 0.9  # default: 1.0 but 0.9 for comparing to GPT-NeoX
         self.top_k = 40  # default: 50 but 40 for comparing to GPT-NeoX
         self.min_length = 1  # default: 0 but we want at least one token
@@ -37,7 +37,7 @@ class FLAN_T5(LargeLanguageModel):
         data = {
             "inputs": input,
             "parameters": {
-                "do_sample": True,  # equivalent to temperature=0
+                "do_sample": False,  # equivalent to temperature=0
                 "min_length": self.min_length,
                 "max_length": int(self.max_generated_tokens),
                 "temperature": float(self.temperature),
