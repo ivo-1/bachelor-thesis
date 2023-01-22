@@ -7,6 +7,7 @@ import regex
 
 from uni_kie import create_logger
 from uni_kie.kleister_charity_constants import KLEISTER_CHARITY_CONSTANTS
+from uni_kie.sroie_constants import SROIE_CONSTANTS
 
 logger = create_logger(__name__)
 
@@ -271,13 +272,16 @@ class DictParser(Parser):
                 continue
 
             if (
-                KLEISTER_CHARITY_CONSTANTS.prompt_key_to_gold_key[prompt_key[:-1]]
-                == "report_date"
-            ):
-                value = Parser._parse_date_to_iso_format(value)
+                prompt_keys == KLEISTER_CHARITY_CONSTANTS.prompt_keys
+            ):  # special parsing for Kleister Charity
+                if (
+                    KLEISTER_CHARITY_CONSTANTS.prompt_key_to_gold_key[prompt_key[:-1]]
+                    == "report_date"
+                ):
+                    value = Parser._parse_date_to_iso_format(value)
 
-            if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
-                value = Parser._parse_money(value)
+                if "income" in prompt_key.lower() or "spending" in prompt_key.lower():
+                    value = Parser._parse_money(value)
 
             if value is None:
                 continue
