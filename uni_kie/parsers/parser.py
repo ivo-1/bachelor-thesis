@@ -286,7 +286,11 @@ class DictParser(Parser):
             if value is None:
                 continue
 
-            out[prompt_key[:-1]] = value  # remove trailing colon
+            if prompt_keys == SROIE_CONSTANTS.prompt_keys:
+                # use the gold keys instead of the prompt keys
+                out[SROIE_CONSTANTS.prompt_key_to_gold_key[prompt_key[:-1]]] = value
+            else:
+                out[prompt_key[:-1]] = value  # remove trailing colon from prompt key
 
         return out
 
