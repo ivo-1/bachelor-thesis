@@ -7,6 +7,7 @@ from uni_kie.pdf_to_text.pdf_to_text import (
     KleisterCharityWrapper,
     PyMuPDFWrapper,
     SroieWrapper,
+    SroieWrapperOwnOCR,
 )
 from uni_kie.prompts.prompts import NeutralPrompt
 
@@ -32,6 +33,7 @@ class PDF_TO_TEXT_MODELS:
     PY_MU_PDF = PyMuPDFWrapper
     KLEISTER_CHARITY_WRAPPER = KleisterCharityWrapper
     SROIE_WRAPPER = SroieWrapper
+    SROIE_WRAPPER_OWN_OCR = SroieWrapperOwnOCR
 
 
 class PARSERS:
