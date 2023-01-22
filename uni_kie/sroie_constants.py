@@ -4,14 +4,17 @@ PATH_SROIE = PATH_DATA / "sroie"
 
 PATH_SROIE_TEST = PATH_SROIE / "test" / "input"  # a folder with images
 PATH_SROIE_TEST_PREDICTIONS = PATH_SROIE_TEST / "predictions"
+PATH_SROIE_TEST_OCR = (
+    PATH_SROIE / "test" / "ocr_boxes"
+)  # a folder with txt files that contain the OCR boxes
 
 
 class SROIE_CONSTANTS:
     prompt_key_to_gold_key = {
-        "company": "Company Name",
-        "date": "Date of Purchase",
-        "address": "Address of Company",
-        "total": "Total",
+        "Company name": "company",
+        "Date of Purchase": "date",
+        "Address of Company": "address",
+        "Total": "total",
     }
     gold_key_to_prompt_key = {v: k for k, v in prompt_key_to_gold_key.items()}
     gold_keys = list(gold_key_to_prompt_key.keys())
