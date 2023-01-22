@@ -50,6 +50,17 @@ if __name__ == "__main__":
         parser=PARSERS.DICT_PARSER(),
     )
 
+    # BASELINE
+    # pipeline = BaselinePipeline(
+    #     keys=SROIE_CONSTANTS.prompt_keys,
+    #     model=BaselineModel,
+    #     pdf_to_text_model=PDF_TO_TEXT_MODELS.SROIE_WRAPPER(split="test"),
+    #     parser=PARSERS.DICT_PARSER(),
+    #     ner_tagger=NER_TAGGERS.SPACY_WEB_LG,
+    #     error_percentage=0.18,
+    #     allowed_entity_range=40,
+    # )
+
     folder_path = (
         PATH_SROIE
         / pipeline.pdf_to_text_model.split
