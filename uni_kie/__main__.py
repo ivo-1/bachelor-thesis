@@ -1,4 +1,5 @@
 import json
+import shutil
 from datetime import datetime
 
 from constants import MODELS, NER_TAGGERS, PARSERS, PDF_TO_TEXT_MODELS, PROMPT_VARIANTS
@@ -94,6 +95,7 @@ if __name__ == "__main__":
             f.write(json.dumps(prediction, indent=4))
 
         print(f"Progress: {i+1}/{len(pipeline.pdf_to_text_model.data)}")
+    shutil.make_archive(folder_path, "zip", folder_path)
 
     logger.info("================== DONE ==================")
     print("======================== DONE ============================")
