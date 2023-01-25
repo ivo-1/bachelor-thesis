@@ -371,7 +371,6 @@ class KleisterCharitySpecificBaselineModel(AbstractBaselineModel):
                         continue
 
                 if len(synonym_entities) > 0:
-                    # find a way to determine which match span is the best
                     # considerations:
                     # * most important: is the entity of the right type?
                     # * the closer the match_span is to the key synonym, the better (i.e. the lower the levenstein distance)

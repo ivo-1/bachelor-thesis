@@ -11,8 +11,8 @@ PATH_SROIE_TEST_OCR = (
 
 class SROIE_CONSTANTS:
     prompt_key_to_gold_key = {
-        "Company name": "company",
-        "Date of Purchase": "date",
+        "Company Name": "company",
+        "Date of Receipt": "date",
         "Address of Company": "address",
         "Total": "total",
     }
