@@ -144,3 +144,5 @@ uni_kie/datasets/kleister_charity/dev-0/out.tsv
 uni_kie/datasets/kleister_charity/dev-0/expected_testing_evaluation.tsv
 
 uni_kie/flan_t5_deployment
+
+uni_kie/datasets/sroie/test/predictions/*/
