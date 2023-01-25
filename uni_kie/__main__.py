@@ -45,10 +45,10 @@ if __name__ == "__main__":
         # zero-shot
         # shots=None,
         # one-shot
-        # shots=SROIE_CONSTANTS.SHOTS[0:1],
+        shots=SROIE_CONSTANTS.SHOTS[0:1],
         # two-shot
-        shots=SROIE_CONSTANTS.SHOTS[0:2],
-        model=MODELS.FLAN_T5(),
+        # shots=SROIE_CONSTANTS.SHOTS[0:2],
+        model=MODELS.GPT.NeoX(),
         pdf_to_text_model=PDF_TO_TEXT_MODELS.SROIE_WRAPPER(split="test"),
         prompt_variant=PROMPT_VARIANTS.NEUTRAL,
         long_document_handling_variant=LONG_DOCUMENT_HANDLING_VARIANTS.SPLIT_TO_SUBDOCUMENTS,
