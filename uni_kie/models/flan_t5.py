@@ -16,7 +16,7 @@ class FLAN_T5(LargeLanguageModel):
     def __init__(self):
         super().__init__()
         self.endpoint_url = (
-            "https://udazl8213890lf1p.us-east-1.aws.endpoints.huggingface.cloud"
+            "https://le5xbyp3kacyag6j.us-east-1.aws.endpoints.huggingface.cloud"
         )
         self.api_key = os.environ["HUGGINGFACE_API_KEY"]
         self.headers = {
