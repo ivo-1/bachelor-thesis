@@ -24,8 +24,8 @@ if __name__ == "__main__":
     # KLEISTER_CHARITY
     # pipeline = LLMPipeline(
     #     keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,
-    #     shots=None, #KLEISTER_CHARITY_CONSTANTS.SHOTS, # or None
-    #     model=MODELS.GPT.NeoX(),
+    #     shots=KLEISTER_CHARITY_CONSTANTS.SHOTS, # or None
+    #     model=MODELS.GPT.Davinci(),
     #     pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(split="test-A"),
     #     prompt_variant=PROMPT_VARIANTS.NEUTRAL,
     #     long_document_handling_variant=LONG_DOCUMENT_HANDLING_VARIANTS.SPLIT_TO_SUBDOCUMENTS,
@@ -90,8 +90,6 @@ if __name__ == "__main__":
     # SROIE
     for i in range(len(pipeline.pdf_to_text_model.data)):
         logger.info(f"Predicting document {i}...")
-        if i == 3:
-            break
         prediction = pipeline.predict(
             pipeline.pdf_to_text_model.data.iloc[i]["filename"]
         )
