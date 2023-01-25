@@ -42,8 +42,13 @@ if __name__ == "__main__":
     # SROIE
     pipeline = LLMPipeline(
         keys=SROIE_CONSTANTS.prompt_keys,
-        shots=None,  # SROIE_CONSTANTS.SHOTS,  # SROIE_CONSTANTS.SHOTS or None
-        model=MODELS.GPT.NeoX(),
+        # zero-shot
+        shots=None,
+        # one-shot
+        # shots=SROIE_CONSTANTS.SHOTS[0:1],
+        # two-shot
+        # shots=SROIE_CONSTANTS.SHOTS[0:2],
+        model=MODELS.FLAN_T5(),
         pdf_to_text_model=PDF_TO_TEXT_MODELS.SROIE_WRAPPER(split="test"),
         prompt_variant=PROMPT_VARIANTS.NEUTRAL,
         long_document_handling_variant=LONG_DOCUMENT_HANDLING_VARIANTS.SPLIT_TO_SUBDOCUMENTS,
@@ -56,7 +61,7 @@ if __name__ == "__main__":
     #     model=BaselineModel,
     #     pdf_to_text_model=PDF_TO_TEXT_MODELS.SROIE_WRAPPER(split="test"),
     #     parser=PARSERS.DICT_PARSER(),
-    #     ner_tagger=NER_TAGGERS.SPACY_WEB_LG,
+    #     ner_tagger=NER_TAGGERS.SPACY_WEB_SM,
     #     error_percentage=0.18,
     #     allowed_entity_range=40,
     # )
