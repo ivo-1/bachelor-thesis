@@ -169,9 +169,12 @@ class LLMPipeline(AbstractPipeline):
                 )
 
                 if model_input_shots_length > 0.5 * self.model.max_input_tokens:
-                    raise ValueError(
-                        "model_input_shots_length is too long for the model, can not be more than half of the model's max_input_tokens"
+                    logger.info(
+                        f"model_input_shots_length is more than half of the model's max_input_tokens"
                     )
+                    # raise ValueError(
+                    #     "model_input_shots_length is too long for the model, can not be more than half of the model's max_input_tokens"
+                    # )
 
                 overlap_no_tokens = (
                     20  # how many tokens to overlap between subdocuments
