@@ -24,7 +24,7 @@ class FLAN_T5(LargeLanguageModel):
         }
         self.max_input_tokens = 1792  # same as neox
         self.max_generated_tokens = 256
-        self.temperature = 0.0001  # 0 not possible - instead: use equivalent do_sample=False (-> greedy decoding) - default: 1
+        self.temperature = 0.0001  # default: 1 - 0 not possible, instead: use equivalent do_sample=False (-> greedy decoding) and mark with 0.0001
         self.top_p = 0.9  # default: 1.0 but 0.9 for comparing to GPT-NeoX
         self.top_k = 40  # default: 50 but 40 for comparing to GPT-NeoX
         self.min_length = 1  # default: 0 but we want at least one token
@@ -43,6 +43,7 @@ class FLAN_T5(LargeLanguageModel):
                 "temperature": float(self.temperature),
                 "top_p": self.top_p,
                 "top_k": self.top_k,
+                "stopping_criteria": self.stop,
             },
         }
 
