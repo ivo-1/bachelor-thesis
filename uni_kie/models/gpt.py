@@ -50,7 +50,7 @@ class GPT_NeoX(LargeLanguageModel):
         self.api_key = os.environ["TEXTSYNTH_API_SECRET_KEY"]
 
         self.max_input_tokens = 1792
-        self.max_generated_tokens = 128
+        self.max_generated_tokens = 256
         self.temperature = 1  # default: 1
         self.top_p = 0.9  # default: 0.9
         self.top_k = 40  # default: 40
