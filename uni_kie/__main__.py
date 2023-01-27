@@ -43,9 +43,9 @@ if __name__ == "__main__":
     pipeline = LLMPipeline(
         keys=SROIE_CONSTANTS.prompt_keys,
         # zero-shot
-        shots=None,
+        # shots=None,
         # one-shot
-        # shots=SROIE_CONSTANTS.SHOTS[0:1],
+        shots=SROIE_CONSTANTS.SHOTS[0:1],
         # two-shot
         # shots=SROIE_CONSTANTS.SHOTS[0:2],
         model=MODELS.GPT.Davinci(),
