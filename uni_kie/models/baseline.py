@@ -269,7 +269,9 @@ class KleisterCharitySpecificBaselineModel(AbstractBaselineModel):
         output = []
         for i, key in enumerate(keys):
             if i == 0 and key != "Address (post code)":
-                raise ValueError("First key must be 'Address (post code)'")
+                raise ValueError(
+                    "First key must be 'Address (post code)'. You probably used KLEISTER_CHARITY_CONSTANTS.prompt_keys instead of KLEISTER_CHARITY_CONSTANTS.SPECIFIC_BASELINE.prompt_keys."
+                )
 
             if key == "Address (post code)":
                 post_code = self.find_post_code(input)
