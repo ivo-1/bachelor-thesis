@@ -396,9 +396,6 @@ class KleisterCharitySpecificBaselineModel(AbstractBaselineModel):
                 else:  # no match found for any synonym
                     continue
 
-                if len(output) > 0:
-                    output.append(f"{key}: {best_entity[3]}")
-                else:
-                    output.append(f"{best_entity[3]}")
+                output.append(f"{key}: {best_entity[3]}")
 
         return "\n".join(output)
