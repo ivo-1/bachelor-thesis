@@ -22,26 +22,26 @@ if __name__ == "__main__":
     now = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
 
     # BASELINE
-    # pipeline = BaselinePipeline(
-    #     keys=KLEISTER_CHARITY_CONSTANTS.SPECIFIC_BASELINE.prompt_keys,
-    #     model=KleisterCharitySpecificBaselineModel,
-    #     pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(split="test-A"),
-    #     parser=PARSERS.KLEISTER_CHARITY_PARSER(),
-    #     ner_tagger=NER_TAGGERS.SPACY_WEB_SM,
-    #     error_percentage=0.18,
-    #     allowed_entity_range=40,
-    # )
+    pipeline = BaselinePipeline(
+        keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,  # .SPECIFIC_BASELINE.prompt_keys,
+        model=BaselineModel,
+        pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(split="test-A"),
+        parser=PARSERS.KLEISTER_CHARITY_PARSER(),
+        ner_tagger=NER_TAGGERS.SPACY_WEB_SM,
+        error_percentage=0.18,
+        allowed_entity_range=40,
+    )
 
     # KLEISTER_CHARITY
-    pipeline = LLMPipeline(
-        keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,
-        shots=KLEISTER_CHARITY_CONSTANTS.SHOTS,  # or None
-        model=MODELS.GPT.Davinci(),
-        pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(split="test-A"),
-        prompt_variant=PROMPT_VARIANTS.NEUTRAL,
-        long_document_handling_variant=LONG_DOCUMENT_HANDLING_VARIANTS.SPLIT_TO_SUBDOCUMENTS,
-        parser=PARSERS.KLEISTER_CHARITY_PARSER(),
-    )
+    # pipeline = LLMPipeline(
+    #     keys=KLEISTER_CHARITY_CONSTANTS.prompt_keys,
+    #     shots=KLEISTER_CHARITY_CONSTANTS.SHOTS,  # or None
+    #     model=MODELS.GPT.Davinci(),
+    #     pdf_to_text_model=PDF_TO_TEXT_MODELS.KLEISTER_CHARITY_WRAPPER(split="test-A"),
+    #     prompt_variant=PROMPT_VARIANTS.NEUTRAL,
+    #     long_document_handling_variant=LONG_DOCUMENT_HANDLING_VARIANTS.SPLIT_TO_SUBDOCUMENTS,
+    #     parser=PARSERS.KLEISTER_CHARITY_PARSER(),
+    # )
 
     path = (
         PATH_KLEISTER_CHARITY
