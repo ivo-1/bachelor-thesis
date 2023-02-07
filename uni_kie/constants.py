@@ -56,7 +56,7 @@ class NER_TAGGERS:
     FLAIR = None
     NLTK = None
     STANZA = None
-    TORCHTEXT = None  # torchtext.datasets.CoNLL2000Chunking
+    TORCHTEXT = None
 
 
 class LONG_DOCUMENT_HANDLING_VARIANTS:
@@ -64,9 +64,3 @@ class LONG_DOCUMENT_HANDLING_VARIANTS:
     TRUNCATE_START = "TRUNCATE_START"
     TRUNCATE_MIDDLE = "TRUNCATE_MIDDLE"
     SPLIT_TO_SUBDOCUMENTS = "SPLIT_TO_SUBDOCUMENTS"
-
-
-# TODO: add class that defines dependency between prompt versions and parsers
-# e.g. NEUTRAL works with KLEISTER_CHARITY_PARSER
-
-# or maybe parsers should be subclasses of prompt variants?

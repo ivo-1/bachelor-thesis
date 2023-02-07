@@ -37,7 +37,7 @@ class NeutralPrompt(Prompt):
         self.shots = False
         self.model_input_shots_number_of_tokens = 0
 
-        if shots:  # this is not yet perfectly shot-agnostic, but works for shots=1
+        if shots:
             self.shots = True
             self.model_input_shots = ""
             self.start_of_document = (
